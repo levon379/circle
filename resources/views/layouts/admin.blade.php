@@ -83,6 +83,46 @@
 
                 <li class="devider"></li>
 
+                <li><a href="#" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        <span class="hide-menu">Products</span></a>
+                </li>
+
+                <li><a href="#" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                        <span class="hide-menu">Product Catalogue</span></a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                        <span class="hide-menu">Media Center<span class="fa arrow"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li>
+                            <a href="#"> <i class="mdi mdi-book-plus fa-fw"></i>
+                                <span class="hide-menu">Press Releases</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"> <i class="mdi mdi-newspaper fa-fw"></i>
+                                <span class="hide-menu">Newsletters</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li><a href="#" class="waves-effect"><i class="mdi mdi-link-variant fa-fw"></i>
+                        <span class="hide-menu">Social Links</span></a>
+                </li>
+
+                <li><a href="#" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
+                        <span class="hide-menu">Vacancies</span></a>
+                </li>
+
+                <li><a href="#" class="waves-effect"><i class="mdi mdi-phone fa-fw"></i>
+                        <span class="hide-menu">Contact Us</span></a>
+                </li>
 
             </ul>
         </div>
@@ -104,7 +144,7 @@
             <!-- .row -->
 
         </div>
-        <footer class="footer text-center"> 2020 &copy; Created By David Kocharyan. </footer>
+        <footer class="footer text-center"> 2020 &copy; Created By Aimtech LLC</footer>
     </div>
 </div>
 
