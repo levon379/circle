@@ -17,8 +17,9 @@ class CreateMediaTable extends Migration
             $table->id();
             $table->string("title", 191);
             $table->text('description');
-            $table->string('image');
+            $table->string('logo');
             $table->date('date');
+            $table->tinyInteger('type');
             $table->timestamps();
         });
     }

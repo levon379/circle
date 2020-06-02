@@ -29,6 +29,19 @@ Auth::routes([
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');
 
+    Route::resource('/newsletters', 'NewsletterController');
+    Route::DELETE('/newsletters/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+
+    Route::resource('/press-releases', 'PressReleaseController');
+    Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+
+    Route::resource('/contact-us', 'ContactUsController');
+
+    Route::resource('/social', 'SocialController');
+
+    Route::resource('/vacancies', 'VacancyController');
+
+    Route::resource('/catalog', 'CatalogController');
 
 
 });

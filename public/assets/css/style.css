@@ -10357,3 +10357,12 @@ ul.pro-amenities li span i {
         margin-top: 10%
     }
 }
+
+/*my custom css*/
+.swal-modal {
+    width: 660px !important;
+}
+
+table.dataTable tbody td {
+    vertical-align: middle;
+}

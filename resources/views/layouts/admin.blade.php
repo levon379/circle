@@ -19,7 +19,7 @@
     <link href="{{asset('assets/css/colors/default.css')}}" id="theme" rel="stylesheet">
 
     {{--custom style--}}
-    @stack('custom-style')
+    @stack('header')
 </head>
 
 <body class="fix-sidebar">
@@ -83,11 +83,11 @@
 
                 <li class="devider"></li>
 
-                <li><a href="#" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                <li><a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                         <span class="hide-menu">Products</span></a>
                 </li>
 
-                <li><a href="#" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
                         <span class="hide-menu">Product Catalogue</span></a>
                 </li>
 
@@ -98,29 +98,28 @@
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li>
-                            <a href="#"> <i class="mdi mdi-book-plus fa-fw"></i>
+                            <a href="/admin/press-releases"> <i class="mdi mdi-book-plus fa-fw"></i>
                                 <span class="hide-menu">Press Releases</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="#"> <i class="mdi mdi-newspaper fa-fw"></i>
+                            <a href="/admin/newsletters"> <i class="mdi mdi-newspaper fa-fw"></i>
                                 <span class="hide-menu">Newsletters</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-
-                <li><a href="#" class="waves-effect"><i class="mdi mdi-link-variant fa-fw"></i>
+                <li><a href="/admin/social" class="waves-effect"><i class="mdi mdi-link-variant fa-fw"></i>
                         <span class="hide-menu">Social Links</span></a>
                 </li>
 
-                <li><a href="#" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
+                <li><a href="/admin/vacancies" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
                         <span class="hide-menu">Vacancies</span></a>
                 </li>
 
-                <li><a href="#" class="waves-effect"><i class="mdi mdi-phone fa-fw"></i>
+                <li><a href="/admin/contact-us" class="waves-effect"><i class="mdi mdi-phone fa-fw"></i>
                         <span class="hide-menu">Contact Us</span></a>
                 </li>
 
@@ -161,6 +160,6 @@
 <script src="{{asset('assets/js/custom.min.js')}}"></script>
 
 {{--custom script--}}
-@stack('custom-script')
+@stack('footer')
 
 </html>
