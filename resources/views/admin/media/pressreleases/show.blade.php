@@ -8,6 +8,11 @@
                 <div class="">
                     <h2 class="m-b-0 m-t-0">{{$data->title}}</h2>
                     <hr>
+                    <h4>
+                        Created at
+                        <span class="text-success" style="margin-left: 15px; font-size: 15px">{{$data->date}}</span>
+                    </h4>
+                    <hr>
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <img src="{{asset("uploads/$data->logo")}}" class="img-fluid img-thumbnail">

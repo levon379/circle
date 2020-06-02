@@ -98,9 +98,9 @@ class ContactUsController extends Controller
         $request->validate([
             "factory_name" => "required",
             "country" => "required",
-            "telephone_number" => "required",
+            "telephone_number" => "required|regex:/^([0-9\s\-\+\(\)]*)$/",
             "fax_number" => "required",
-            "po_box" => "required",
+            "po_box" => "numeric",
         ]);
 
         $contactUs = ContactUs::find($id);
