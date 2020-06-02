@@ -51,7 +51,7 @@
                                 @error('po_box')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="po_box"
+                                <input type="number" class="form-control" id="po_box"
                                        placeholder="P.O Box" name="po_box" value="{{old('po_box')}}" required>
                             </div>
 
