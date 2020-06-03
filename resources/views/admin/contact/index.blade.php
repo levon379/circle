@@ -1,79 +1,79 @@
 @extends('layouts.admin')
 
 @section('content')
-
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
+            <div class="white-box">
+                <h3 class="box-title">{{$title}}</h3>
+                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add New {{ $title }}</a>
 
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        {{$title}}
-
-                        @if(!$data)
-                            <a href="{{$route."/create"}}" class="btn btn-instagram text-center"><i class="fas fa-plus"></i> Add Data</a>
-                        @else
-                            <a href="{{$route."/".$data->id."/edit"}}" class="btn btn-primary text-center"><i class="fas fa-edit"></i> Edit Data</a>
-                        @endif
-                    </div>
-
-                    <div class="panel-wrapper collapse in">
-                        <table class="table table-hover">
-                            <tbody>
+                {{--table--}}
+                <div class="table-responsive">
+                    <table id="datatable" class="display table table-hover table-striped" cellspacing="0"
+                           width="100%">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Factory Name</th>
+                            <th>Country</th>
+                            <th>Telephone Number</th>
+                            <th>Fax Number</th>
+                            <th>P.O Box</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data as $key=>$val)
                             <tr>
-                                <td align="center"></td>
-                                <td class="bold">Factory Name</td>
-                                <td>{{$data->factory_name ?? ""}}</td>
-                            </tr>
+                                <td>{{$key + 1}}</td>
+                                <td>{{$val->factory_name}}</td>
+                                <td>{{$val->country}}</td>
+                                <td>{{$val->telephone_number}}</td>
+                                <td>{{$val->fax_number}}</td>
+                                <td>{{$val->po_box}}</td>
 
-                            <tr>
-                                <td align="center"></td>
-                                <td class="bold">Country</td>
-                                <td>{{$data->country ?? ""}}</td>
-                            </tr>
+                                <td>
+                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
+                                       data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
 
-                            <tr>
-                                <td align="center"></td>
-                                <td class="bold">Telephone Number</td>
-                                <td>{{$data->telephone_number ?? ""}}</td>
+                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"
+                                          method="post" id="work-for-form">
+                                        @csrf
+                                        @method("DELETE")
+                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">
+                                            <button data-toggle="tooltip"
+                                                    data-placement="top" title="Remove"
+                                                    class="btn btn-danger btn-circle tooltip-danger"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </a>
+                                    </form>
+                                </td>
                             </tr>
-
-                            <tr>
-                                <td align="center"></td>
-                                <td class="bold">Fax Number</td>
-                                <td>{{$data->fax_number ?? ""}}</td>
-                            </tr>
-
-                            <tr>
-                                <td align="center"></td>
-                                <td class="bold">P.O Box</td>
-                                <td>{{$data->po_box ?? ""}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-
 @push('header')
-    <style>
-        .panel-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .bold{
-            font-weight: bold;
-        }
-    </style>
+    <!--This is a datatable style -->
+    <link href="{{asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}" rel="stylesheet"
+          type="text/css"/>
 @endpush
 
-
-
+@push('footer')
+    <!--Datatable js-->
+    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
+    <script>
+        $('#datatable').DataTable();
+    </script>
+@endpush
 
 
 

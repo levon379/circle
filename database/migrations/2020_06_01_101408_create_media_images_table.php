@@ -17,6 +17,7 @@ class CreateMediaImagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('media_id');
             $table->string('image');
+            $table->string('pdf');
             $table->timestamps();
 
             $table->foreign('media_id')->references('id')->on('media')->onDelete('cascade')->onUpdate('cascade');

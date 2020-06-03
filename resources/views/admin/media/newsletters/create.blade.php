@@ -45,11 +45,26 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="images">Upload Images <strong class="text-danger"> &#42; </strong></label>
-                                @error('images')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="file" id="images" name="images[]" multiple />
+                                <label for="logo">Upload Images and PDF <strong class="text-danger"> &#42; </strong></label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dynamic_field">
+                                        <tr>
+                                            <td>
+                                                <div class="col-xs-6">
+                                                    <input type="file" name="images[]" class="form-control input-md input_open"/>
+                                                </div>
+
+                                                <div class="col-xs-6">
+                                                    <input type="file" name="pdf[]" class="form-control input_close"/>
+                                                </div>
+                                            </td>
+
+                                            <td align="center">
+                                                <button type="button" name="add" id="add" class="btn btn-info"><i class="fas fa-plus"></i></button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">Save {{$title}}
@@ -83,5 +98,29 @@
             todayHighlight: true,
             format: 'yyyy-mm-dd',
         }).datepicker("setDate", new Date());
+
+        $(document).ready(function () {
+            var i = 1;
+            $('#add').click(function () {
+                i++;
+                $('#dynamic_field').append(`<tr id="row${i}">
+			    <td>
+                    <div class="col-xs-6">
+                        <input type="file" name="images[]" class="form-control input-md input_open"/>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <input type="file" name="pdf[]" class="form-control input_close"/>
+                    </div>
+                </td>
+			    <td align="center"><button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove"><i class="fas fa-minus"></i></button></td>
+			</tr>`);
+            });
+
+            $(document).on('click', '.btn_remove', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
     </script>
 @endpush

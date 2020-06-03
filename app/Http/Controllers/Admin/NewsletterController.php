@@ -54,11 +54,21 @@ class NewsletterController extends Controller
             'description' => 'required',
             'date' => 'required',
             'logo' => 'required|image|max:2048',
-            'images' => 'max:5000',
+            'images' => 'array|max:5',
+            'pdf' => 'array|max:5'
         ]);
 
         $logo = Storage::disk('public')->putFile('media/', new File($request->logo));
-        $image = FileUploadHelper::upload($request->images, ['*'], "media");
+
+        $arr = array();
+        if (!empty($request->images) AND !empty($request->pdf)){
+            foreach ($request->images as $key=>$val){
+                $image = Storage::disk('public')->putFile('media/', new File($val));
+                $file = Storage::disk('public')->putFile('media/', new File($request->pdf[$key]));
+                $arr[$key]['image'] = $image;
+                $arr[$key]['pdf'] = $file;
+            }
+        }
 
         DB::beginTransaction();
 
@@ -70,7 +80,7 @@ class NewsletterController extends Controller
         $media->logo = $logo;
         $media->save();
 
-        $media->images()->createMany($image);
+        $media->images()->createMany($arr);
         DB::commit();
 
         return redirect(self::ROUTE);
@@ -117,7 +127,8 @@ class NewsletterController extends Controller
             'description' => 'required',
             'date' => 'required',
             'logo' => 'max:2048',
-            'images' => 'max:5000',
+            'images' => 'array|max:5',
+            'pdf' => 'array|max:5'
         ]);
 
         DB::beginTransaction();
@@ -136,9 +147,15 @@ class NewsletterController extends Controller
 
         $media->save();
 
-        if (!empty($request->images) OR $request->images != NULL){
-            $image = FileUploadHelper::upload($request->images, ['*'], "media");
-            $media->images()->createMany($image);
+        $arr = array();
+        if (!empty($request->images) AND !empty($request->pdf)){
+            foreach ($request->images as $key=>$val){
+                $image = Storage::disk('public')->putFile('media/', new File($val));
+                $file = Storage::disk('public')->putFile('media/', new File($request->pdf[$key]));
+                $arr[$key]['image'] = $image;
+                $arr[$key]['pdf'] = $file;
+            }
+            $media->images()->createMany($arr);
         }
         DB::commit();
 
@@ -173,6 +190,7 @@ class NewsletterController extends Controller
     {
         $media_image = MediaImage::find($image_id);
         Storage::disk('public')->delete("$media_image->image");
+        Storage::disk('public')->delete("$media_image->pdf");
         MediaImage::destroy($media_image->id);
         return redirect(self::ROUTE.'/'.$media_id.'/edit');
     }

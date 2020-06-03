@@ -19,7 +19,7 @@ class ContactUsController extends Controller
      */
     public function index()
     {
-        $data = ContactUs::first();
+        $data = ContactUs::all();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -119,8 +119,9 @@ class ContactUsController extends Controller
      * @param \App\Admin\ContactUs $contactUs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactUs $contactUs)
+    public function destroy($id)
     {
-        //
+        ContactUs::destroy($id);
+        return  redirect(self::ROUTE);
     }
 }
