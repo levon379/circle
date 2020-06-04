@@ -54,15 +54,17 @@
                                         <tr>
                                             <td>
                                                 <div class="col-xs-6">
+                                                     <label for="logo">Image</label>
                                                     <input type="file" name="images[]" class="form-control input-md input_open"/>
                                                 </div>
 
                                                 <div class="col-xs-6">
+                                                    <label for="logo">Pdf</label>
                                                     <input type="file" name="pdf[]" class="form-control input_close"/>
                                                 </div>
                                             </td>
 
-                                            <td align="center">
+                                            <td style="text-align: center; vertical-align: middle;">>
                                                 <button type="button" name="add" id="add" class="btn btn-info"><i class="fas fa-plus"></i></button>
                                             </td>
                                         </tr>

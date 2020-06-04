@@ -36,6 +36,18 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <h3 class="box-title m-t-40">PDF Files</h3>
+                            <div class="pdf">
+                                @foreach($data->images as $key=>$val)
+                                    <a href="{{asset("uploads/$val->pdf")}}" target="_blank">
+                                        PDF_{{$key}}
+                                    </a>
+                                    <br>
+                                @endforeach
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

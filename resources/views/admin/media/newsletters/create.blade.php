@@ -103,18 +103,20 @@
             var i = 1;
             $('#add').click(function () {
                 i++;
-                $('#dynamic_field').append(`<tr id="row${i}">
-			    <td>
-                    <div class="col-xs-6">
-                        <input type="file" name="images[]" class="form-control input-md input_open"/>
-                    </div>
+                if(i <= 5){
+                    $('#dynamic_field').append(`<tr id="row${i}">
+			            <td>
+                            <div class="col-xs-6">
+                                <input type="file" name="images[]" class="form-control input-md input_open"/>
+                            </div>
 
-                    <div class="col-xs-6">
-                        <input type="file" name="pdf[]" class="form-control input_close"/>
-                    </div>
-                </td>
-			    <td align="center"><button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove"><i class="fas fa-minus"></i></button></td>
-			</tr>`);
+                            <div class="col-xs-6">
+                                <input type="file" name="pdf[]" class="form-control input_close"/>
+                            </div>
+                        </td>
+			            <td align="center"><button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove"><i class="fas fa-minus"></i></button></td>
+			        </tr>`);
+                }
             });
 
             $(document).on('click', '.btn_remove', function () {

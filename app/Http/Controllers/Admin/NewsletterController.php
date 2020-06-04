@@ -174,6 +174,7 @@ class NewsletterController extends Controller
         if (!empty($media->images)) {
             foreach ($media->images as $key) {
                 Storage::disk('public')->delete("$key->image");
+                Storage::disk('public')->delete("$key->pdf");
             }
         }
         Media::destroy($media->id);
