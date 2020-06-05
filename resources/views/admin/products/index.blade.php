@@ -14,11 +14,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Factory Name</th>
-                            <th>Country</th>
-                            <th>Telephone Number</th>
-                            <th>Fax Number</th>
-                            <th>P.O Box</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Show Status</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -26,13 +25,25 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$val->factory_name}}</td>
-                                <td>{{$val->country}}</td>
-                                <td>{{$val->telephone_number}}</td>
-                                <td>{{$val->fax_number}}</td>
-                                <td>{{$val->po_box}}</td>
-
                                 <td>
+                                    <img src='{{ asset("uploads/".$val->image[0]->image)}}' alt="{{$val->title}}" class="img-responsive" width="200">
+                                </td>
+                                <td>{{$val->title}}</td>
+                                <td>{{$val->category->name}}</td>
+                                <td>{{$val->show == 1 ? "Show" : "Don`t Show"}}</td>
+                                <td>
+                                    <a href="{{$route."/".$val->id."/specification"}}" data-toggle="tooltip"
+                                       data-placement="top" title="Specification"
+                                       class="btn btn-success btn-circle tooltip-success">
+                                        <i class="fas fas fa-plus"></i>
+                                    </a>
+
+                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"
+                                       data-placement="top" title="Show"
+                                       class="btn btn-warning btn-circle tooltip-warning">
+                                        <i class="fas fas fa-eye"></i>
+                                    </a>
+
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
                                         <i class="fas fa-edit"></i>

@@ -11,49 +11,60 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="factory_name">Factory Name <strong class="text-danger"> &#42; </strong> </label>
-                                @error('factory_name')
+                                <label for="title">Title<strong class="text-danger"> &#42; </strong> </label>
+                                @error('title')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="factory_name"
-                                       placeholder="Factory Name" name="factory_name" value="{{old('factory_name')}}" required>
+                                <input type="text" class="form-control" id="title"
+                                       placeholder="Title" name="title" value="{{old('title')}}" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="country">Country <strong class="text-danger"> &#42; </strong> </label>
-                                @error('country')
+                                <label for="product_desc">Product Description<strong class="text-danger"> &#42; </strong> </label>
+                                @error('product_desc')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="country"
-                                       placeholder="Country" name="country" value="{{old('country')}}" required>
+                                <textarea name="product_desc" id="product_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="telephone_number">Telephone Number <strong class="text-danger"> &#42; </strong> </label>
-                                @error('telephone_number')
-                                <p class="invalid-feedback text-danger phone_err" role="alert"><strong>{{ $message }}</strong></p>
+                                <label for="uses_desc">Uses Description<strong class="text-danger"> &#42; </strong> </label>
+                                @error('uses_desc')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <p class="invalid-feedback text-danger phone_err " style="display: none" role="alert"></p>
-                                <input type="text" class="form-control" id="telephone_number"
-                                       placeholder="Telephone Number" name="telephone_number" value="{{old('telephone_number')}}" required>
+                                <textarea name="uses_desc" id="uses_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="fax_number">Fax Number <strong class="text-danger"> &#42; </strong> </label>
-                                @error('fax_number')
+                                <label for="images">Images<strong class="text-danger"> &#42; </strong> </label>
+                                @error('images')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="fax_number"
-                                       placeholder="Fax Number" name="fax_number" value="{{old('fax_number')}}" required>
+                                <input type="file" class="form-control" id="images"
+                                       placeholder="Images" name="images[]" multiple required>
                             </div>
 
                             <div class="form-group">
-                                <label for="po_box">P.O Box <strong class="text-danger"> &#42; </strong> </label>
-                                @error('po_box')
+                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
+                                @error('category')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="number" class="form-control" id="po_box"
-                                       placeholder="P.O Box" name="po_box" value="{{old('po_box')}}" required>
+                                <select name="category_id" id="category_id" class="form-control">
+                                    @foreach($category as $key)
+                                        <option value="{{$key->id}}" @if(old('category_id') == $key->id) selected @endif>{{$key->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="show">Show<strong class="text-danger"> &#42; </strong> </label>
+                                @error('show')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select name="show" id="show" class="form-control">
+                                    <option value="0" @if(old('show') == 0) selected @endif>Don`t Show</option>
+                                    <option value="1" @if(old('show') == 1) selected @endif>Show</option>
+                                </select>
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">Save {{$title}}
@@ -65,21 +76,3 @@
         </div>
     </div>
 @endsection
-
-@push('footer')
-    <script>
-        $(document).ready(function () {
-            $("#telephone_number").on('input', function () {
-                regex = /^([0-9\s\-\+\(\)]*)$/;
-                if (!$(this).val().match(regex)) {
-                    $('.phone_err').empty().append(`<strong>Please enter correct telephone number.</strong>`).show();
-                }
-                else{
-                    $('.phone_err').empty().hide();
-                }
-            })
-        })
-    </script>
-@endpush
-
-

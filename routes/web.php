@@ -43,5 +43,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
 
     Route::resource('/catalog', 'CatalogController');
 
+    Route::resource('/products', 'ProductController');
+    Route::DELETE('/products/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
+    Route::GET('/products/{id}/specification', 'ProductController@specification');
+    Route::POST('/products/{id}/specification', 'ProductController@specificationStore');
 
 });

@@ -15,7 +15,16 @@ class CreateProductSpecificationsTable extends Migration
     {
         Schema::create('product_specifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('specification_id');
+            $table->string('units');
+            $table->string('value');
+            $table->string('tolerance');
+            $table->string('method');
             $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('specification_id')->references('id')->on('specifications')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

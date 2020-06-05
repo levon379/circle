@@ -5,62 +5,54 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add New {{ $title }}</a>
 
                 {{--table--}}
                 <div class="table-responsive">
-                    <table id="datatable" class="display table table-hover table-striped" cellspacing="0"
+                    <table id="datatable" class="display table borderless" cellspacing="0"
                            width="100%">
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Show Status</th>
                             <th>Options</th>
+                            <th>Specification</th>
+                            <th>Units</th>
+                            <th>Value</th>
+                            <th>Tolerance</th>
+                            <th>Method</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data as $key=>$val)
+
+                        @foreach($specification as $key=>$val)
                             <tr>
-                                <td>{{$key + 1}}</td>
                                 <td>
-                                    <img src='{{ asset("uploads/".$val->image[0]->image)}}' alt="{{$val->title}}" class="img-responsive" width="200">
+                                    <button type="button" class="btn btn-info plus" data-toggle="modal" data-target="#modal" >+</button>
                                 </td>
-                                <td>{{$val->title}}</td>
-                                <td>{{$val->category->name}}</td>
-                                <td>{{$val->show == 1 ? "Show" : "Don`t Show"}}</td>
-                                <td>
-                                    <a href="{{$route."/".$val->id."/specification"}}" data-toggle="tooltip"
-                                       data-placement="top" title="Specification"
-                                       class="btn btn-success btn-circle tooltip-success">
-                                        <i class="fas fas fa-plus"></i>
-                                    </a>
+                                <td data-name="{{$val->name}}" data-id="{{$val->id}}">{{$val->name}}</td>
 
-                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"
-                                       data-placement="top" title="Show"
-                                       class="btn btn-warning btn-circle tooltip-warning">
-                                        <i class="fas fas fa-eye"></i>
-                                    </a>
-
-                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
-                                       data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"
-                                          method="post" id="work-for-form">
-                                        @csrf
-                                        @method("DELETE")
-                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Remove"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </a>
-                                    </form>
-                                </td>
+                                @foreach($data as $k=>$v)
+                                    @if($v->specification_id == $val->id)
+                                        <td>
+                                            @foreach(json_decode($data[$k]->units) as $u)
+                                                <strong>{{$u}}</strong> <br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach(json_decode($data[$k]->value) as $u)
+                                                    <strong>{{$u}}</strong> <br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach(json_decode($data[$k]->tolerance) as $u)
+                                                <strong>{{$u}}</strong> <br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach(json_decode($data[$k]->method) as $u)
+                                                <strong>{{$u}}</strong> <br>
+                                            @endforeach
+                                        </td>
+                                    @endif
+                                @endforeach
                             </tr>
                         @endforeach
                         </tbody>
@@ -69,20 +61,110 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalLabel"><span class="title">10</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ $route."/".$id."/specification" }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="container-fluid">
+                            <div class="row spec-form">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('header')
-    <!--This is a datatable style -->
-    <link href="{{asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}" rel="stylesheet"
-          type="text/css"/>
+    <style>
+        .form-group input{
+            width: 90%;
+            display: inline-block;
+        }
+        .borderless td, .borderless th {
+            border: none !important;
+        }
+    </style>
 @endpush
 
 @push('footer')
-    <!--Datatable js-->
-    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
-    <script>
-        $('#datatable').DataTable();
+    <script !src="">
+        $(document).ready(function () {
+            let row = 0;
+
+            $('.plus').click(function () {
+                let specification_name = $(this).closest("tr").find('td:eq(1)').data('name');
+                let specification_id = $(this).closest("tr").find('td:eq(1)').data('id');
+
+                $('.title').empty()
+                $('.title').html(specification_name)
+
+                $('.spec-form').empty();
+                $('.spec-form').append(`
+                    <input type="hidden" name="specification_id" value="${specification_id}">
+
+                    <div class="form-group units m-b-20">
+                        <input type="text" name="units[]" class="form-control m-b-20" placeholder="Units" required>
+                        <button type="button" class="btn btn-success row-add">+</button>
+                    </div>
+
+                    <div class="form-group value m-b-20">
+                        <input type="text" name="value[]" class="form-control m-b-20" placeholder="Value" required>
+                        <button type="button" class="btn btn-success row-add">+</button>
+                    </div>
+
+                    <div class="form-group tolerance m-b-20">
+                        <input type="text" name="tolerance[]" class="form-control m-b-20" placeholder="Tolerance" required>
+                        <button type="button" class="btn btn-success row-add">+</button>
+                    </div>
+
+                    <div class="form-group method m-b-20">
+                        <input type="text" name="method[]" class="form-control m-b-20" placeholder="Method" required>
+                        <button type="button" class="btn btn-success row-add">+</button>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary col-md-12">Save</button>
+                `);
+            });
+
+            $(document).on('click','.row-add', function () {
+                let elem_name = $(this).parent().find('input').attr('name');
+                let elem_placeholder = $(this).parent().find('input').attr('placeholder');
+                let parent = $(this).parent()
+
+                parent.append(`
+                    <input type="text" name="${elem_name}" class="form-control m-b-20"  data-row="${row}" placeholder="${elem_placeholder}" required>
+                    <button type="button" class="btn btn-danger row-remove" data-row="${row}">-</button>
+                `);
+                row++;
+            });
+
+            $(document).on('click','.row-remove', function () {
+                btn_row = $(this).data('row');
+                input_row = $(this).parent().find('input')
+                input_row.each((index, item)  => {
+                    if($(item).length > 0 && $(item).data('row') === btn_row){
+                        $(item).remove();
+                        $(this).remove();
+                    }
+                });
+                row--;
+            });
+
+        })
     </script>
 @endpush
 

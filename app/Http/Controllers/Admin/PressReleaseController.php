@@ -177,7 +177,7 @@ class PressReleaseController extends Controller
     public function destroy($id)
     {
         $media = Media::with('images')->where('id', $id)->first();
-
+        Storage::disk('public')->delete("$media->logo");
         if (!empty($media->images)) {
             foreach ($media->images as $key) {
                 Storage::disk('public')->delete("$key->image");

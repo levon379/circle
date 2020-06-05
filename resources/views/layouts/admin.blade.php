@@ -83,7 +83,7 @@
 
                 <li class="devider"></li>
 
-                <li><a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                         <span class="hide-menu">Products</span></a>
                 </li>
 
