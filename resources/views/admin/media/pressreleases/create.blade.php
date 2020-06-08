@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="logo">Upload Logo <strong class="text-danger"> &#42; </strong></label>
+                                <label for="logo">Upload Thumbnail <strong class="text-danger"> &#42; </strong></label>
                                 @error('logo')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror

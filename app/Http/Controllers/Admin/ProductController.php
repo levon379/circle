@@ -7,9 +7,13 @@ use App\Admin\Product;
 use App\Admin\ProductImage;
 use App\Admin\ProductSpecification;
 use App\Admin\Specification;
+use App\Admin\SpecificationType;
 use App\helpers\FileUploadHelper;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,9 +63,10 @@ class ProductController extends Controller
             "category_id" => "required|numeric",
             "show" => "required|numeric",
             "images" => "required|array|max:5",
+            "thumbnail" => "image|max:5000",
         ]);
 
-
+        $logo = Storage::disk('public')->putFile('product/', new File($request->thumbnail));
         $image = FileUploadHelper::upload($request->images, ['*'], "/product");
 
         DB::beginTransaction();
@@ -71,6 +76,7 @@ class ProductController extends Controller
         $product->product_desc = $request->product_desc;
         $product->uses_desc = $request->uses_desc;
         $product->category_id = $request->category_id;
+        $product->logo = $logo;
         $product->show = $request->show;
         $product->save();
 
@@ -124,7 +130,9 @@ class ProductController extends Controller
             "category_id" => "required|numeric",
             "show" => "required|numeric",
             "images" => "array|max:5",
+            "thumbnail" => "image|max:5000",
         ]);
+
 
 
         DB::beginTransaction();
@@ -134,6 +142,13 @@ class ProductController extends Controller
         $product->uses_desc = $request->uses_desc;
         $product->category_id = $request->category_id;
         $product->show = $request->show;
+
+        if ($request->thumbnail) {
+            Storage::disk('public')->delete( "$request->thumbnail");
+            $logo = Storage::disk('public')->putFile('product/', new File($request->thumbnail));
+            $product->logo = $logo;
+        }
+
         $product->save();
 
         if ($request->image) {
@@ -158,6 +173,7 @@ class ProductController extends Controller
                 Storage::disk('public')->delete("$key->image");
             }
         }
+        Storage::disk('public')->delete("$product->logo");
         Product::destroy($product->id);
         return redirect(self::ROUTE);
     }
@@ -181,31 +197,76 @@ class ProductController extends Controller
      */
     public function specification($id)
     {
-        $data = ProductSpecification::where('product_id', $id)->get();
+        $data = ProductSpecification::with('type')->where('product_id', $id)->get();
         $specification = Specification::all();
+        $type = SpecificationType::all();
         $title = 'Product Specification';
         $route = self::ROUTE;
-        return view(self::FOLDER . '.specification', compact('data', 'id','specification', 'title', 'route'));
+        return view(self::FOLDER . '.specification', compact('data', 'id','specification', 'type', 'title', 'route'));
     }
 
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function specificationStore(Request $request, $id)
     {
-        $units = json_encode((array)array_filter($request->units, 'strlen'));
-        $value = json_encode((array)array_filter($request->value, 'strlen'));
-        $tolerance = json_encode((array)array_filter($request->tolerance, 'strlen'));
-        $method = json_encode((array)array_filter($request->method, 'strlen'));
+        $arr = array();
+        $count = 0;
 
-        $specification = new ProductSpecification;
-        $specification->units = $units;
-        $specification->value = $value;
-        $specification->tolerance = $tolerance;
-        $specification->method = $method;
-        $specification->specification_id = $request->specification_id;
-        $specification->product_id = $id;
-        $specification->save();
+        foreach ($request->data as $key=>$val)
+        {
+            foreach ($val as $b=>$v)
+            {
+                if ($v != NULL){
+                    $arr[$count][$b]['product_id'] = $id;
+                    $arr[$count][$b]['specification_id'] = $request->specification_id;
+                    $arr[$count][$b]['type_id'] = $key;
+                    $arr[$count][$b]['name'] = $v;
+                    $arr[$count][$b]['created_at'] = Carbon::now();
+                    $arr[$count][$b]['updated_at'] = Carbon::now();
+                }
+            }
+            $count++;
+        }
+
+        foreach ($arr as $key=>$val)
+        {
+            $specification = new ProductSpecification;
+            $specification->insert($val);
+        }
 
         return redirect(self::ROUTE."/$id/specification");
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajaxDelete(Request $request)
+    {
+        ProductSpecification::destroy($request->id);
+        return response()->json(['success'=> "Your row has been deleted."],200);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajaxEdit(Request $request)
+    {
+        $row = ProductSpecification::find($request->id);
+        $row->name = $request->input;
+        $row->save();
+
+        return response()->json(["success"=> "Your row has been changed.", 'name'=> $row->name, 'id' => $row->id],200);
+    }
+
+    public function ajaxGet(Request $request)
+    {
+        $row = ProductSpecification::find($request->id);
+        return response()->json(['name'=> $row->name, 'id' => $row->id],200);
+    }
 
 }

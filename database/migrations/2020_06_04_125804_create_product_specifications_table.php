@@ -17,14 +17,13 @@ class CreateProductSpecificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('specification_id');
-            $table->string('units');
-            $table->string('value');
-            $table->string('tolerance');
-            $table->string('method');
+            $table->unsignedBigInteger('type_id');
+            $table->string('name', 191);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('specification_id')->references('id')->on('specifications')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('type_id')->references('id')->on('specification_types')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

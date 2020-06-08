@@ -41,6 +41,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="thumbnail">Thumbnail<strong class="text-danger"> &#42; </strong> </label>
+                                @error('thumbnail')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="file" class="form-control dropify" id="thumbnail"
+                                       placeholder="thumbnail" name="thumbnail" data-default-file='{{asset("uploads/$data->logo")}}'>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="images">Images<strong class="text-danger"> &#42; </strong> </label>
                                 @error('images')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
@@ -138,11 +147,18 @@
     <!--This is a datatable style -->
     <link href="{{asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}" rel="stylesheet"
           type="text/css"/>
+
+    <!-- Dropify plugins css -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/dropify/dist/css/dropify.min.css')}}">
+    <!-- jQuery file upload -->
+    <script src="{{asset('assets/plugins/dropify/dist/js/dropify.min.js')}}"></script>
 @endpush
 
 @push('footer')
     <!--Datatable js-->
     <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
+    <script>
+        $('.dropify').dropify();
+    </script>
 @endpush
-

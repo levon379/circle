@@ -36,6 +36,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="thumbnail">Thumbnail<strong class="text-danger"> &#42; </strong> </label>
+                                @error('thumbnail')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="file" class="form-control dropify" id="thumbnail"
+                                       placeholder="thumbnail" name="thumbnail" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="images">Images<strong class="text-danger"> &#42; </strong> </label>
                                 @error('images')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
@@ -76,3 +85,16 @@
         </div>
     </div>
 @endsection
+
+@push('header')
+    <!-- Dropify plugins css -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/dropify/dist/css/dropify.min.css')}}">
+    <!-- jQuery file upload -->
+    <script src="{{asset('assets/plugins/dropify/dist/js/dropify.min.js')}}"></script>
+@endpush
+
+@push('footer')
+    <script>
+        $('.dropify').dropify();
+    </script>
+@endpush

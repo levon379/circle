@@ -14,7 +14,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
+                            <th>Thumbnail</th>
                             <th>Title</th>
                             <th>Date</th>
                             <th>Options</th>

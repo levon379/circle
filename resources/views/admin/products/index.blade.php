@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>
-                                    <img src='{{ asset("uploads/".$val->image[0]->image)}}' alt="{{$val->title}}" class="img-responsive" width="200">
+                                    <img src='{{ asset("uploads/".$val->logo)}}' alt="{{$val->title}}" class="img-responsive" width="200">
                                 </td>
                                 <td>{{$val->title}}</td>
                                 <td>{{$val->category->name}}</td>

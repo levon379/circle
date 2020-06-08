@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('title', 191);
             $table->text('product_desc');
             $table->text('uses_desc');
+            $table->string('logo');
             $table->tinyInteger('show')->default(0);
             $table->timestamps();
 

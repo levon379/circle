@@ -29,23 +29,28 @@ Auth::routes([
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');
 
-    Route::resource('/newsletters', 'NewsletterController');
-    Route::DELETE('/newsletters/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
-
-    Route::resource('/press-releases', 'PressReleaseController');
-    Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
-
     Route::resource('/contact-us', 'ContactUsController');
-
     Route::resource('/social', 'SocialController');
-
     Route::resource('/vacancies', 'VacancyController');
-
     Route::resource('/catalog', 'CatalogController');
 
-    Route::resource('/products', 'ProductController');
-    Route::DELETE('/products/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
-    Route::GET('/products/{id}/specification', 'ProductController@specification');
-    Route::POST('/products/{id}/specification', 'ProductController@specificationStore');
+    Route::prefix('newsletters')->group(function () {
+        Route::resource('/', 'NewsletterController');
+        Route::DELETE('/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+    });
 
+    Route::prefix('press-releases')->group(function () {
+        Route::resource('/', 'PressReleaseController');
+        Route::DELETE('/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+    });
+
+    Route::prefix('products')->group(function () {
+        Route::resource('/', 'ProductController');
+        Route::DELETE('/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
+        Route::GET('/{id}/specification', 'ProductController@specification');
+        Route::POST('/{id}/specification', 'ProductController@specificationStore');
+        Route::POST('/ajax-delete', 'ProductController@ajaxDelete');
+        Route::POST('/ajax-edit', 'ProductController@ajaxEdit');
+        Route::POST('/ajax-get', 'ProductController@ajaxGet');
+    });
 });
