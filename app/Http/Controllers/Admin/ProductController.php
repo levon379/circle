@@ -279,7 +279,7 @@ class ProductController extends Controller
     {
         $data = array();
         foreach (ProductFeatur::where('product_id', $id)->get() as $key) {
-            $data[] = $key->featured_id;
+            $data[] = intval($key->featured_id);
         }
         $data = json_encode($data);
         $products = Product::all();
