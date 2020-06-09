@@ -43,10 +43,10 @@
     <script !src="">
         $(document).ready(function () {
             let json = '{{$data}}';
-            let selected = JSON.parse(json);
+            // let selected = JSON.parse(json);
 
-            $("#featured").select2()
-            $('#featured').val(selected).trigger('change');
+            $("#featured").select2();
+            $('#featured').val(json).trigger('change');
         })
     </script>
 @endpush
