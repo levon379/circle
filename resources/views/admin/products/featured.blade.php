@@ -43,7 +43,12 @@
     <script !src="">
         $(document).ready(function () {
             let json = '{{$data}}';
-            // let selected = JSON.parse(json);
+
+            console.log(json)
+
+            let selected = JSON.parse(json);
+
+            console.log(selected)
 
             $("#featured").select2();
             $('#featured').val(json).trigger('change');
