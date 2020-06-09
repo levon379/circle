@@ -18,7 +18,7 @@
                                 <select name="featured[]" multiple id="featured" class="form-control">
                                     @foreach($products as $key=>$val)
                                         @if($val->id != $data->id)
-                                            <option value="{{$val->id}}" @if($data->featured->containsStrict('featured_id', $val->id)) selected="selected" @endif>
+                                            <option value="{{$val->id}}" @if($data->featured->containsStrict('featured_id', $val->id)) selected @endif>
                                                 {{$val->title}}
                                             </option>
                                         @endif
