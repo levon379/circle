@@ -281,6 +281,9 @@ class ProductController extends Controller
         foreach (ProductFeatur::where('product_id', $id)->get() as $key) {
             $data[] = $key->featured_id;
         }
+
+        dd($data);
+
         $data = json_encode($data);
         $products = Product::all();
         $title = 'Featured Product';
