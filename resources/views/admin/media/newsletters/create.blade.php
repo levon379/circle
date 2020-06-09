@@ -155,24 +155,32 @@
         $('.btn-success').on('click', function (e) {
             e.preventDefault();
             let form = $(this).parents('form');
-            let bool = true;
+            let bool_image = true;
+            let bool_pdf = true;
+            let text = '';
 
             $(".image").each(function (index, item) {
                 if($(item).val() === ''){
-                    bool = false;
+                    bool_image = false;
+                    text = 'Image';
                 }
             });
             $(".pdf").each(function (index, item) {
                 if($(item).val() === ''){
-                    bool = false;
+                    bool_pdf = false;
+                    text = 'PDF';
                 }
             });
 
-            if(bool === false){
+            if(bool_image === false && bool_pdf === false){
+                text = 'Pdf and Image';
+            }
+
+            if(bool_image === false || bool_pdf === false){
                 swal({
                     icon: 'warning',
                     title: "Are you sure?",
-                    text: "You want to continue without adding pdf or image!",
+                    text: `You want to continue without adding ${text}!`,
                     buttons: {
                         cancel: 'No, cancel it!',
                         confirm: 'Yes, I am sure!',
