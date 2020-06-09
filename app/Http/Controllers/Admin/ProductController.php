@@ -277,11 +277,15 @@ class ProductController extends Controller
      */
     public function featured($id)
     {
-        $data = Product::with('featured')->where('id', $id)->first();
+        $data = array();
+        foreach (ProductFeatur::where('product_id', $id)->get() as $key) {
+            $data[] = $key->featured_id;
+        }
+        $data = json_encode($data);
         $products = Product::all();
         $title = 'Featured Product';
         $route = self::ROUTE;
-        return view(self::FOLDER . '.featured', compact('data', 'products', 'title', 'route'));
+        return view(self::FOLDER . '.featured', compact('data', 'id', 'products', 'title', 'route'));
     }
 
     /**
@@ -296,8 +300,7 @@ class ProductController extends Controller
         ]);
 
         $arr = array();
-        foreach ($request->featured as $key=>$val)
-        {
+        foreach ($request->featured as $key => $val) {
             $arr[$key]['product_id'] = $id;
             $arr[$key]['featured_id'] = $val;
             $arr[$key]['created_at'] = Carbon::now();

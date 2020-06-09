@@ -7,7 +7,7 @@
                 <div class="panel-heading">{{$title}}</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        <form method="post" action="{{ $route."/".$data->id . "/featured-store"}}" enctype="multipart/form-data">
+                        <form method="post" action="{{ $route."/". $id . "/featured-store"}}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -17,10 +17,8 @@
                                 @enderror
                                 <select name="featured[]" multiple id="featured" class="form-control">
                                     @foreach($products as $key=>$val)
-                                        @if($val->id != $data->id)
-                                            <option value="{{$val->id}}" @if($data->featured->containsStrict('featured_id', $val->id)) selected @endif>
-                                                {{$val->title}}
-                                            </option>
+                                        @if($val->id != $id)
+                                            <option value="{{$val->id}}">{{$val->title}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -44,7 +42,11 @@
     <script src="{{asset('assets/plugins/select2/dist/js/select2.js')}}"></script>
     <script !src="">
         $(document).ready(function () {
+            let json = '{{$data}}';
+            let selected = JSON.parse(json);
+
             $("#featured").select2()
+            $('#featured').val(selected).trigger('change');
         })
     </script>
 @endpush
