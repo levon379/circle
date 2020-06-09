@@ -34,15 +34,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/vacancies', 'VacancyController');
     Route::resource('/catalog', 'CatalogController');
 
-    Route::prefix('newsletters')->group(function () {
-        Route::resource('/', 'NewsletterController');
-        Route::DELETE('/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
-    });
+    Route::resource('/newsletters', 'NewsletterController');
+    Route::DELETE('/newsletters/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
 
-    Route::prefix('press-releases')->group(function () {
-        Route::resource('/', 'PressReleaseController');
-        Route::DELETE('/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
-    });
+    Route::resource('/press-releases', 'PressReleaseController');
+    Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
 
     Route::prefix('products')->group(function () {
         Route::resource('/', 'ProductController');

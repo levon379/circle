@@ -105,8 +105,16 @@
                                 @foreach($data->images as $key=>$val)
                                     <tr>
                                         <td>{{$key + 1}}</td>
-                                        <td><img src="{{ asset("/uploads/".$val->image)}}" class="img-responsive" width="200"></td>
-                                        <td><a href="{{asset("uploads/$val->pdf")}}">PDF</a></td>
+                                        <td>
+                                            @if($val->image != null)
+                                                <img src="{{ asset("/uploads/".$val->image)}}" class="img-responsive" width="200">
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($val->pdf != null)
+                                                <a href="{{asset("uploads/$val->pdf")}}">PDF</a>
+                                            @endif
+                                        </td>
                                         <td>
 
                                             <form style="display: inline-block" action="{{ $route."/".$data->id."/destroy-image/".$val->id }}"

@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="thumbnail">Thumbnail<strong class="text-danger"> &#42; </strong> </label>
+                                <label for="thumbnail">Main Image<strong class="text-danger"> &#42; </strong> </label>
                                 @error('thumbnail')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror

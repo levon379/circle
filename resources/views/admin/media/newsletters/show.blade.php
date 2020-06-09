@@ -29,11 +29,13 @@
                             <h3 class="box-title m-t-40">Images</h3>
                             <div class="gallery">
                                 @foreach($data->images as $key)
-                                    <a href="{{asset("uploads/$key->image")}}">
-                                        <img src="{{asset("uploads/$key->image")}}"
-                                             class="card img-responsive m-l-15 img-thumbnail"
-                                             style="display: inline-block; width: 200px; height: 200px;"/>
-                                    </a>
+                                    @if($key->image != null)
+                                        <a href="{{asset("uploads/$key->image")}}">
+                                            <img src="{{asset("uploads/$key->image")}}"
+                                                 class="card img-responsive m-l-15 img-thumbnail"
+                                                 style="display: inline-block; width: 200px; height: 200px;"/>
+                                        </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -42,10 +44,12 @@
                             <h3 class="box-title m-t-40">PDF Files</h3>
                             <div class="pdf">
                                 @foreach($data->images as $key=>$val)
-                                    <a href="{{asset("uploads/$val->pdf")}}" target="_blank">
-                                        PDF_{{$key}}
-                                    </a>
-                                    <br>
+                                    @if($val->pdf != null)
+                                        <a href="{{asset("uploads/$val->pdf")}}" target="_blank">
+                                            PDF_{{$key}}
+                                        </a>
+                                        <br>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>

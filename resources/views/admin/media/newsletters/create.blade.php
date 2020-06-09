@@ -45,17 +45,31 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="logo">Upload Images and PDF <strong class="text-danger"> &#42; </strong></label>
+                                <label for="logo">Upload Images and PDF </label>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dynamic_field">
                                         <tr>
                                             <td>
                                                 <div class="col-xs-6">
-                                                    <input type="file" name="images[]" class="form-control input-md input_open"/>
+                                                    <b>Image</b>
                                                 </div>
 
                                                 <div class="col-xs-6">
-                                                    <input type="file" name="pdf[]" class="form-control input_close"/>
+                                                    <b>Pdf</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <b>Options</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="col-xs-6">
+                                                    <input type="file" name="images[]" class="form-control input-md input_open image"/>
+                                                </div>
+
+                                                <div class="col-xs-6">
+                                                    <input type="file" name="pdf[]" class="form-control input_close pdf"/>
                                                 </div>
                                             </td>
 
@@ -87,9 +101,22 @@
     <link href="{{asset('assets/plugins/datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Date Picker Plugin JavaScript -->
     <script src="{{asset('assets/plugins/datepicker/bootstrap-datepicker.min.js')}}"></script>
+
+    <style>
+        .swal-button--confirm, .swal-button--confirm:hover {
+            background-color: green !important;
+            color: white;
+        }
+
+        .swal-button--cancel, .swal-button--cancel:hover {
+            background-color: red !important;
+            color: white;
+        }
+    </style>
 @endpush
 
 @push('footer')
+    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
     <script>
         $('.dropify').dropify();
 
@@ -107,11 +134,11 @@
                     $('#dynamic_field').append(`<tr id="row${i}">
 			            <td>
                             <div class="col-xs-6">
-                                <input type="file" name="images[]" class="form-control input-md input_open"/>
+                                <input type="file" name="images[]" class="form-control input-md input_open image"/>
                             </div>
 
                             <div class="col-xs-6">
-                                <input type="file" name="pdf[]" class="form-control input_close"/>
+                                <input type="file" name="pdf[]" class="form-control input_close pdf"/>
                             </div>
                         </td>
 			            <td align="center"><button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove"><i class="fas fa-minus"></i></button></td>
@@ -123,6 +150,39 @@
                 var button_id = $(this).attr("id");
                 $('#row' + button_id + '').remove();
             });
+        });
+
+        $('.btn-success').on('click', function (e) {
+            e.preventDefault();
+            let form = $(this).parents('form');
+            let bool = true;
+
+            $(".image").each(function (index, item) {
+                if($(item).val() === ''){
+                    bool = false;
+                }
+            });
+            $(".pdf").each(function (index, item) {
+                if($(item).val() === ''){
+                    bool = false;
+                }
+            });
+
+            if(bool === false){
+                swal({
+                    icon: 'warning',
+                    title: "Are you sure?",
+                    text: "You want to continue without adding pdf or image!",
+                    buttons: {
+                        cancel: 'No, cancel it!',
+                        confirm: 'Yes, I am sure!',
+                    },
+                }).then((isConfirm) => {
+                    if (isConfirm) form.submit();
+                });
+            }else{
+                form.submit()
+            }
         });
     </script>
 @endpush
