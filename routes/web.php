@@ -48,5 +48,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::POST('/ajax-delete', 'ProductController@ajaxDelete');
         Route::POST('/ajax-edit', 'ProductController@ajaxEdit');
         Route::POST('/ajax-get', 'ProductController@ajaxGet');
+        Route::GET('/{id}/featured', 'ProductController@featured');
+        Route::POST('/{id}/featured-store', 'ProductController@featuredStore');
     });
+
 });

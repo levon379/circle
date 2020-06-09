@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Category;
 use App\Admin\Product;
+use App\Admin\ProductFeatur;
 use App\Admin\ProductImage;
 use App\Admin\ProductSpecification;
 use App\Admin\Specification;
@@ -134,7 +135,6 @@ class ProductController extends Controller
         ]);
 
 
-
         DB::beginTransaction();
 
         $product->title = $request->title;
@@ -144,7 +144,7 @@ class ProductController extends Controller
         $product->show = $request->show;
 
         if ($request->thumbnail) {
-            Storage::disk('public')->delete( "$request->thumbnail");
+            Storage::disk('public')->delete("$request->thumbnail");
             $logo = Storage::disk('public')->putFile('product/', new File($request->thumbnail));
             $product->logo = $logo;
         }
@@ -191,6 +191,9 @@ class ProductController extends Controller
         return redirect(self::ROUTE . '/' . $product_id . '/edit');
     }
 
+
+//    PRODUCT SPECIFICATION PART
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -202,7 +205,7 @@ class ProductController extends Controller
         $type = SpecificationType::all();
         $title = 'Product Specification';
         $route = self::ROUTE;
-        return view(self::FOLDER . '.specification', compact('data', 'id','specification', 'type', 'title', 'route'));
+        return view(self::FOLDER . '.specification', compact('data', 'id', 'specification', 'type', 'title', 'route'));
     }
 
     /**
@@ -215,11 +218,9 @@ class ProductController extends Controller
         $arr = array();
         $count = 0;
 
-        foreach ($request->data as $key=>$val)
-        {
-            foreach ($val as $b=>$v)
-            {
-                if ($v != NULL){
+        foreach ($request->data as $key => $val) {
+            foreach ($val as $b => $v) {
+                if ($v != NULL) {
                     $arr[$count][$b]['product_id'] = $id;
                     $arr[$count][$b]['specification_id'] = $request->specification_id;
                     $arr[$count][$b]['type_id'] = $key;
@@ -231,13 +232,12 @@ class ProductController extends Controller
             $count++;
         }
 
-        foreach ($arr as $key=>$val)
-        {
+        foreach ($arr as $key => $val) {
             $specification = new ProductSpecification;
             $specification->insert($val);
         }
 
-        return redirect(self::ROUTE."/$id/specification");
+        return redirect(self::ROUTE . "/$id/specification");
     }
 
     /**
@@ -247,7 +247,7 @@ class ProductController extends Controller
     public function ajaxDelete(Request $request)
     {
         ProductSpecification::destroy($request->id);
-        return response()->json(['success'=> "Your row has been deleted."],200);
+        return response()->json(['success' => "Your row has been deleted."], 200);
     }
 
     /**
@@ -260,13 +260,53 @@ class ProductController extends Controller
         $row->name = $request->input;
         $row->save();
 
-        return response()->json(["success"=> "Your row has been changed.", 'name'=> $row->name, 'id' => $row->id],200);
+        return response()->json(["success" => "Your row has been changed.", 'name' => $row->name, 'id' => $row->id], 200);
     }
 
     public function ajaxGet(Request $request)
     {
         $row = ProductSpecification::find($request->id);
-        return response()->json(['name'=> $row->name, 'id' => $row->id],200);
+        return response()->json(['name' => $row->name, 'id' => $row->id], 200);
     }
 
+//    FEATURED PRODUCT PART
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function featured($id)
+    {
+        $data = Product::with('featured')->where('id', $id)->first();
+        $products = Product::all();
+        $title = 'Featured Product';
+        $route = self::ROUTE;
+        return view(self::FOLDER . '.featured', compact('data', 'products', 'title', 'route'));
+    }
+
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function featuredStore(Request $request, $id)
+    {
+        $request->validate([
+            'featured' => 'required|array|max:5',
+        ]);
+
+        $arr = array();
+        foreach ($request->featured as $key=>$val)
+        {
+            $arr[$key]['product_id'] = $id;
+            $arr[$key]['featured_id'] = $val;
+            $arr[$key]['created_at'] = Carbon::now();
+            $arr[$key]['updated_at'] = Carbon::now();
+        }
+
+        ProductFeatur::where('product_id', $id)->delete();
+        $featured = new ProductFeatur;
+        $featured->insert($arr);
+        return redirect(self::ROUTE);
+    }
 }

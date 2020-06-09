@@ -38,6 +38,12 @@
                                         <i class="fas fas fa-plus"></i>
                                     </a>
 
+                                    <a href="{{$route."/".$val->id."/featured"}}" data-toggle="tooltip"
+                                       data-placement="top" title="Featured Product"
+                                       class="btn btn-primary btn-circle tooltip-primary">
+                                        <i class="fas fa-toggle-on"></i>
+                                    </a>
+
                                     <a href="{{$route."/".$val->id}}" data-toggle="tooltip"
                                        data-placement="top" title="Show"
                                        class="btn btn-warning btn-circle tooltip-warning">

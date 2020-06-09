@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Admin\ProductSpecification', "specification_id", "id");
     }
+
+    public function featured()
+    {
+        return $this->hasMany('App\Admin\ProductFeatur', "product_id", "id");
+    }
 }
