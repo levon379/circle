@@ -90,25 +90,8 @@
                 <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
                         <span class="hide-menu">Product Catalogue</span></a>
                 </li>
-
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
-                        <span class="hide-menu">Media Center<span class="fa arrow"></span>
-                        </span>
-                    </a>
-                    <ul class="nav nav-second-level collapse">
-                        <li>
-                            <a href="/admin/press-releases"> <i class="mdi mdi-book-plus fa-fw"></i>
-                                <span class="hide-menu">Press Releases</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/admin/newsletters"> <i class="mdi mdi-newspaper fa-fw"></i>
-                                <span class="hide-menu">Newsletters</span>
-                            </a>
-                        </li>
-                    </ul>
+                <li><a href="/admin/media-center" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                        <span class="hide-menu">Media Center</span></a>
                 </li>
 
                 <li><a href="/admin/social" class="waves-effect"><i class="mdi mdi-link-variant fa-fw"></i>
@@ -117,6 +100,10 @@
 
                 <li><a href="/admin/vacancies" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
                         <span class="hide-menu">Vacancies</span></a>
+                </li>
+
+                <li><a href="/admin/subscriber" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
+                        <span class="hide-menu">Subscriber</span></a>
                 </li>
 
                 <li><a href="/admin/contact-us" class="waves-effect"><i class="mdi mdi-phone fa-fw"></i>

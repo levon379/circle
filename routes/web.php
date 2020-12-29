@@ -30,15 +30,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/', 'AdminController');
 
     Route::resource('/contact-us', 'ContactUsController');
+    Route::get('/subscriber', 'SubscriberController@index');
+    Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
     Route::resource('/social', 'SocialController');
     Route::resource('/vacancies', 'VacancyController');
     Route::resource('/catalog', 'CatalogController');
 
-    Route::resource('/newsletters', 'NewsletterController');
-    Route::DELETE('/newsletters/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+    Route::resource('/media-center', 'MediaCenterController');
+    Route::DELETE('/media-center/{media_id}/destroy-image/{image_id}', 'MediaCenterController@destroyImage');
 
-    Route::resource('/press-releases', 'PressReleaseController');
-    Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
+    //Route::resource('/press-releases', 'PressReleaseController');
+    //Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
 
     Route::prefix('products')->group(function () {
         Route::resource('/', 'ProductController');
