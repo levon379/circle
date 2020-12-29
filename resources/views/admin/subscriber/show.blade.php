@@ -48,18 +48,6 @@
 @endsection
 
 
-@push('header')
-    <link rel="stylesheet" href="{{ asset("assets/plugins/dbLightbox/dist/simpleLightbox.min.css") }}">
-@endpush
-
-@push('footer')
-    <script src="{{ asset("assets/plugins/dbLightbox/dist/simpleLightbox.js") }}"></script>
-    <script !src="">
-        $('.gallery a').simpleLightbox();
-    </script>
-@endpush
-
-
 
 
 

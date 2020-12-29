@@ -32,6 +32,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/contact-us', 'ContactUsController');
     Route::get('/subscriber', 'SubscriberController@index');
     Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
+
+    Route::get('/job-application', 'JobApplicationController@index');
+    Route::get('/job-application/show/{id}', 'JobApplicationController@show');
+    Route::DELETE('/job-application/{id}', 'JobApplicationController@destroy');
+
     Route::resource('/social', 'SocialController');
     Route::resource('/vacancies', 'VacancyController');
     Route::resource('/catalog', 'CatalogController');

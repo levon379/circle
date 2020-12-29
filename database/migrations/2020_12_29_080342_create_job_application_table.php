@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContactFormTable extends Migration
+class CreateJobApplicationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContactFormTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact_form', function (Blueprint $table) {
+        Schema::create('job_application', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('job_title')->nullable();
@@ -34,6 +34,6 @@ class CreateContactFormTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contact_form');
+        Schema::dropIfExists('job_application');
     }
 }

@@ -102,7 +102,11 @@
                         <span class="hide-menu">Vacancies</span></a>
                 </li>
 
-                <li><a href="/admin/subscriber" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
+                <li><a href="/admin/job-application" class="waves-effect"><i class="mdi mdi-account-alert fa-fw"></i>
+                        <span class="hide-menu">Job Application</span></a>
+                </li>
+
+                <li><a href="/admin/subscriber" class="waves-effect"><i class="mdi mdi-account-multiple fa-fw"></i>
                         <span class="hide-menu">Subscriber</span></a>
                 </li>
 
