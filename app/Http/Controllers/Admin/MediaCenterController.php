@@ -11,12 +11,12 @@ use App\Admin\Media;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class NewsletterController extends Controller
+class MediaCenterController extends Controller
 {
 
-    const FOLDER = "admin.media.newsletters";
-    const TITLE = "Newsletter";
-    const ROUTE = "/admin/newsletters";
+    const FOLDER = "admin.mediacenter";
+    const TITLE = "Media Center";
+    const ROUTE = "/admin/media-center";
 
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class NewsletterController extends Controller
      */
     public function index()
     {
-        $data = Media::where('type', Media::TYPE['newsletter'])->get();
+        $data = Media::all();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -85,7 +85,7 @@ class NewsletterController extends Controller
         $media->title = $request->title;
         $media->description = $request->description;
         $media->date = $request->date;
-        $media->type = Media::TYPE['newsletter'];
+        //$media->type = Media::TYPE['newsletter'];
         $media->logo = $logo;
         $media->save();
 
@@ -146,7 +146,7 @@ class NewsletterController extends Controller
         $media->title = $request->title;
         $media->description = $request->description;
         $media->date = $request->date;
-        $media->type = Media::TYPE['newsletter'];
+        //$media->type = Media::TYPE['newsletter'];
 
         if ($request->logo) {
             Storage::disk('public')->delete($media->logo);
