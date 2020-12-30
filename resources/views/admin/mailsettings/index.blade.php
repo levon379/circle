@@ -12,8 +12,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Subject</th>
                             <th>Type</th>
+                            <th>Subject</th>
                             <th>Message</th>
                             <th>Options</th>
                         </tr>
