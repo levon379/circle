@@ -83,13 +83,24 @@
 
                 <li class="devider"></li>
 
-                <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
-                        <span class="hide-menu">Products</span></a>
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                        <span class="hide-menu">Product Managment<span class="fa arrow"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Products</span></a>
+                        </li>
+                        <li><a href="/admin/categories" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Category</span></a>
+                        </li>
+                        <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">Product Catalogue</span></a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
-                        <span class="hide-menu">Product Catalogue</span></a>
-                </li>
                 <li><a href="/admin/media-center" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
                         <span class="hide-menu">Media Center</span></a>
                 </li>
