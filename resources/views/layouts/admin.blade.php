@@ -125,6 +125,10 @@
                         <span class="hide-menu">Contact Us</span></a>
                 </li>
 
+                <li><a href="/admin/mail-settings" class="waves-effect"><i class="mdi mdi-mailbox fa-fw"></i>
+                        <span class="hide-menu">Mail Settings</span></a>
+                </li>
+
             </ul>
         </div>
     </div>

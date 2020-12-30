@@ -30,6 +30,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/', 'AdminController');
 
     Route::resource('/contact-us', 'ContactUsController');
+    Route::resource('/mail-settings', 'MailSettingsController');
     Route::get('/subscriber', 'SubscriberController@index');
     Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
 

@@ -27,6 +27,11 @@ class RestController extends Controller
             $data = $request->all();
             $subscriber = Subscriber::create($data);
             if($subscriber) {
+                $subscriber = Subscriber::where('status',0)->pluck('email');
+                $mail = array('subject' => $request->subject, 'message' => $request->message);
+
+                Subscribe::dispatch($subscriber, $mail);
+
                 $mail = array('subject' => "TEST Subject", 'message' => "Test Message");
                 Subscribe::dispatch($subscriber, $mail);
             }
