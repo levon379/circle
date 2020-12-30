@@ -15,8 +15,8 @@ class MailSettingsController extends Controller
 {
 
     const FOLDER = "admin.mailsettings";
-    const TITLE = "Media Settings";
-    const ROUTE = "/admin/media-settings";
+    const TITLE = "Mail Settings";
+    const ROUTE = "/admin/mail-settings";
 
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class MailSettingsController extends Controller
      */
     public function index()
     {
-        $data = Media::all();
+        $data = MailContent::all();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -50,46 +50,17 @@ class MailSettingsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'date' => 'required',
-            'logo' => 'required|image|max:2048',
-            'images' => 'array|max:5',
-            'pdf' => 'array|max:5'
+            'subject' => 'required',
+            'message' => 'required'
         ]);
-
-        $logo = Storage::disk('public')->putFile('media/', new File($request->logo));
-
-        $arr = array();
-        if (!empty($request->images)) {
-            foreach ($request->images as $key => $val) {
-                if ($val != null) {
-                    $image = Storage::disk('public')->putFile('media/', new File($val));
-                    $arr[$key]['image'] = $image;
-                }
-            }
-        }
-
-        if (!empty($request->pdf)) {
-            foreach ($request->pdf as $key => $val) {
-                if ($val != null){
-                    $file = Storage::disk('public')->putFile('media/', new File($val));
-                    $arr[$key]['pdf'] = $file;
-                }
-            }
-        }
 
         DB::beginTransaction();
 
-        $media = new Media;
-        $media->title = $request->title;
-        $media->description = $request->description;
-        $media->date = $request->date;
-        //$media->type = Media::TYPE['newsletter'];
-        $media->logo = $logo;
+        $media = new MailContent;
+        $media->subject = $request->subject;
+        $media->message = $request->message;
+        $media->type = $request->type;
         $media->save();
-
-        $media->images()->createMany($arr);
         DB::commit();
 
         return redirect(self::ROUTE);
@@ -102,7 +73,7 @@ class MailSettingsController extends Controller
      */
     public function show($id)
     {
-        $data = Media::find($id);
+        $data = MailContent::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Show";
@@ -116,7 +87,7 @@ class MailSettingsController extends Controller
      */
     public function edit($id)
     {
-        $data = Media::with('images')->where('id', $id)->first();
+        $data = MailContent::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Edit";
@@ -132,40 +103,18 @@ class MailSettingsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'date' => 'required',
-            'logo' => 'max:2048',
-            'images' => 'array|max:5',
-            'pdf' => 'array|max:5'
+            'subject' => 'required',
+            'message' => 'required'
         ]);
 
         DB::beginTransaction();
 
-        $media = Media::find($id);
-        $media->title = $request->title;
-        $media->description = $request->description;
-        $media->date = $request->date;
-        //$media->type = Media::TYPE['newsletter'];
+        $data = MailContent::find($id);
+        $data->subject = $request->subject;
+        $data->message = $request->message;
+        $data->type = $request->type;
+        $data->save();
 
-        if ($request->logo) {
-            Storage::disk('public')->delete($media->logo);
-            $logo = Storage::disk('public')->putFile('media/', new File($request->logo));
-            $media->logo = $logo;
-        }
-
-        $media->save();
-
-        $arr = array();
-        if (!empty($request->images) AND !empty($request->pdf)) {
-            foreach ($request->images as $key => $val) {
-                $image = Storage::disk('public')->putFile('media/', new File($val));
-                $file = Storage::disk('public')->putFile('media/', new File($request->pdf[$key]));
-                $arr[$key]['image'] = $image;
-                $arr[$key]['pdf'] = $file;
-            }
-            $media->images()->createMany($arr);
-        }
         DB::commit();
 
         return redirect(self::ROUTE);
@@ -178,30 +127,7 @@ class MailSettingsController extends Controller
      */
     public function destroy($id)
     {
-        $media = Media::with('images')->where('id', $id)->first();
-        Storage::disk('public')->delete("$media->logo");
-        if (!empty($media->images)) {
-            foreach ($media->images as $key) {
-                Storage::disk('public')->delete("$key->image");
-                Storage::disk('public')->delete("$key->pdf");
-            }
-        }
-        Media::destroy($media->id);
-
+        MailContent::destroy($id);
         return redirect(self::ROUTE);
-    }
-
-    /**
-     * @param $media_id
-     * @param $image_id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroyImage($media_id, $image_id)
-    {
-        $media_image = MediaImage::find($image_id);
-        Storage::disk('public')->delete("$media_image->image");
-        Storage::disk('public')->delete("$media_image->pdf");
-        MediaImage::destroy($media_image->id);
-        return redirect(self::ROUTE . '/' . $media_id . '/edit');
     }
 }

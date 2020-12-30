@@ -9,4 +9,9 @@ class MailContent extends Model
     protected $table = 'mail_content';
 
     protected $guarded = [];
+
+    public static $types = [
+        'subscriber' => 'Subscriber',
+        'application' => 'Applicaion'
+    ];
 }

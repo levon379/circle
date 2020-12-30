@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Admin\Subscriber;
 use App\Jobs\Subscribe;
 use App\Admin\Product;
+use App\Admin\MailContent;
 use App\Admin\JobApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -27,13 +28,12 @@ class RestController extends Controller
             $data = $request->all();
             $subscriber = Subscriber::create($data);
             if($subscriber) {
-                $subscriber = Subscriber::where('status',0)->pluck('email');
-                $mail = array('subject' => $request->subject, 'message' => $request->message);
-
-                Subscribe::dispatch($subscriber, $mail);
-
-                $mail = array('subject' => "TEST Subject", 'message' => "Test Message");
-                Subscribe::dispatch($subscriber, $mail);
+                $subscribers = Subscriber::where('status',0)->pluck('email');
+                $mailData = MailContent::where('type','subsciber')->first();
+                $mail = array('subject' => $mailData->subject, 'message' => $mailData->message);
+                Subscribe::dispatch($subscribers, $mail);
+                Subscriber::where('status', '=', 0)
+                    ->update(['status' => 1]);
             }
         } catch (\Throwable $e){
             $errorMessage = $e->getMessage();
