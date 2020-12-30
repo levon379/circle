@@ -22,4 +22,5 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::POST('/job-applicaion', 'RestController@addJobApplicaion');
     Route::POST('/subscriber', 'RestController@addSubscriber');
     Route::GET('/getAllProducts', 'RestController@getAllProducts');
+    Route::GET('/getSliderData', 'RestController@getSliders');
 });

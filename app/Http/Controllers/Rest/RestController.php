@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Admin\Subscriber;
 use App\Jobs\Subscribe;
 use App\Admin\Product;
+use App\Admin\Slider;
 use App\Admin\MailContent;
 use App\Admin\JobApplication;
 use Illuminate\Support\Facades\DB;
@@ -85,5 +86,23 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['category'=>$productsResponse,'success'=>$success,'errorMessage'=>$errorMessage]);
+    }
+
+    public function getSliders()
+    {
+        $errorMessage = "";
+        $success = true;
+        $slidersResponse = [];
+        try {
+            $sliders = Slider::all();
+            foreach($sliders as $key=>$slider) {
+                $slidersResponse[$key] = $slider;
+                $slidersResponse[$key]['image'] = asset("/uploads/".$slider->path);
+            }
+        } catch (\Throwable $e){
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['sliders'=>$slidersResponse,'success'=>$success,'errorMessage'=>$errorMessage]);
     }
 }
