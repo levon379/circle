@@ -30,6 +30,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/', 'AdminController');
 
     Route::resource('/contact-us', 'ContactUsController');
+    Route::resource('/categories', 'CategoryController');
+    Route::resource('/about-us', 'AboutUsController');
     Route::resource('/mail-settings', 'MailSettingsController');
     Route::resource('/slider', 'SliderController');
     Route::get('/subscriber', 'SubscriberController@index');

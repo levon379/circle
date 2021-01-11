@@ -110,8 +110,8 @@
                         <li><a href="/admin/slider" class="waves-effect"><i class="mdi zmdi-slideshare fa-fw"></i>
                                 <span class="hide-menu">Sliders</span></a>
                         </li>
-                        <li><a href="/admin/categories" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
-                                <span class="hide-menu">Category</span></a>
+                        <li><a href="/admin/about-us" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">About Us</span></a>
                         </li>
                         <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
                                 <span class="hide-menu">Product Catalogue</span></a>

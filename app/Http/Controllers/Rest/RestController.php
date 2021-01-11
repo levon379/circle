@@ -10,6 +10,9 @@ use App\Admin\Product;
 use App\Admin\Slider;
 use App\Admin\MailContent;
 use App\Admin\JobApplication;
+use App\Admin\AboutUs;
+use App\Admin\Media;
+use App\Admin\MediaImage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,20 +31,20 @@ class RestController extends Controller
 
             $data = $request->all();
             $subscriber = Subscriber::create($data);
-            if($subscriber) {
-                $subscribers = Subscriber::where('status',0)->pluck('email');
-                $mailData = MailContent::where('type','subsciber')->first();
+            if ($subscriber) {
+                $subscribers = Subscriber::where('status', 0)->pluck('email');
+                $mailData = MailContent::where('type', 'subsciber')->first();
                 $mail = array('subject' => $mailData->subject, 'message' => $mailData->message);
                 Subscribe::dispatch($subscribers, $mail);
                 Subscriber::where('status', '=', 0)
                     ->update(['status' => 1]);
             }
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
 
-        return response()->json(['subscriber'=>$subscriber,'success'=>$success,'errorMessage'=>$errorMessage]);
+        return response()->json(['subscriber' => $subscriber, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function addJobApplicaion(Request $request)
@@ -62,12 +65,12 @@ class RestController extends Controller
 
             $data = $request->all();
             $application = JobApplication::create($data);
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
 
-        return response()->json(['application'=>$application,'success'=>$success,'errorMessage'=>$errorMessage]);
+        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function getAllProducts()
@@ -77,15 +80,15 @@ class RestController extends Controller
         $productsResponse = [];
         try {
             $products = Product::with('category')->get();
-            foreach($products as $product) {
+            foreach ($products as $product) {
                 $productsResponse[$product->category->name]['products'][] = $product;
                 $productsResponse[$product->category->name]['category'] = $product->category;
             }
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['category'=>$productsResponse,'success'=>$success,'errorMessage'=>$errorMessage]);
+        return response()->json(['category' => $productsResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function getSliders()
@@ -95,14 +98,53 @@ class RestController extends Controller
         $slidersResponse = [];
         try {
             $sliders = Slider::all();
-            foreach($sliders as $key=>$slider) {
+            foreach ($sliders as $key => $slider) {
                 $slidersResponse[$key] = $slider;
-                $slidersResponse[$key]['image'] = asset("/uploads/".$slider->path);
+                $slidersResponse[$key]['image'] = asset("/uploads/" . $slider->path);
             }
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['sliders'=>$slidersResponse,'success'=>$success,'errorMessage'=>$errorMessage]);
+        return response()->json(['sliders' => $slidersResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
+    public function getAboutUsData()
+    {
+        $errorMessage = "";
+        $success = true;
+        $aboutResponse = [];
+        try {
+            $aboutUs = AboutUs::all();
+            foreach ($aboutUs as $key => $about) {
+                $aboutResponse[$key] = $about;
+                $aboutResponse[$key]['image'] = asset("/uploads/" . $about->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['about' => $aboutResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getMedia()
+    {
+        $errorMessage = "";
+        $success = true;
+        $mediaResponse = [];
+        try {
+            $medias = Media::all();
+            foreach ($medias as $key => $media) {
+                $mediaResponse[$key] = $media;
+                $images = MediaImage::where('media_id',$media->id)->get();
+                $mediaResponse[$key]['image'] = $images;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['media' => $mediaResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+
+    }
+
 }

@@ -23,4 +23,6 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::POST('/subscriber', 'RestController@addSubscriber');
     Route::GET('/getAllProducts', 'RestController@getAllProducts');
     Route::GET('/getSliderData', 'RestController@getSliders');
+    Route::GET('/getAboutUsData', 'RestController@getAboutUsData');
+    Route::GET('/getMedia', 'RestController@getMedia');
 });

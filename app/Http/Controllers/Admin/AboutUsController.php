@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin\AboutUs;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\File;
 use Illuminate\Http\Request;
-use App\Admin\Slider;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class SliderController extends Controller
+class AboutUsController extends Controller
 {
 
-    const FOLDER = "admin.slider";
-    const TITLE = "Slider";
-    const ROUTE = "/admin/slider";
+    const FOLDER = "admin.about";
+    const TITLE = "About Us";
+    const ROUTE = "/admin/about-us";
 
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $data = Slider::all();
+        $data = AboutUs::all();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -54,16 +54,16 @@ class SliderController extends Controller
             'path' => 'required|image'
         ]);
 
-        $path = Storage::disk('public')->putFile('slider', new File($request->path));
+        $path = Storage::disk('public')->putFile('about', new File($request->path));
 
         DB::beginTransaction();
 
-        $slider = new Slider;
-        $slider->title = $request->title;
-        $slider->link = $request->link;
-        $slider->description = $request->description;
-        $slider->path = $path;
-        $slider->save();
+        $about = new AboutUs;
+        $about->title = $request->title;
+        $about->link = $request->link;
+        $about->description = $request->description;
+        $about->path = $path;
+        $about->save();
 
         DB::commit();
 
@@ -72,26 +72,22 @@ class SliderController extends Controller
 
     /**
      * Display the specified resource.
-     * @param int $id
+     * @param \App\Admin\AboutUs $AboutUs
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(AboutUs $AboutUs)
     {
-        $data = Slider::find($id);
-        $title = self::TITLE;
-        $route = self::ROUTE;
-        $action = "Show";
-        return view(self::FOLDER . '.show', compact('title', 'route', 'data', 'action'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param \App\Admin\AboutUs $AboutUs
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data = Slider::find($id);
+        $data = AboutUs::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Edit";
@@ -101,7 +97,7 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param \App\Admin\AboutUs     $AboutUs
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -115,7 +111,7 @@ class SliderController extends Controller
 
         DB::beginTransaction();
 
-        $slider = Slider::find($id);
+        $slider = AboutUs::find($id);
         $slider->title = $request->title;
         $slider->link = $request->link;
         $slider->description = $request->description;
@@ -123,7 +119,7 @@ class SliderController extends Controller
 
         if ($request->path) {
             Storage::disk('public')->delete($slider->path);
-            $path = Storage::disk('public')->putFile('slider', new File($request->path));
+            $path = Storage::disk('public')->putFile('about', new File($request->path));
             $slider->path = $path;
         }
 
@@ -136,15 +132,12 @@ class SliderController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param \App\Admin\AboutUs $AboutUs
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $slider = Slider::find($id);
-        Storage::disk('public')->delete("$slider->path");
-        Media::destroy($slider->id);
-
-        return redirect(self::ROUTE);
+        AboutUs::destroy($id);
+        return  redirect(self::ROUTE);
     }
 }
