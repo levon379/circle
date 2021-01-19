@@ -25,4 +25,8 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getSliderData', 'RestController@getSliders');
     Route::GET('/getAboutUsData', 'RestController@getAboutUsData');
     Route::GET('/getMedia', 'RestController@getMedia');
+    Route::GET('/getWhyTahweel', 'RestController@getWhyTahweel');
+    Route::GET('/getOverview', 'RestController@getOverview');
+    Route::GET('/getMissionVission', 'RestController@getMissionVission');
+    Route::GET('/getTwahweelIntegrated', 'RestController@getTwahweelIntegrated');
 });

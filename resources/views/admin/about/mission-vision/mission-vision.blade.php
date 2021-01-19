@@ -15,6 +15,8 @@
                             <th>#</th>
                             <th>Thumbnail</th>
                             <th>Title</th>
+                            <th>Mission Text</th>
+                            <th>Vision Text</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -22,10 +24,9 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>
-                                    <img src='{{asset("/uploads/$val->path")}}' alt="{{$val->title}}" class="img-responsive" width="200">
-                                </td>
                                 <td>{{$val->title}}</td>
+                                <td>{{$val->mission_text}}</td>
+                                <td>{{$val->vision_text}}</td>
 
                                 <td>
                                     <a href="{{$route."/".$val->id}}" data-toggle="tooltip"

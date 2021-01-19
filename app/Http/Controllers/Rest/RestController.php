@@ -13,6 +13,10 @@ use App\Admin\JobApplication;
 use App\Admin\AboutUs;
 use App\Admin\Media;
 use App\Admin\MediaImage;
+use App\Admin\WhyTahweel;
+use App\Admin\Overview;
+use App\Admin\Integrated;
+use App\Admin\MissionVision;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -145,6 +149,78 @@ class RestController extends Controller
         }
         return response()->json(['media' => $mediaResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
 
+    }
+
+    public function getWhyTahweel()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = WhyTahweel::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+                $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['whyTahweel' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+
+    }
+
+    public function getOverview()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = Overview::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+                $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['overview' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+
+    }
+
+    public function getMissionVission()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = Integrated::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['integrated' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getTwahweelIntegrated()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = MissionVision::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
 }

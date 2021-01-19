@@ -110,11 +110,41 @@
                         <li><a href="/admin/slider" class="waves-effect"><i class="mdi zmdi-slideshare fa-fw"></i>
                                 <span class="hide-menu">Sliders</span></a>
                         </li>
+                        <li><a href="/admin/why-tahweel" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Why Tahweel</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                        <span class="hide-menu">About Us<span class="fa arrow"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
                         <li><a href="/admin/about-us" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">About Us</span></a>
                         </li>
-                        <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
-                                <span class="hide-menu">Product Catalogue</span></a>
+                        <li><a href="/admin/overview" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Overview</span></a>
+                        </li>
+                        <li><a href="/admin/integrated" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Tahweel Integrated</span></a>
+                        </li>
+                        <li><a href="/admin/mission-vision" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">Mission & Vision</span></a>
+                        </li>
+                        <li><a href="/admin/history" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">History</span></a>
+                        </li>
+                        <li><a href="/admin/around-world" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">Tahweel Around The World</span></a>
+                        </li>
+                        <li><a href="/admin/about-us/health-safety" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">Environment Health & Safety</span></a>
+                        </li>
+                        <li><a href="/admin/about-us/people" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                                <span class="hide-menu">Tahweel's People</span></a>
                         </li>
                     </ul>
                 </li>

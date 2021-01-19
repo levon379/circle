@@ -32,8 +32,30 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/contact-us', 'ContactUsController');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/about-us', 'AboutUsController');
+
+    Route::GET('/overview', 'AboutUsController@overview');
+    Route::GET('/overview/{id}/edit', 'AboutUsController@overviewEdit');
+    Route::PUT('/overview/{id}', 'AboutUsController@overviewStore');
+
+    Route::GET('/integrated', 'AboutUsController@integrated');
+    Route::GET('/integrated/{id}/edit', 'AboutUsController@integratedEdit');
+    Route::PUT('/integrated/{id}', 'AboutUsController@integratedStore');
+
+    Route::GET('/mission-vision', 'AboutUsController@integrated');
+    Route::GET('/mission-vision/{id}/edit', 'AboutUsController@missionVisionEdit');
+    Route::PUT('/mission-vision/{id}', 'AboutUsController@missionVisionStore');
+
+    //Route::POST('/about-us/overview', 'AboutUsController@overview');
+    Route::GET('/integrated', 'AboutUsController@integrated');
+    Route::GET('/mission-vision', 'AboutUsController@missionVision');
+    Route::GET('/history', 'AboutUsController@history');
+    Route::GET('/around-world', 'AboutUsController@aroundWorld');
+    Route::GET('/health-safety', 'AboutUsController@healthSafety');
+    Route::GET('/people', 'AboutUsController@people');
+
     Route::resource('/mail-settings', 'MailSettingsController');
     Route::resource('/slider', 'SliderController');
+    Route::resource('/why-tahweel', 'WhyTahweelController');
     Route::get('/subscriber', 'SubscriberController@index');
     Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
 
