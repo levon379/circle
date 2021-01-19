@@ -29,4 +29,7 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getOverview', 'RestController@getOverview');
     Route::GET('/getMissionVission', 'RestController@getMissionVission');
     Route::GET('/getTwahweelIntegrated', 'RestController@getTwahweelIntegrated');
+    Route::GET('/getHealTyAndSafety', 'RestController@getHealTyAndSafety');
+    Route::GET('/getAroundWorld', 'RestController@getAroundWorld');
+    Route::GET('/getTahweelPeople', 'RestController@getTahweelPeople');
 });

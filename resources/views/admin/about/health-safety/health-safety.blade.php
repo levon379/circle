@@ -18,6 +18,7 @@
                             <th>Text 1</th>
                             <th>Text 2</th>
                             <th>Text 3</th>
+                            <th>Text 4</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -32,6 +33,7 @@
                                 <td>{{$val->text1}}</td>
                                 <td>{{$val->text2}}</td>
                                 <td>{{$val->text3}}</td>
+                                <td>{{$val->text4}}</td>
 
                                 <td>
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"

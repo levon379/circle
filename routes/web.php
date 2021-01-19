@@ -45,6 +45,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::GET('/mission-vision/{id}/edit', 'AboutUsController@missionVisionEdit');
     Route::PUT('/mission-vision/{id}', 'AboutUsController@missionVisionStore');
 
+    Route::GET('/history', 'AboutUsController@history');
+    Route::GET('/history/{id}/edit', 'AboutUsController@historyEdit');
+    Route::PUT('/history/{id}', 'AboutUsController@historyStore');
+
+    Route::GET('/around-world', 'AboutUsController@aroundWorld');
+    Route::GET('/around-world/{id}/edit', 'AboutUsController@aroundWorldEdit');
+    Route::PUT('/around-world/{id}', 'AboutUsController@aroundWorldStore');
+
+    Route::GET('/health-safety', 'AboutUsController@healthSafety');
+    Route::GET('/health-safety/{id}/edit', 'AboutUsController@healthSafetyEdit');
+    Route::PUT('/health-safety/{id}', 'AboutUsController@healthSafetyStore');
+
+    Route::GET('/people', 'AboutUsController@people');
+    Route::GET('/people/{id}/edit', 'AboutUsController@peopleEdit');
+    Route::PUT('/people/{id}', 'AboutUsController@peopleStore');
+
     //Route::POST('/about-us/overview', 'AboutUsController@overview');
     Route::GET('/integrated', 'AboutUsController@integrated');
     Route::GET('/mission-vision', 'AboutUsController@missionVision');

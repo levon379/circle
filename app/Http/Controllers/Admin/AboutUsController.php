@@ -6,6 +6,10 @@ use App\Admin\AboutUs;
 use App\Admin\Overview;
 use App\Admin\Integrated;
 use App\Admin\MissionVision;
+use App\Admin\History;
+use App\Admin\AroundWorld;
+use App\Admin\HealthSafety;
+use App\Admin\People;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
@@ -14,24 +18,33 @@ use Illuminate\Support\Facades\Storage;
 
 class AboutUsController extends Controller
 {
-
+    const TITLE = "About Us";
     const ABOUT_FOLDER = "admin.about";
+    const ROUTE = "/admin/about-us";
 
     const OVERVIEW_FOLDER = "admin.about.overview";
     const INTEGRATED_FOLDER = "admin.about.integrated";
     const MISION_VISION_FOLDER = "admin.about.mission-vision";
-
-    const TITLE = "About Us";
+    const HISTORY_FOLDER = "admin.about.history";
+    const AROUND_WORLD_FOLDER = "admin.about.around-world";
+    const HEALTH_SAFETY_FOLDER = "admin.about.health-safety";
+    const PEOPLE_FOLDER = "admin.about.people";
 
     const TITLE_OVERVIEW = "Overview";
     const TITLE_INTEGRATED = "Integrated";
     const TITLE_MISSION_VISION = "Mission & Vision";
-
-    const ROUTE = "/admin/about-us";
+    const TITLE_HISTORY = "History";
+    const TITLE_AROUND_WORLD= "Around The World";
+    const TITLE_HEALTH_SAFETY= "Health & Safety";
+    const TITLE_PEOPLE= "Tahweel's People";
 
     const OVERVIEW_ROUTE = "/admin/overview";
     const INTEGRATED_ROUTE = "/admin/integrated";
     const MISSION_VISION_ROUTE = "/admin/mission-vision";
+    const HISTORY_ROUTE = "/admin/history";
+    const AROUND_WORLD_ROUTE = "/admin/around-world";
+    const HEALTH_SAFETY_ROUTE = "/admin/health-safety";
+    const PEOPLE_ROUTE = "/admin/people";
 
     /**
      * Display a listing of the resource.
@@ -45,10 +58,7 @@ class AboutUsController extends Controller
         return view(self::ABOUT_FOLDER . '.index', compact('title', 'route', 'data'));
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     */
+    /******************** OVERVIEW START ****************/
     public function overview()
     {
         $data = Overview::all();
@@ -92,12 +102,9 @@ class AboutUsController extends Controller
 
         return redirect(self::OVERVIEW_ROUTE);
     }
+    /******************** OVERVIEW END ****************/
 
-
-    /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     */
+    /******************** Integrated START ****************/
     public function integrated()
     {
         $data = Integrated::all();
@@ -132,12 +139,9 @@ class AboutUsController extends Controller
 
         return redirect(self::INTEGRATED_ROUTE);
     }
+    /******************** Integrated END ****************/
 
-
-    /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     */
+    /******************** Mission and Vision START ****************/
     public function missionVision()
     {
         $data = MissionVision::all();
@@ -172,11 +176,168 @@ class AboutUsController extends Controller
 
         return redirect(self::MISSION_VISION_ROUTE);
     }
+    /******************** Mission and Vision END ****************/
 
-    /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
-     */
+    /******************** History START ****************/
+    public function history()
+    {
+        $data = History::all();
+        $title = self::TITLE_HISTORY;
+        $route = self::HISTORY_ROUTE;
+        return view(self::HISTORY_FOLDER . '.history', compact('title', 'route', 'data'));
+    }
+
+    public function historyEdit($id)
+    {
+        $data = History::find($id);
+        $title = self::TITLE_HISTORY;
+        $route = self::HISTORY_ROUTE;
+        $action = "Edit";
+        return view(self::HISTORY_FOLDER . '.edit', compact('title', 'route', 'action', 'data'));
+    }
+
+    public function historyStore(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:191',
+            'description' => 'required|string'
+        ]);
+
+        $integrated = History::find($id);
+        $integrated->title = $request->title;
+        $integrated->description = $request->description;
+
+        $integrated->save();
+
+        return redirect(self::HISTORY_ROUTE);
+    }
+    /******************** History END ****************/
+
+    /******************** Around World START ****************/
+    public function aroundWorld()
+    {
+        $data = AroundWorld::all();
+        $title = self::TITLE_AROUND_WORLD;
+        $route = self::AROUND_WORLD_ROUTE;
+        return view(self::AROUND_WORLD_FOLDER . '.around-world', compact('title', 'route', 'data'));
+    }
+
+    public function aroundWorldEdit($id)
+    {
+        $data = AroundWorld::find($id);
+        $title = self::TITLE_AROUND_WORLD;
+        $route = self::AROUND_WORLD_ROUTE;
+        $action = "Edit";
+        return view(self::AROUND_WORLD_FOLDER . '.edit', compact('title', 'route', 'action', 'data'));
+    }
+
+    public function aroundWorldStore(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:191',
+            'description' => 'required|string'
+        ]);
+
+        $integrated = AroundWorld::find($id);
+        $integrated->title = $request->title;
+        $integrated->description = $request->description;
+
+        $integrated->save();
+
+        return redirect(self::AROUND_WORLD_ROUTE);
+    }
+    /******************** Around World END ****************/
+
+    /******************** Health & Safety START ****************/
+    public function healthSafety()
+    {
+        $data = HealthSafety::all();
+        $title = self::TITLE_HEALTH_SAFETY;
+        $route = self::HEALTH_SAFETY_ROUTE;
+        return view(self::HEALTH_SAFETY_FOLDER . '.health-safety', compact('title', 'route', 'data'));
+    }
+
+    public function healthSafetyEdit($id)
+    {
+        $data = HealthSafety::find($id);
+        $title = self::TITLE_HEALTH_SAFETY;
+        $route = self::HEALTH_SAFETY_ROUTE;
+        $action = "Edit";
+        return view(self::HEALTH_SAFETY_FOLDER . '.edit', compact('title', 'route', 'action', 'data'));
+    }
+
+    public function healthSafetyStore(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:191',
+            'text1' => 'required|string',
+            'text2' => 'required|string',
+            'text3' => 'required|string',
+            'text4' => 'required|string',
+            'path' => 'image'
+        ]);
+
+        $healthSafety = HealthSafety::find($id);
+        $healthSafety->title = $request->title;
+        $healthSafety->text1 = $request->text1;
+        $healthSafety->text2 = $request->text2;
+        $healthSafety->text3 = $request->text3;
+        $healthSafety->text4 = $request->text3;
+
+        if ($request->path) {
+            Storage::disk('public')->delete($healthSafety->path);
+            $path = Storage::disk('public')->putFile('healthSafety', new File($request->path));
+            $healthSafety->path = $path;
+        }
+
+        $healthSafety->save();
+
+        return redirect(self::HEALTH_SAFETY_ROUTE);
+    }
+    /******************** Health & Safety END ****************/
+
+    /******************** PEOPLE START ****************/
+    public function people()
+    {
+        $data = People::all();
+        $title = self::TITLE_PEOPLE;
+        $route = self::PEOPLE_ROUTE;
+        return view(self::PEOPLE_FOLDER . '.people', compact('title', 'route', 'data'));
+    }
+
+    public function peopleEdit($id)
+    {
+        $data = People::find($id);
+        $title = self::TITLE_PEOPLE;
+        $route = self::PEOPLE_ROUTE;
+        $action = "Edit";
+        return view(self::PEOPLE_FOLDER . '.edit', compact('title', 'route', 'action', 'data'));
+    }
+
+    public function peopleStore(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:191',
+            'description' => 'required|string',
+            'path' => 'image'
+        ]);
+
+        $healthSafety = People::find($id);
+        $healthSafety->title = $request->title;
+        $healthSafety->description = $request->description;
+
+        if ($request->path) {
+            Storage::disk('public')->delete($healthSafety->path);
+            $path = Storage::disk('public')->putFile('people', new File($request->path));
+            $healthSafety->path = $path;
+        }
+
+        $healthSafety->save();
+
+        return redirect(self::PEOPLE_ROUTE);
+    }
+    /******************** PEOPLE END ****************/
+
     public function create()
     {
         $title = self::TITLE;

@@ -17,6 +17,9 @@ use App\Admin\WhyTahweel;
 use App\Admin\Overview;
 use App\Admin\Integrated;
 use App\Admin\MissionVision;
+use App\Admin\HealthSafety;
+use App\Admin\AroundWorld;
+use App\Admin\People;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -221,6 +224,59 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getHealTyAndSafety()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = HealthSafety::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+                $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['healthSafety' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getAroundWorld()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = AroundWorld::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['aroundWorld' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getTahweelPeople()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = People::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+                $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['people' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
 }

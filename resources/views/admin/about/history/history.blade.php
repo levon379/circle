@@ -13,11 +13,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Thumbnail</th>
                             <th>Title</th>
-                            <th>Text 1</th>
-                            <th>Text 2</th>
-                            <th>Text 3</th>
+                            <th>Description</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -25,15 +22,11 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>
-                                    <img src='{{asset("/uploads/$val->path")}}' alt="{{$val->title}}" class="img-responsive" width="200">
-                                </td>
                                 <td>{{$val->title}}</td>
-                                <td>{{$val->text1}}</td>
-                                <td>{{$val->text2}}</td>
-                                <td>{{$val->text3}}</td>
+                                <td>{{$val->description}}</td>
 
                                 <td>
+
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
                                         <i class="fas fa-edit"></i>
