@@ -206,7 +206,7 @@ class RestController extends Controller
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['integrated' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function getTwahweelIntegrated()
@@ -223,7 +223,7 @@ class RestController extends Controller
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['integrated' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function getHealTyAndSafety()
