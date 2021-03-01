@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="30" viewBox="0 0 21 30">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="21" height="30" transform="translate(551 265)" fill="#54667a" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Media_center" data-name="Media center" transform="translate(-551 -265)" clip-path="url(#clip-path)">
+    <g id="Media_center-2" data-name="Media center" transform="translate(551 269.5)">
+      <g id="Group_27" data-name="Group 27">
+        <path id="Path_39" data-name="Path 39" d="M20.25,15h-1.5V12a.75.75,0,0,0-.75-.75H11.25V6H15a.75.75,0,0,0,.75-.75V.75A.75.75,0,0,0,15,0H6a.75.75,0,0,0-.75.75v4.5A.75.75,0,0,0,6,6H9.75v5.25H3a.75.75,0,0,0-.75.75v3H.75a.75.75,0,0,0-.75.75v4.5A.75.75,0,0,0,.75,21h4.5A.75.75,0,0,0,6,20.25v-4.5A.75.75,0,0,0,5.25,15H3.75V12.75h6V15H8.25a.75.75,0,0,0-.75.75v4.5a.75.75,0,0,0,.75.75h4.5a.75.75,0,0,0,.75-.75v-4.5a.75.75,0,0,0-.75-.75h-1.5V12.75h6V15h-1.5a.75.75,0,0,0-.75.75v4.5a.75.75,0,0,0,.75.75h4.5a.75.75,0,0,0,.75-.75v-4.5A.75.75,0,0,0,20.25,15Z" fill="#54667a"/>
+      </g>
+    </g>
+  </g>
+</svg>

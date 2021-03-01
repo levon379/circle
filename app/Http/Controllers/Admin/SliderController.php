@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Admin\Slider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Admin\Category;
 
 class SliderController extends Controller
 {
@@ -37,7 +38,8 @@ class SliderController extends Controller
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Create";
-        return view(self::FOLDER . '.create', compact('title', 'route', 'action'));
+        $category = Category::all();
+        return view(self::FOLDER . '.create', compact('title', 'route', 'action','category'));
     }
 
     /**
@@ -51,6 +53,7 @@ class SliderController extends Controller
             'title' => 'required|max:191',
             'description' => 'string',
             'link' => 'string|max:191',
+            "category_id" => "numeric",
             'path' => 'required|image'
         ]);
 
@@ -62,6 +65,7 @@ class SliderController extends Controller
         $slider->title = $request->title;
         $slider->link = $request->link;
         $slider->description = $request->description;
+        $slider->category_id = $request->category_id;
         $slider->path = $path;
         $slider->save();
 
@@ -95,7 +99,8 @@ class SliderController extends Controller
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Edit";
-        return view(self::FOLDER . '.edit', compact('title', 'route', 'action', 'data'));
+        $category = Category::all();
+        return view(self::FOLDER . '.edit', compact('title', 'route', 'action', 'data','category'));
     }
 
     /**
@@ -110,6 +115,7 @@ class SliderController extends Controller
             'title' => 'required|max:191',
             'description' => 'string',
             'link' => 'string|max:191',
+            "category_id" => "numeric",
             'path' => 'required|image'
         ]);
 
@@ -119,6 +125,7 @@ class SliderController extends Controller
         $slider->title = $request->title;
         $slider->link = $request->link;
         $slider->description = $request->description;
+        $slider->category_id = $request->category_id;
         $slider->link = $request->link;
 
         if ($request->path) {
@@ -143,7 +150,7 @@ class SliderController extends Controller
     {
         $slider = Slider::find($id);
         Storage::disk('public')->delete("$slider->path");
-        Media::destroy($slider->id);
+        Slider::destroy($slider->id);
 
         return redirect(self::ROUTE);
     }

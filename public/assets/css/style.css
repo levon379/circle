@@ -10366,3 +10366,6 @@ ul.pro-amenities li span i {
 table.dataTable tbody td {
     vertical-align: middle;
 }
+.menu-icon {
+    width: 18px;
+}

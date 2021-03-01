@@ -91,6 +91,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
 
     Route::prefix('products')->group(function () {
         Route::resource('/', 'ProductController');
+        Route::GET('/details', 'ProductController@details');
         Route::DELETE('/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
         Route::GET('/{id}/specification', 'ProductController@specification');
         Route::POST('/{id}/specification', 'ProductController@specificationStore');

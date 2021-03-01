@@ -84,13 +84,22 @@
                 <li class="devider"></li>
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/productmanagment.svg') }}">
                         <span class="hide-menu">Product Managment<span class="fa arrow"></span>
                         </span>
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Products</span></a>
+                        </li>
+                        <li><a href="/admin/product/details" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Product Details</span></a>
+                        </li>
+                        <li><a href="/admin/product/list" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Product List</span></a>
+                        </li>
+                        <li><a href="/admin/product/configuration" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Product Configuration</span></a>
                         </li>
                         <li><a href="/admin/categories" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Category</span></a>
@@ -102,7 +111,7 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/home.svg') }}">
                         <span class="hide-menu">Home Page<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -117,7 +126,7 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-content-copy fa-fw"></i>
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
                         <span class="hide-menu">About Us<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -149,31 +158,31 @@
                     </ul>
                 </li>
 
-                <li><a href="/admin/media-center" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                <li><a href="/admin/media-center" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/mediacenter.svg') }}">
                         <span class="hide-menu">Media Center</span></a>
                 </li>
 
-                <li><a href="/admin/social" class="waves-effect"><i class="mdi mdi-link-variant fa-fw"></i>
+                <li><a href="/admin/social" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/sociallinks.svg') }}">
                         <span class="hide-menu">Social Links</span></a>
                 </li>
 
-                <li><a href="/admin/vacancies" class="waves-effect"><i class="mdi mdi-archive fa-fw"></i>
+                <li><a href="/admin/vacancies" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/vacancies.svg') }}">
                         <span class="hide-menu">Vacancies</span></a>
                 </li>
 
-                <li><a href="/admin/job-application" class="waves-effect"><i class="mdi mdi-account-alert fa-fw"></i>
+                <li><a href="/admin/job-application" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/jobapplication.svg') }}">
                         <span class="hide-menu">Job Application</span></a>
                 </li>
 
-                <li><a href="/admin/subscriber" class="waves-effect"><i class="mdi mdi-account-multiple fa-fw"></i>
+                <li><a href="/admin/subscriber" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/subscriber.svg') }}">
                         <span class="hide-menu">Subscriber</span></a>
                 </li>
 
-                <li><a href="/admin/contact-us" class="waves-effect"><i class="mdi mdi-phone fa-fw"></i>
+                <li><a href="/admin/contact-us" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/contactus.svg') }}">
                         <span class="hide-menu">Contact Us</span></a>
                 </li>
 
-                <li><a href="/admin/mail-settings" class="waves-effect"><i class="mdi mdi-mailbox fa-fw"></i>
+                <li><a href="/admin/mail-settings" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/mailsettings.svg') }}">
                         <span class="hide-menu">Mail Settings</span></a>
                 </li>
 

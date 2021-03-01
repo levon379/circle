@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="30" viewBox="0 0 21 30">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="21" height="30" transform="translate(797 265)" fill="#54667a" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mail_settings" data-name="Mail settings" transform="translate(-797 -265)" clip-path="url(#clip-path)">
+    <g id="mail" transform="translate(797 269.5)">
+      <path id="Path_54" data-name="Path 54" d="M10.5,16.353,7.22,14.359.912,20.132H20.088L13.78,14.359Z" fill="#54667a"/>
+      <path id="Path_55" data-name="Path 55" d="M.964,10.553a4.811,4.811,0,0,1-.957-.765L0,19.3l6.126-5.606Z" fill="#54667a"/>
+      <path id="Path_56" data-name="Path 56" d="M20.036,10.553l-5.162,3.139L21,19.3V9.781A4.81,4.81,0,0,1,20.036,10.553Z" fill="#54667a"/>
+      <path id="Path_57" data-name="Path 57" d="M16.167,7.307,14.659,9.8l-1.339-.428a4.718,4.718,0,0,1-.994.564l-.315,1.495H8.99L8.674,9.936a4.718,4.718,0,0,1-.988-.56l-1.352.446L4.813,7.307H.007v.057A3.6,3.6,0,0,0,1.6,9.5l8.9,5.411L19.4,9.5A3.6,3.6,0,0,0,21,7.34V7.307H16.167Z" fill="#54667a"/>
+      <circle id="Ellipse_2" data-name="Ellipse 2" cx="0.832" cy="0.832" r="0.832" transform="translate(9.668 4.722)" fill="#54667a"/>
+      <path id="Path_58" data-name="Path 58" d="M7.93,8.043l.309.255a3.542,3.542,0,0,0,1.086.614l.377.133.253,1.2h1.091l.253-1.2.377-.133A3.537,3.537,0,0,0,12.761,8.3l.309-.255,1.056.338.565-.934L13.9,6.679l.083-.392a3.57,3.57,0,0,0,0-1.472L13.9,4.42l.866-.823L14.2,2.668l-1.123.405-.311-.257a3.542,3.542,0,0,0-1.1-.621l-.38-.133L11.043.868H9.957L9.712,2.061l-.38.133a3.542,3.542,0,0,0-1.1.621l-.311.257L6.835,2.679l-.563.929L7.1,4.42l-.083.394a3.572,3.572,0,0,0,0,1.473l.082.392-.8.783.565.934Zm.508-2.489A2.063,2.063,0,1,1,10.5,7.617,2.065,2.065,0,0,1,8.437,5.555Z" fill="#54667a"/>
+    </g>
+  </g>
+</svg>

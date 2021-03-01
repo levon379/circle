@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Rest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin\Subscriber;
+use App\Admin\Category;
 use App\Jobs\Subscribe;
 use App\Admin\Product;
 use App\Admin\Slider;
@@ -79,14 +80,31 @@ class RestController extends Controller
 
         return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+    
+    public function getCategories() {
+        $errorMessage = "";
+        $success = true;
+        $categoryResponse = [];
+        try {
+            $categories = Category::all();
+            foreach ($categories as $key=>$category) {
+                $categoryResponse[$key] = $category;
+                $categoryResponse[$key]['pdf'] = asset("/uploads/" . $category->pdf_path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['category' => $categoryResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
 
-    public function getAllProducts()
+    public function getAllProductsByCategory($categoryId)
     {
         $errorMessage = "";
         $success = true;
         $productsResponse = [];
         try {
-            $products = Product::with('category')->get();
+            $products = Product::where('category_id',$categoryId)->with('category','details')->get();
             foreach ($products as $product) {
                 $productsResponse[$product->category->name]['products'][] = $product;
                 $productsResponse[$product->category->name]['category'] = $product->category;

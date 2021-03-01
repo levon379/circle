@@ -29,6 +29,19 @@
                                 <textarea name="description" id="description" cols="30" rows="10" class="form-control"
                                           style="resize: none;" required>{{$data->description}}</textarea>
                             </div>
+                            
+                            <div class="form-group">
+                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
+                                @error('category')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select name="category_id" id="category_id" class="form-control">
+                                    @foreach($category as $key)
+                                        <option value="{{$key->id}}"
+                                                @if($data->category_id == $key->id) selected @endif>{{$key->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label for="description">Link <strong class="text-danger"> &#42; </strong></label>
