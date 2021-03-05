@@ -69,13 +69,14 @@ class ProductController extends Controller
             "uses_desc" => "required",*/
             "category_id" => "required|numeric",
             "show" => "required|numeric",
-            "images" => "required|array|max:5",
+            "images" => "array|max:5",
             "thumbnail" => "image|max:5000",
         ]);
 
         $logo = Storage::disk('public')->putFile('product/', new File($request->thumbnail));
-        $image = FileUploadHelper::upload($request->images, ['*'], "/product");
-
+        if ($request->has('images')) {
+            $image = FileUploadHelper::upload($request->images, ['*'], "/product");
+        }
         DB::beginTransaction();
 
         $product = new Product;
@@ -117,9 +118,9 @@ class ProductController extends Controller
 
             }
         }
-
-        $product->image()->createMany($image);
-
+        if ($request->has('images')) {
+            $product->image()->createMany($image);
+        }
         DB::commit();
 
         return redirect(self::ROUTE);
