@@ -13,7 +13,7 @@ class UpdateProductColumns extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->text('product_desc')->nullable();
             $table->text('uses_desc')->nullable();
         });
