@@ -14,8 +14,8 @@ class UpdateProductColumns extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->text('product_desc')->nullable();
-            $table->text('uses_desc')->nullable();
+            $table->text('product_desc')->nullable()->change();
+            $table->text('uses_desc')->nullable()->change();
         });
     }
 
