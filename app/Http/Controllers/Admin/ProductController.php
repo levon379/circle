@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Category;
 use App\Admin\Product;
+use App\Admin\ProductList;
+use App\Admin\ProductListItems;
+use App\Admin\ProductTabs;
 use App\Admin\ProductFeatur;
 use App\Admin\ProductImage;
 use App\Admin\ProductSpecification;
+use App\Admin\ProductTabsMaP;
 use App\Admin\Specification;
 use App\Admin\SpecificationType;
 use App\helpers\FileUploadHelper;
@@ -44,10 +48,11 @@ class ProductController extends Controller
     public function create()
     {
         $category = Category::all();
+        $product_tabs = ProductTabs::all();
         $specification = Specification::all();
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . '.create', compact('title', 'route', 'category', 'specification'));
+        return view(self::FOLDER . '.create', compact('title', 'route', 'category', 'product_tabs', 'specification'));
     }
 
     /**
@@ -57,10 +62,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             "title" => "required",
-            "product_desc" => "required",
-            "uses_desc" => "required",
+            /*"product_desc" => "required",
+            "uses_desc" => "required",*/
             "category_id" => "required|numeric",
             "show" => "required|numeric",
             "images" => "required|array|max:5",
@@ -75,11 +81,42 @@ class ProductController extends Controller
         $product = new Product;
         $product->title = $request->title;
         $product->product_desc = $request->product_desc;
-        $product->uses_desc = $request->uses_desc;
+        //$product->uses_desc = $request->uses_desc;
         $product->category_id = $request->category_id;
         $product->logo = $logo;
         $product->show = $request->show;
-        $product->save();
+        if($product->save()) {
+            if ($request->has('tabs')&& is_array($request->tabs)) {
+                foreach ($request->tabs as $key => $value) {
+                    $product_tabs_map = new ProductTabsMap;
+                    $product_tabs_map->products_id = $product->id;
+                    $product_tabs_map->tabs_id = $value;
+                    $product_tabs_map->save();
+                }
+            }
+
+            for($i = 0; $i < 30; ++$i) {
+                if (!$request->has("product-list-$i")) {
+                    continue;
+                }
+
+                $product_list = new ProductList();
+                $product_list->product_id = $product->id;
+                $product_list->name = $request->{"product-list-$i"};
+                $product_list->save();
+
+                if (!$request->has("product-list-item-$i")) {
+                    continue;
+                }
+                foreach($request->toArray()["product-list-item-$i"] as $itemName) {
+                    $item = new ProductListItems();
+                    $item->product_list_id = $product_list->id;
+                    $item->name = $itemName;
+                    $item->save();
+                }
+
+            }
+        }
 
         $product->image()->createMany($image);
 
@@ -106,14 +143,22 @@ class ProductController extends Controller
      * @param \App\Admin\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product,$id)
     {
-        $data = $product;
+        //$data = $product;
+        $data = Product::find($id);
         $category = Category::all();
+        $tabs = ProductTabs::all();
+        $product_tabs_map =  ProductTabsMap::where('products_id',$id)->get();
+        $choosenTabsId = [];
+        foreach ($product_tabs_map as $tab){
+            $choosenTabsId[] = $tab->tabs_id;
+        }
+
         $specification = Specification::all();
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . '.edit', compact('title', 'route', 'category', 'specification', 'data'));
+        return view(self::FOLDER . '.edit', compact('title', 'route', 'tabs','choosenTabsId', 'category', 'specification', 'data'));
     }
 
     /**
@@ -122,12 +167,13 @@ class ProductController extends Controller
      * @param \App\Admin\Product       $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product,$id)
     {
+        //dd($request);
         $request->validate([
             "title" => "required",
-            "product_desc" => "required",
-            "uses_desc" => "required",
+            /*"product_desc" => "required",
+            "uses_desc" => "required",*/
             "category_id" => "required|numeric",
             "show" => "required|numeric",
             "images" => "array|max:5",
@@ -137,9 +183,10 @@ class ProductController extends Controller
 
         DB::beginTransaction();
 
+        $product = Product::find($id);
         $product->title = $request->title;
         $product->product_desc = $request->product_desc;
-        $product->uses_desc = $request->uses_desc;
+        //$product->uses_desc = $request->uses_desc;
         $product->category_id = $request->category_id;
         $product->show = $request->show;
 
@@ -151,6 +198,42 @@ class ProductController extends Controller
 
         $product->save();
 
+        // product tabs
+        $product_tabs_map = new ProductTabsMap;
+        $product_tabs_map::where('products_id', $id)->delete();
+        if ($request->has('tabs')&& is_array($request->tabs)) {
+            foreach ($request->tabs as $key => $value) {
+                $product_tabs_map = new ProductTabsMap;
+                $product_tabs_map->products_id = $product->id;
+                $product_tabs_map->tabs_id = $value;
+                $product_tabs_map->save();
+            }
+        }
+        //product list
+        $product_list = new ProductList();
+        $product_list::where('product_id', $product->id)->delete();
+        for($i = 0; $i < 20; ++$i) {
+            if (!$request->has("product-list-$i")) {
+                continue;
+            }
+
+            $product_list = new ProductList();
+            $product_list->product_id = $product->id;
+            $product_list->name = $request->{"product-list-$i"};
+            $product_list->save();
+
+            if (!$request->has("product-list-item-$i")) {
+                continue;
+            }
+            foreach($request->toArray()["product-list-item-$i"] as $itemName) {
+                $item = new ProductListItems();
+                $item->product_list_id = $product_list->id;
+                $item->name = $itemName;
+                $item->save();
+            }
+
+        }
+        //////////////
         if ($request->image) {
             $image = FileUploadHelper::upload($request->images, ['*'], "/product");
             $product->image()->createMany($image);
@@ -176,6 +259,12 @@ class ProductController extends Controller
         Storage::disk('public')->delete("$product->logo");
         Product::destroy($product->id);
         return redirect(self::ROUTE);
+    }
+    public function destroyProduct($id)
+    {
+        $Product = Product::find($id);
+        Product::destroy($Product->id);
+        return  redirect(self::ROUTE);
     }
 
     /**

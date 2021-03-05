@@ -92,15 +92,15 @@
                         <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Products</span></a>
                         </li>
-                        <li><a href="/admin/product/details" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        {{--<li><a href="/admin/product/details" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Product Details</span></a>
+                        </li>--}}
+                        <li><a href="/admin/product-tabs" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                                <span class="hide-menu">Product Tabs</span></a>
                         </li>
-                        <li><a href="/admin/product/list" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
-                                <span class="hide-menu">Product List</span></a>
-                        </li>
-                        <li><a href="/admin/product/configuration" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        {{--<li><a href="/admin/product/configuration" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Product Configuration</span></a>
-                        </li>
+                        </li>--}}
                         <li><a href="/admin/categories" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Category</span></a>
                         </li>

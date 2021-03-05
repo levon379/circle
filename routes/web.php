@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
 
     Route::resource('/contact-us', 'ContactUsController');
     Route::resource('/categories', 'CategoryController');
+    Route::resource('/product-tabs', 'ProductTabsController');
     Route::resource('/about-us', 'AboutUsController');
 
     Route::GET('/overview', 'AboutUsController@overview');
@@ -95,6 +96,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::DELETE('/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
         Route::GET('/{id}/specification', 'ProductController@specification');
         Route::POST('/{id}/specification', 'ProductController@specificationStore');
+        Route::GET('/{id}/edit', 'ProductController@edit');
+        Route::POST('/{id}/delete', 'ProductController@destroyProduct');
+        Route::PUT('/{id}', 'ProductController@update');
+
         Route::POST('/ajax-delete', 'ProductController@ajaxDelete');
         Route::POST('/ajax-edit', 'ProductController@ajaxEdit');
         Route::POST('/ajax-get', 'ProductController@ajaxGet');

@@ -25,4 +25,13 @@ class Product extends Model
     {
         return $this->hasMany('App\Admin\ProductFeatur', "product_id", "id");
     }
+    public function product_list()
+    {
+        return $this->hasMany('App\Admin\ProductList', "product_id", "id");
+    }
+
+    public function product_tabs()
+    {
+        return $this->belongsToMany(ProductTabs::class, 'product_tabs_map');
+    }
 }

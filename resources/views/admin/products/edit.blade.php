@@ -20,25 +20,7 @@
                                        placeholder="Title" name="title" value="{{$data->title}}" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="product_desc">Product Description<strong class="text-danger">
-                                        &#42; </strong> </label>
-                                @error('product_desc')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <textarea name="product_desc" id="product_desc" cols="30" rows="10" class="form-control"
-                                          style="resize: none">{{$data->product_desc}}</textarea>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="uses_desc">Uses Description<strong class="text-danger"> &#42; </strong>
-                                </label>
-                                @error('uses_desc')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <textarea name="uses_desc" id="uses_desc" cols="30" rows="10" class="form-control"
-                                          style="resize: none">{{$data->product_desc}}</textarea>
-                            </div>
 
                             <div class="form-group">
                                 <label for="thumbnail">Main Image<strong class="text-danger"> &#42; </strong> </label>
@@ -49,14 +31,7 @@
                                        placeholder="thumbnail" name="thumbnail" data-default-file='{{asset("uploads/$data->logo")}}'>
                             </div>
 
-                            <div class="form-group">
-                                <label for="images">Images<strong class="text-danger"> &#42; </strong> </label>
-                                @error('images')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="file" class="form-control" id="images"
-                                       placeholder="Images" name="images[]" multiple >
-                            </div>
+
 
                             <div class="form-group">
                                 <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
@@ -80,6 +55,55 @@
                                     <option value="0" @if($data->show == 0) selected @endif>Don`t Show</option>
                                     <option value="1" @if($data->show == 1) selected @endif>Show</option>
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_tab">Select Tabs</label>
+                                @error('product_tab')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <div class="form-check form-check-inline">
+                                    @foreach($tabs as $value)
+
+                                        <input type="checkbox" @if(in_array($value->id,$choosenTabsId)) checked @endif class="form-check-input" name="tabs[]" value="{{$value->id}}" id="{{$value->id}}" autocomplete="off">
+                                        <label class="form-check-label" for="btncheck">{{$value->name}}</label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_desc">Product Description</label>
+                                @error('product_desc')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <textarea name="product_desc" id="product_desc" cols="30" rows="10" class="form-control"
+                                          style="resize: none">{{$data->product_desc}}</textarea>
+                            </div>
+                            <div class="">
+                                <div id="product-lists-container" class="form-inline">
+                                </div>
+                            </div>
+                            <div style="margin-bottom:10px">
+                                <button id="add-list" type="button" class="btn btn-primary" onclick="addList()">Add List</button>
+                            </div>
+
+
+
+                            {{--<div class="form-group">
+                                <label for="uses_desc">Uses Description</label>
+                                @error('uses_desc')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <textarea name="uses_desc" id="uses_desc" cols="30" rows="10" class="form-control"
+                                          style="resize: none">{{$data->product_desc}}</textarea>
+                            </div>--}}
+
+                            <div class="form-group">
+                                <label for="images">Images </label>
+                                @error('images')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="file" class="form-control" id="images"
+                                       placeholder="Images" name="images[]" multiple >
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">
@@ -160,5 +184,63 @@
     <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
     <script>
         $('.dropify').dropify();
+        let currentListIndex = 0;
+        const ulListBaseName = "product-list";
+        const liItemBaseName = "product-list-item";
+
+        function addList(value) {
+            if (!value) {
+                value = "";
+            }
+            const ulInputName = ulListBaseName + '-' + currentListIndex;
+            const ulInputId = ulListBaseName + '-' + currentListIndex;
+            $("#product-lists-container").append(
+                '<ul id="product-list-ul-' + currentListIndex + '" data-list-index="' + currentListIndex + '" class="list-group ">' +
+                '<li class="list-group-item">' +
+                '   <div class="input-group" style="width:70%">' +
+                '       <label htmlFor="' + ulInputId + '">List </label>' +
+                '       <div class="input-group-append">' +
+                '       <input id="' + ulInputId + '" style="width:65%" type="text" name="' + ulInputName + '" value="' + value + '" class="form-control"/>' +
+                '           <button type="button" class="btn btn-danger waves-effect waves-light form-control" title="Delete list" onclick="removeList(this)">x</button>' +
+                '           <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
+                '       </div>' +
+                '   </div>' +
+                '</li>' +
+                '</ul>'
+            );
+            ++currentListIndex;
+        }
+        function addItem(element, value) {
+            if (!value) {
+                value = "";
+            }
+            const currentListSavedIndex = $(element).closest('ul').data("list-index");
+            const liInputName = liItemBaseName + '-' + currentListSavedIndex + "[]";
+            $(element).closest('ul').append(
+                '<li class="list-group-item">' +
+                '   <div class="input-group" style="width:70%">' +
+                '       <div class="input-group-append">' +
+                '       <input class="form-control" style="width:65%" name="' + liInputName + '" value="' + value + '"/>' +
+                '           <button type="button" class="btn btn-primary waves-effect waves-light" onclick="removeItem(this)">x</button>' +
+                '       </div>' +
+                '   </div>' +
+                '</li>'
+            );
+        }
+
+        function removeList(element) {
+            $(element).closest('ul').remove();
+        }
+        function removeItem(element) {
+            $(element).closest('li').remove();
+        }
+
+        @foreach ($data->product_list as $list)
+            addList("{{$list->name}}");
+            @foreach ($list->product_list_items as $item)
+                addItem($("#product-list-ul-" + (currentListIndex - 1)), "{{$item->name}}");
+            @endforeach
+        @endforeach
+
     </script>
 @endpush
