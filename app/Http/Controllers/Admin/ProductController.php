@@ -235,7 +235,7 @@ class ProductController extends Controller
 
         }
         //////////////
-        if ($request->image) {
+        if ($request->has('images')) {
             $image = FileUploadHelper::upload($request->images, ['*'], "/product");
             $product->image()->createMany($image);
         }
