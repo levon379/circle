@@ -10,7 +10,7 @@ use App\Admin\ProductTabs;
 use App\Admin\ProductFeatur;
 use App\Admin\ProductImage;
 use App\Admin\ProductSpecification;
-use App\Admin\ProductTabsMaP;
+use App\Admin\ProductTabsMap;
 use App\Admin\Specification;
 use App\Admin\SpecificationType;
 use App\helpers\FileUploadHelper;
