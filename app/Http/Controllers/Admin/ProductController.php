@@ -91,7 +91,7 @@ class ProductController extends Controller
                 foreach ($request->tabs as $key => $value) {
                     $product_tabs_map = new ProductTabsMap;
                     $product_tabs_map->product_id = $product->id;
-                    $product_tabs_map->tabs_id = $value;
+                    $product_tabs_map->tab_id = $value;
                     $product_tabs_map->save();
                 }
             }
@@ -153,7 +153,7 @@ class ProductController extends Controller
         $product_tabs_map =  ProductTabsMap::where('product_id',$id)->get();
         $choosenTabsId = [];
         foreach ($product_tabs_map as $tab){
-            $choosenTabsId[] = $tab->tabs_id;
+            $choosenTabsId[] = $tab->tab_id;
         }
 
         $specification = Specification::all();
@@ -206,7 +206,7 @@ class ProductController extends Controller
             foreach ($request->tabs as $key => $value) {
                 $product_tabs_map = new ProductTabsMap;
                 $product_tabs_map->product_id = $product->id;
-                $product_tabs_map->tabs_id = $value;
+                $product_tabs_map->tab_id = $value;
                 $product_tabs_map->save();
             }
         }
