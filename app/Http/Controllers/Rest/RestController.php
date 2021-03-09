@@ -98,7 +98,7 @@ class RestController extends Controller
         return response()->json(['category' => $categoryResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
-    public function getAllProductsByCategory($categoryId)
+/*    public function getAllProductsByCategory($categoryId)
     {
         $errorMessage = "";
         $success = true;
@@ -108,6 +108,38 @@ class RestController extends Controller
             foreach ($products as $product) {
                 $productsResponse[$product->category->name]['products'][] = $product;
                 $productsResponse[$product->category->name]['category'] = $product->category;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['category' => $productsResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }  */
+    public function getAllProductsByCategory($categoryId)
+    {
+        $errorMessage = "";
+        $success = true;
+        $productsResponse = [];
+        try {
+            $products = Product::where('category_id',$categoryId)->with([
+                'product_list',
+                //'product_list_items',
+                'product_tabs_map',
+                'featured',
+                'category',
+                'image',
+                'specification'
+            ])->get();
+            foreach ($products as $product) {
+                $productsResponse[$product->category->name]['products'][] = $product;
+                $productsResponse[$product->category->name]['category'] = $product->category;
+                foreach($product->product_tabs_map as $tabsMap) {
+                    $productsResponse[$product->category->name]['products']['tabs'][] = $tabsMap->get_tabs;
+                }
+                foreach($product->product_list as $list_items) {
+                    $productsResponse[$product->category->name]['products']['product_list']['product_items'][] = $list_items->product_list_items;
+                }
+
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
@@ -125,10 +157,10 @@ class RestController extends Controller
             $productsResponse = Product::with([
                 'product_list',
                 'product_tabs',
-//                'featured',
-//                'category',
-//                'image',
-//                'specification'
+                'featured',
+                'category',
+                'image',
+                'specification'
             ])->get();
 //            foreach ($products as $product) {
 //                $item = [];
