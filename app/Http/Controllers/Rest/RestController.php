@@ -80,7 +80,7 @@ class RestController extends Controller
 
         return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-    
+
     public function getCategories() {
         $errorMessage = "";
         $success = true;
@@ -114,6 +114,32 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['category' => $productsResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function getAllProducts()
+    {
+        $errorMessage = "";
+        $success = true;
+        $productsResponse = [];
+        try {
+            $productsResponse = Product::with([
+                'product_list',
+                'product_tabs',
+//                'featured',
+//                'category',
+//                'image',
+//                'specification'
+            ])->get();
+//            foreach ($products as $product) {
+//                $item = [];
+//                $productsResponse[$product->category->name]['products'][] = $product;
+//                $productsResponse[$product->category->name]['category'] = $product->category;
+//            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['products' => $productsResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function getSliders()

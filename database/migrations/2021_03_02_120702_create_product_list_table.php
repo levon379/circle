@@ -18,7 +18,7 @@ class CreateProductListTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

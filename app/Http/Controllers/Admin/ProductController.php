@@ -90,7 +90,7 @@ class ProductController extends Controller
             if ($request->has('tabs')&& is_array($request->tabs)) {
                 foreach ($request->tabs as $key => $value) {
                     $product_tabs_map = new ProductTabsMap;
-                    $product_tabs_map->products_id = $product->id;
+                    $product_tabs_map->product_id = $product->id;
                     $product_tabs_map->tabs_id = $value;
                     $product_tabs_map->save();
                 }
@@ -150,7 +150,7 @@ class ProductController extends Controller
         $data = Product::find($id);
         $category = Category::all();
         $tabs = ProductTabs::all();
-        $product_tabs_map =  ProductTabsMap::where('products_id',$id)->get();
+        $product_tabs_map =  ProductTabsMap::where('product_id',$id)->get();
         $choosenTabsId = [];
         foreach ($product_tabs_map as $tab){
             $choosenTabsId[] = $tab->tabs_id;
@@ -201,11 +201,11 @@ class ProductController extends Controller
 
         // product tabs
         $product_tabs_map = new ProductTabsMap;
-        $product_tabs_map::where('products_id', $id)->delete();
+        $product_tabs_map::where('product_id', $id)->delete();
         if ($request->has('tabs')&& is_array($request->tabs)) {
             foreach ($request->tabs as $key => $value) {
                 $product_tabs_map = new ProductTabsMap;
-                $product_tabs_map->products_id = $product->id;
+                $product_tabs_map->product_id = $product->id;
                 $product_tabs_map->tabs_id = $value;
                 $product_tabs_map->save();
             }

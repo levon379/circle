@@ -10,6 +10,6 @@ class ProductTabsMap extends Model
     protected $table = "product_tabs_map";
 
     public function get_tabs(){
-        return $this->hasOne("App\Admin\ProductTabs","id","tabs_id");
+        return $this->hasOne("App\Admin\ProductTabs","id","tab_id");
     }
 }
