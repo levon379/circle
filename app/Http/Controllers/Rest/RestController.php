@@ -16,6 +16,7 @@ use App\Admin\Media;
 use App\Admin\MediaImage;
 use App\Admin\WhyTahweel;
 use App\Admin\Overview;
+use App\Admin\History;
 use App\Admin\Integrated;
 use App\Admin\MissionVision;
 use App\Admin\HealthSafety;
@@ -97,24 +98,23 @@ class RestController extends Controller
         }
         return response()->json(['category' => $categoryResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-
-/*    public function getAllProductsByCategory($categoryId)
-    {
+    public function getCategoryById($id) {
         $errorMessage = "";
         $success = true;
-        $productsResponse = [];
+        $categoryResponse = [];
         try {
-            $products = Product::where('category_id',$categoryId)->with('category','details')->get();
-            foreach ($products as $product) {
-                $productsResponse[$product->category->name]['products'][] = $product;
-                $productsResponse[$product->category->name]['category'] = $product->category;
+            $categories = Category::find($id);
+            foreach ($categories as $key=>$category) {
+                $categoryResponse[$key] = $category;
+                $categoryResponse[$key]['pdf'] = asset("/uploads/" . $category->pdf_path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['category' => $productsResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
-    }  */
+        return response()->json(['category' => $categoryResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
     public function getAllProductsByCategory($categoryId)
     {
         $errorMessage = "";
@@ -183,6 +183,7 @@ class RestController extends Controller
             $sliders = Slider::all();
             foreach ($sliders as $key => $slider) {
                 $slidersResponse[$key] = $slider;
+                $slidersResponse[$key]['category'] = $slider->category;
                 $slidersResponse[$key]['image'] = asset("/uploads/" . $slider->path);
             }
         } catch (\Throwable $e) {
@@ -274,7 +275,7 @@ class RestController extends Controller
         $success = true;
         $whyTahweelResp = [];
         try {
-            $whyTahweel = Integrated::all();
+            $whyTahweel = MissionVision::all();
             foreach ($whyTahweel as $key => $tahweel) {
                 $whyTahweelResp[$key] = $tahweel;
             }
@@ -284,6 +285,22 @@ class RestController extends Controller
         }
         return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+    public function getHistory()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = History::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['history' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
 
     public function getTwahweelIntegrated()
     {
@@ -291,7 +308,7 @@ class RestController extends Controller
         $success = true;
         $whyTahweelResp = [];
         try {
-            $whyTahweel = MissionVision::all();
+            $whyTahweel = Integrated::all();
             foreach ($whyTahweel as $key => $tahweel) {
                 $whyTahweelResp[$key] = $tahweel;
             }

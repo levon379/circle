@@ -21,15 +21,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Rest'], function () {
     Route::POST('/job-applicaion', 'RestController@addJobApplicaion');
     Route::POST('/subscriber', 'RestController@addSubscriber');
-    Route::GET('/getAllProductsByCategory/{id}', 'RestController@getAllProductsByCategory');
+    Route::GET('/getProductsByCategory/{id}', 'RestController@getAllProductsByCategory');
+    Route::GET('/getCategory/{id}', 'RestController@getCategoryById');
     Route::GET('/getSliderData', 'RestController@getSliders');
     Route::GET('/getAboutUsData', 'RestController@getAboutUsData');
     Route::GET('/getMedia', 'RestController@getMedia');
     Route::GET('/getWhyTahweel', 'RestController@getWhyTahweel');
     Route::GET('/getOverview', 'RestController@getOverview');
     Route::GET('/getMissionVission', 'RestController@getMissionVission');
+    Route::GET('/getHistory', 'RestController@getHistory');
     Route::GET('/getTwahweelIntegrated', 'RestController@getTwahweelIntegrated');
     Route::GET('/getHealTyAndSafety', 'RestController@getHealTyAndSafety');
     Route::GET('/getAroundWorld', 'RestController@getAroundWorld');
     Route::GET('/getTahweelPeople', 'RestController@getTahweelPeople');
+    Route::GET('/getCategories', 'RestController@getCategories');
 });

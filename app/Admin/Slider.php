@@ -9,5 +9,8 @@ class Slider extends Model
 
     protected $guarded = [];
     protected $table = "slider";
-
+    public function category()
+    {
+        return $this->hasOne('App\Admin\Category', "id", "category_id");
+    }
 }
