@@ -62,6 +62,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::GET('/people/{id}/edit', 'AboutUsController@peopleEdit');
     Route::PUT('/people/{id}', 'AboutUsController@peopleStore');
 
+    Route::GET('/career', 'ContactUsController@career');
+    Route::GET('/career/{id}/edit', 'ContactUsController@careerEdit');
+    Route::PUT('/career/{id}', 'ContactUsController@careerStore');
+
     //Route::POST('/about-us/overview', 'AboutUsController@overview');
     Route::GET('/integrated', 'AboutUsController@integrated');
     Route::GET('/mission-vision', 'AboutUsController@missionVision');
@@ -69,6 +73,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::GET('/around-world', 'AboutUsController@aroundWorld');
     Route::GET('/health-safety', 'AboutUsController@healthSafety');
     Route::GET('/people', 'AboutUsController@people');
+
+    //Route::GET('/career', 'AboutUsController@career');
 
     Route::resource('/mail-settings', 'MailSettingsController');
     Route::resource('/slider', 'SliderController');

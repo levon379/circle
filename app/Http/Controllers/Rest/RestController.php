@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rest;
 
+use App\Admin\ContactUs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin\Subscriber;
@@ -22,6 +23,7 @@ use App\Admin\MissionVision;
 use App\Admin\HealthSafety;
 use App\Admin\AroundWorld;
 use App\Admin\People;
+use App\Admin\Career;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -285,6 +287,22 @@ class RestController extends Controller
         }
         return response()->json(['missionVision' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+    public function getContactUs()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = ContactUs::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['contact_us' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
     public function getHistory()
     {
         $errorMessage = "";
@@ -370,6 +388,23 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['people' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getCareer()
+    {
+        $errorMessage = "";
+        $success = true;
+        $whyTahweelResp = [];
+        try {
+            $whyTahweel = Career::all();
+            foreach ($whyTahweel as $key => $tahweel) {
+                $whyTahweelResp[$key] = $tahweel;
+                $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['career' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
 }

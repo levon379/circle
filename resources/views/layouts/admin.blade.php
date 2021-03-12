@@ -178,8 +178,20 @@
                         <span class="hide-menu">Subscriber</span></a>
                 </li>
 
-                <li><a href="/admin/contact-us" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/contactus.svg') }}">
-                        <span class="hide-menu">Contact Us</span></a>
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/contactus.svg') }}">
+                        <span class="hide-menu">Contact Us<span class="fa arrow"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/admin/contact-us" class="waves-effect">
+                                <span class="hide-menu">Contact Us</span></a>
+                        </li>
+                        <li><a href="/admin/career" class="waves-effect">
+                                <span class="hide-menu">Career</span></a>
+                        </li>
+
+                    </ul>
                 </li>
 
                 <li><a href="/admin/mail-settings" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/mailsettings.svg') }}">

@@ -34,5 +34,7 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getHealTyAndSafety', 'RestController@getHealTyAndSafety');
     Route::GET('/getAroundWorld', 'RestController@getAroundWorld');
     Route::GET('/getTahweelPeople', 'RestController@getTahweelPeople');
+    Route::GET('/getCareer', 'RestController@getCareer');
+    Route::GET('/getContactUs', 'RestController@getContactUs');
     Route::GET('/getCategories', 'RestController@getCategories');
 });
