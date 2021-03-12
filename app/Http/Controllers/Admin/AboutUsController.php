@@ -268,8 +268,10 @@ class AboutUsController extends Controller
 
     public function healthSafetyStore(Request $request, $id)
     {
+
         $request->validate([
             'title' => 'required|max:191',
+            'description' => 'required|String',
             'text1' => 'required|string',
             'text2' => 'required|string',
             'text3' => 'required|string',
@@ -279,6 +281,7 @@ class AboutUsController extends Controller
 
         $healthSafety = HealthSafety::find($id);
         $healthSafety->title = $request->title;
+        $healthSafety->description = $request->description;
         $healthSafety->text1 = $request->text1;
         $healthSafety->text2 = $request->text2;
         $healthSafety->text3 = $request->text3;
