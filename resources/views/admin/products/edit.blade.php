@@ -88,14 +88,14 @@
 
 
 
-                            {{--<div class="form-group">
-                                <label for="uses_desc">Uses Description</label>
+                            <div class="form-group">
+                                <label for="uses_desc">Images Description</label>
                                 @error('uses_desc')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <textarea name="uses_desc" id="uses_desc" cols="30" rows="10" class="form-control"
-                                          style="resize: none">{{$data->product_desc}}</textarea>
-                            </div>--}}
+                                          style="resize: none">{{$data->uses_desc}}</textarea>
+                            </div>
 
                             <div class="form-group">
                                 <label for="images">Images </label>

@@ -38,7 +38,7 @@
 
                         <div class="col-lg-9 col-md-9 col-sm-6 m-b-20">
                             <h4 class="box-title ">
-                                Uses Description
+                                Images Description
                             </h4>
                             <p class="col-md-11"
                                style="word-wrap: break-word; white-space: pre-line">{{$data->uses_desc}}</p>

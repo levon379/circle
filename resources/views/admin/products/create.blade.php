@@ -83,13 +83,13 @@
                             <div style="margin-bottom:10px">
                                 <button id="add-list" type="button" class="btn btn-primary" onclick="addList()">Add List</button>
                             </div>
-                            {{--<div class="form-group">
-                                <label for="uses_desc">Uses Description</label>
+                            <div class="form-group">
+                                <label for="uses_desc">Images Description</label>
                                 @error('uses_desc')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <textarea name="uses_desc" id="uses_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
-                            </div>--}}
+                            </div>
 
                             <div class="form-group">
                                 <label for="images">Images</label>
