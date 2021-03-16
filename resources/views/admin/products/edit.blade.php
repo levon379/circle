@@ -210,7 +210,7 @@
                 '   <div class="input-group" style="width:70%">' +
                 '       <label htmlFor="' + ulInputId + '">List </label>' +
                 '       <div class="input-group-append">' +
-                '           <input id="' + ulInputId + '" required style="width:65%" type="text" name="' + ulInputName + '" value="' + name + '" class="form-control" placeholder="Name" />' +
+                '           <input id="' + ulInputId + '"  style="width:65%" type="text" name="' + ulInputName + '" value="' + name + '" class="form-control" placeholder="Name" />' +
                 '           <button type="button" class="btn btn-danger waves-effect waves-light form-control" title="Delete list" onclick="removeList(this)">x</button>' +
                 '       <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
                 // '       <button id="' + ulInputDesc + '-disable-button" style="' + (showDescription ? "" : "display:none") + '" type="button" class="btn btn-danger waves-effect waves-light form-control" title="Disable description" onclick="disableDescription(\'' + ulInputDesc + '\')">Disable desc</button>' +
