@@ -18,7 +18,6 @@
                                 <input type="text" class="form-control" id="title"
                                        placeholder="Title" name="title" value="{{old('title')}}" required>
                             </div>
-
                             <div class="form-group">
                                 <label for="description">Description <strong class="text-danger"> &#42; </strong></label>
                                 @error('description')
@@ -26,6 +25,22 @@
                                 @enderror
                                 <textarea name="description" id="description" cols="30" rows="10" class="form-control"
                                           style="resize: none;" required>{{old('description')}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Details Title <strong class="text-danger"> &#42; </strong> </label>
+                                @error('details_title')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="details_title"
+                                       placeholder="Title" name="details_title" value="{{old('Details title')}}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Details Description <strong class="text-danger"> &#42; </strong></label>
+                                @error('details_description')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <textarea name="details_description" id="details_description" cols="30" rows="10" class="form-control"
+                                          style="resize: none;" required>{{old('details_description')}}</textarea>
                             </div>
 
                             <div class="form-group">

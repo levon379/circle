@@ -29,6 +29,23 @@
                                 <textarea name="description" id="description" cols="30" rows="10" class="form-control"
                                           style="resize: none;" required>{{$data->description}}</textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="title">Details Title <strong class="text-danger"> &#42; </strong> </label>
+                                @error('details_title')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="title"
+                                       placeholder="Details Title" name="details_title" value="{{$data->details_title}}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Details Description <strong class="text-danger">
+                                        &#42; </strong></label>
+                                @error('details_description')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <textarea name="details_description" id="details_description" cols="30" rows="10" class="form-control"
+                                          style="resize: none;" required>{{$data->details_description}}</textarea>
+                            </div>
 
                             <div class="form-group">
                                 <label for="description">Date <strong class="text-danger"> &#42; </strong></label>

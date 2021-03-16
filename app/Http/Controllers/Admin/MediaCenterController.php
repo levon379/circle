@@ -52,6 +52,8 @@ class MediaCenterController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'details_title' => 'required',
+            'details_description' => 'required',
             'date' => 'required',
             'logo' => 'required|image|max:2048',
             'images' => 'array|max:5',
@@ -84,6 +86,8 @@ class MediaCenterController extends Controller
         $media = new Media;
         $media->title = $request->title;
         $media->description = $request->description;
+        $media->details_title = $request->details_title;
+        $media->details_description = $request->details_description;
         $media->date = $request->date;
         //$media->type = Media::TYPE['newsletter'];
         $media->logo = $logo;
@@ -134,6 +138,8 @@ class MediaCenterController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'details_title' => 'required',
+            'details_description' => 'required',
             'date' => 'required',
             'logo' => 'max:2048',
             'images' => 'array|max:5',
@@ -145,6 +151,8 @@ class MediaCenterController extends Controller
         $media = Media::find($id);
         $media->title = $request->title;
         $media->description = $request->description;
+        $media->details_title = $request->details_title;
+        $media->details_description = $request->details_description;
         $media->date = $request->date;
         //$media->type = Media::TYPE['newsletter'];
 
