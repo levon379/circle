@@ -186,30 +186,58 @@
         $('.dropify').dropify();
         let currentListIndex = 0;
         const ulListBaseName = "product-list";
+        const ulListBaseNameDesc = "product-desc";
         const liItemBaseName = "product-list-item";
 
-        function addList(value) {
-            if (!value) {
-                value = "";
+        function addList(name, description) {
+            if (!name) {
+                name = "";
             }
+            let showDescription;
+            if (!description) {
+                description = "";
+                showDescription = false;
+            } else {
+                showDescription = true;
+            }
+
             const ulInputName = ulListBaseName + '-' + currentListIndex;
+            const ulInputDesc = ulListBaseNameDesc + '-' + currentListIndex;
             const ulInputId = ulListBaseName + '-' + currentListIndex;
-            $("#product-lists-container").append(
+            const ulHtml =
                 '<ul id="product-list-ul-' + currentListIndex + '" data-list-index="' + currentListIndex + '" class="list-group ">' +
                 '<li class="list-group-item">' +
                 '   <div class="input-group" style="width:70%">' +
                 '       <label htmlFor="' + ulInputId + '">List </label>' +
                 '       <div class="input-group-append">' +
-                '       <input id="' + ulInputId + '" style="width:65%" type="text" name="' + ulInputName + '" value="' + value + '" class="form-control"/>' +
+                '           <input id="' + ulInputId + '" required style="width:65%" type="text" name="' + ulInputName + '" value="' + name + '" class="form-control" placeholder="Name" />' +
                 '           <button type="button" class="btn btn-danger waves-effect waves-light form-control" title="Delete list" onclick="removeList(this)">x</button>' +
-                '           <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
+                '       <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
+                // '       <button id="' + ulInputDesc + '-disable-button" style="' + (showDescription ? "" : "display:none") + '" type="button" class="btn btn-danger waves-effect waves-light form-control" title="Disable description" onclick="disableDescription(\'' + ulInputDesc + '\')">Disable desc</button>' +
+                '       <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
                 '       </div>' +
+                '   </div>' +
+                '   <div class="input-group" style="width:70%">' +
+                '       <textarea id="' + ulInputDesc + '" cols="20" style="width:65%;margin-top: 10px;' + (showDescription ? "" : "display:none") +'" name="' + ulInputDesc + '" class="form-control" placeholder="Description">' + description + '</textarea>' +
                 '   </div>' +
                 '</li>' +
                 '</ul>'
-            );
+            $("#product-lists-container").append(ulHtml);
             ++currentListIndex;
         }
+
+        function enableDescription(elementId) {
+            $("#" + elementId).show();
+            $("#" + elementId + "-disable-button").show();
+            $("#" + elementId + "-enable-button").hide();
+        }
+
+        function disableDescription(elementId) {
+            $("#" + elementId).hide();
+            $("#" + elementId + "-disable-button").hide();
+            $("#" + elementId + "-enable-button").show();
+        }
+
         function addItem(element, value) {
             if (!value) {
                 value = "";
@@ -220,7 +248,7 @@
                 '<li class="list-group-item">' +
                 '   <div class="input-group" style="width:70%">' +
                 '       <div class="input-group-append">' +
-                '       <input class="form-control" style="width:65%" name="' + liInputName + '" value="' + value + '"/>' +
+                '       <input class="form-control" style="width:65%" required name="' + liInputName + '" value="' + value + '" placeholder="Item name"/>' +
                 '           <button type="button" class="btn btn-primary waves-effect waves-light" onclick="removeItem(this)">x</button>' +
                 '       </div>' +
                 '   </div>' +
@@ -236,7 +264,7 @@
         }
 
         @foreach ($data->product_list as $list)
-            addList("{{$list->name}}");
+            addList("{{$list->name}}", "{{$list->description}}");
             @foreach ($list->product_list_items as $item)
                 addItem($("#product-list-ul-" + (currentListIndex - 1)), "{{$item->name}}");
             @endforeach

@@ -27,25 +27,38 @@
                                 <textarea name="description" id="description" cols="30" rows="10" class="form-control"
                                           style="resize: none;" required>{{old('description')}}</textarea>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
-                                @error('category')
+
+{{--                            <div class="form-group">--}}
+{{--                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>--}}
+{{--                                @error('category')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <select name="category_id" id="category_id" class="form-control">--}}
+{{--                                    @foreach($category as $key)--}}
+{{--                                        <option value="{{$key->id}}" @if(old('category_id') == $key->id) selected @endif>{{$key->name}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+                             <div class="form-group">
+                                <label for="logo">Upload PDF</label>
+                                @error('pdf_path')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <select name="category_id" id="category_id" class="form-control">
-                                    @foreach($category as $key)
-                                        <option value="{{$key->id}}" @if(old('category_id') == $key->id) selected @endif>{{$key->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="file" id="pdf_path" name="pdf_path" />
                             </div>
-
                             <div class="form-group">
-                                <label for="description">Link <strong class="text-danger"> &#42; </strong></label>
+                                <label for="description">Link</label>
                                 @error('link')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" name="link" required placeholder="Link" id="link" class="form-control" value="{{old('link')}}">
+                                <input type="text" name="link"  placeholder="Link" id="link" class="form-control" value="{{old('link')}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Link(web)</label>
+                                @error('link')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" name="link_web"  placeholder="Link(web)" id="link_web" class="form-control" value="{{old('link_web')}}">
                             </div>
 
                             <div class="form-group">

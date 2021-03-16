@@ -50,15 +50,15 @@ class CategoryController extends Controller
         $request->validate([
             "name" => "required"
         ]);
-        
-        $pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
+//dd($request->pdf_path);
+        //$pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
         //$pdf = FileUploadHelper::upload($request->pdf_path, ['*'], "/categories");
 
         $Category = new Category;
         $Category->name = $request->name;
         $Category->description = $request->description;
-        $Category->pdf_path = $pdf;
-        $Category->link = $request->link;
+        //$Category->pdf_path = $pdf;
+        //$Category->link = $request->link;
         if(!$Category->save()) {
             echo "<pre>";print_r($Category->getErrors());die;
         }
@@ -103,18 +103,18 @@ class CategoryController extends Controller
         ]);
 
         $Category = Category::find($id);
-        
-        if ($request->pdf_path) {
-            Storage::disk('public')->delete("$Category->pdf_path");
-            $pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
-            $Category->pdf_path = $pdf;
-        }
 
-        
+//        if ($request->pdf_path) {
+//            Storage::disk('public')->delete("$Category->pdf_path");
+//            $pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
+//            $Category->pdf_path = $pdf;
+//        }
+
+
         $Category->name = $request->name;
         $Category->description = $request->description;
-        
-        $Category->link = $request->link;
+
+//        $Category->link = $request->link;
         $Category->save();
 
         return redirect(self::ROUTE);
@@ -128,7 +128,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $Category = Category::find($id);
-         Storage::disk('public')->delete("$Category->pdf_path");
+//         Storage::disk('public')->delete("$Category->pdf_path");
          Category::destroy($Category->id);
         return  redirect(self::ROUTE);
     }

@@ -9,6 +9,9 @@ use App\Admin\Slider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Admin\Category;
+use App\helpers\FileUploadHelper;
+
+
 
 class SliderController extends Controller
 {
@@ -48,24 +51,32 @@ class SliderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { //dd($request->path);
         $request->validate([
             'title' => 'required|max:191',
             'description' => 'string',
-            'link' => 'string|max:191',
-            "category_id" => "numeric",
+            //'link' => 'string|max:191',
+            //'link_web' => 'string|max:191',
+            //"category_id" => "numeric",
             'path' => 'required|image'
         ]);
-
+        if ($request->has('pdf_path') !='') {
+            $pdf = Storage::disk('public')->putFile('slider', new File($request->pdf_path));
+            //$pdf = FileUploadHelper::upload($request->pdf_path, ['*'], "/slider");
+        }else{
+            $pdf = '';
+        }
         $path = Storage::disk('public')->putFile('slider', new File($request->path));
 
         DB::beginTransaction();
 
         $slider = new Slider;
         $slider->title = $request->title;
-        $slider->link = $request->link;
         $slider->description = $request->description;
-        $slider->category_id = $request->category_id;
+        $slider->link = $request->link;
+        $slider->link_web = $request->link_web;
+        $slider->pdf_path = $pdf;
+        //$slider->category_id = $request->category_id;
         $slider->path = $path;
         $slider->save();
 
@@ -114,23 +125,29 @@ class SliderController extends Controller
         $request->validate([
             'title' => 'required|max:191',
             'description' => 'string',
-            'link' => 'string|max:191',
-            "category_id" => "numeric",
-            'path' => 'required|image'
+            //'link' => 'string|max:191',
+            //'link_web' => 'string|max:191',
+            //"category_id" => "numeric",
+            'path' => 'required'
         ]);
-
         DB::beginTransaction();
 
         $slider = Slider::find($id);
         $slider->title = $request->title;
-        $slider->link = $request->link;
         $slider->description = $request->description;
-        $slider->category_id = $request->category_id;
         $slider->link = $request->link;
+        $slider->link_web = $request->link_web;
+        //$slider->category_id = $request->category_id;
 
-        if ($request->path) {
+        if ($request->has('pdf_path') !='') {
+            Storage::disk('public')->delete("$slider->pdf_path");
+            $pdf = Storage::disk('public')->putFile('slider', new File($request->pdf_path));
+            $slider->pdf_path = $pdf;
+        }
+
+        if ($request->imagePath) {
             Storage::disk('public')->delete($slider->path);
-            $path = Storage::disk('public')->putFile('slider', new File($request->path));
+            $path = Storage::disk('public')->putFile('slider', new File($request->imagePath));
             $slider->path = $path;
         }
 
@@ -149,6 +166,7 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $slider = Slider::find($id);
+        Storage::disk('public')->delete("$slider->pdf_path");
         Storage::disk('public')->delete("$slider->path");
         Slider::destroy($slider->id);
 

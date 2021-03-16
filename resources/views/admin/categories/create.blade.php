@@ -28,30 +28,30 @@
                                           style="resize: none;" required>{{old('description')}}</textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Link</label>
-                                @error('link')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="text" name="link" required placeholder="Link" id="link" class="form-control" value="{{old('link')}}">
-                            </div>
-                            
-                             <div class="form-group">
-                                <label for="logo">Upload PDF</label>
-                                @error('pdf_path')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="file" id="pdf_path" name="pdf_path" />
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="description">Link</label>--}}
+{{--                                @error('link')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="text" name="link" required placeholder="Link" id="link" class="form-control" value="{{old('link')}}">--}}
+{{--                            </div>--}}
 
-                            <div class="form-group">
-                                <label for="logo">Upload Image <strong class="text-danger"> &#42; </strong></label>
-                                @error('path')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="file" id="path" name="path" required class="dropify"/>
-                            </div>
-                            
+{{--                             <div class="form-group">--}}
+{{--                                <label for="logo">Upload PDF</label>--}}
+{{--                                @error('pdf_path')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="file" id="pdf_path" name="pdf_path" />--}}
+{{--                            </div>--}}
+
+{{--                            <div class="form-group">--}}
+{{--                                <label for="logo">Upload Image <strong class="text-danger"> &#42; </strong></label>--}}
+{{--                                @error('path')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="file" id="path" name="path" required class="dropify"/>--}}
+{{--                            </div>--}}
+
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">Save {{$title}}
                             </button>

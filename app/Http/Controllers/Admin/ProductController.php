@@ -104,6 +104,7 @@ class ProductController extends Controller
                 $product_list = new ProductList();
                 $product_list->product_id = $product->id;
                 $product_list->name = $request->{"product-list-$i"};
+                $product_list->description = $request->{"product-desc-$i"};
                 $product_list->save();
 
                 if (!$request->has("product-list-item-$i")) {
@@ -221,6 +222,7 @@ class ProductController extends Controller
             $product_list = new ProductList();
             $product_list->product_id = $product->id;
             $product_list->name = $request->{"product-list-$i"};
+            $product_list->description = $request->{"product-desc-$i"};
             $product_list->save();
 
             if (!$request->has("product-list-item-$i")) {
