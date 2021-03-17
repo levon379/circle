@@ -188,7 +188,7 @@
                 '<li class="list-group-item">' +
                 '   <div class="input-group" style="width:70%">' +
                 '       <div class="input-group-append">' +
-                '       <input class="form-control" style="width:65%" name="' + liInputName + '" value="' + value + '" required placeholder="Item name"/>' +
+                '       <input class="form-control" style="width:65%" name="' + liInputName + '" value="' + value + '"  placeholder="Item name"/>' +
                 '           <button type="button" class="btn btn-primary waves-effect waves-light" onclick="removeItem(this)">x</button>' +
                 '       </div>' +
                 '   </div>' +
