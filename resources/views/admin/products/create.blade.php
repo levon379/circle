@@ -152,13 +152,14 @@
                 '       <div class="input-group-append">' +
                 '           <input id="' + ulInputId + '" style="width:65%" type="text" name="' + ulInputName + '"  value="' + name + '" class="form-control" placeholder="Name" />' +
                 '           <button type="button" class="btn btn-danger waves-effect waves-light form-control" title="Delete list" onclick="removeList(this)">x</button>' +
-                '       <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
+                '           <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
                 // '       <button id="' + ulInputDesc + '-disable-button" style="' + (showDescription ? "" : "display:none") + '" type="button" class="btn btn-danger waves-effect waves-light form-control" title="Disable description" onclick="disableDescription(\'' + ulInputDesc + '\')">Disable desc</button>' +
-                '       <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
+                '           <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
                 '       </div>' +
                 '   </div>' +
-                '   <div class="input-group" style="width:70%">' +
+                '   <div class="input-group-append" style="width:70%">' +
                 '       <textarea id="' + ulInputDesc + '" cols="20" style="width:65%;margin-top: 10px;' + (showDescription ? "" : "display:none") +'" name="' + ulInputDesc + '" class="form-control" placeholder="Description">' + description + '</textarea>' +
+                '       <button type="button" class="btn btn-danger waves-effect waves-light form-control" id="' + ulInputDesc + '-disable-button"  style="' + (showDescription ? "" : "display:none") +'"  title="Delete Desc" onclick="disableDescription(\'' + ulInputDesc + '\')">x</button>' +
                 '   </div>' +
                 '</li>' +
                 '</ul>'
@@ -174,6 +175,7 @@
 
         function disableDescription(elementId) {
             $("#" + elementId).hide();
+            $("#" + elementId + "-disable-button").parent().find( "textarea" ).val('');
             $("#" + elementId + "-disable-button").hide();
             $("#" + elementId + "-enable-button").show();
         }
@@ -198,6 +200,10 @@
 
         function removeList(element) {
             $(element).closest('ul').remove();
+        }
+        function removeDesc(element) {
+            //disableDescription(elementId);
+            $(element).closest('div').remove();
         }
         function removeItem(element) {
             $(element).closest('li').remove();

@@ -217,8 +217,9 @@
                 '       <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
                 '       </div>' +
                 '   </div>' +
-                '   <div class="input-group" style="width:70%">' +
+                '   <div class="input-group-append" style="width:70%">' +
                 '       <textarea id="' + ulInputDesc + '" cols="20" style="width:65%;margin-top: 10px;' + (showDescription ? "" : "display:none") +'" name="' + ulInputDesc + '" class="form-control" placeholder="Description">' + description + '</textarea>' +
+                '       <button type="button" class="btn btn-danger waves-effect waves-light form-control" id="' + ulInputDesc + '-disable-button"  style="' + (showDescription ? "" : "display:none") +'"  title="Delete Desc" onclick="disableDescription(\'' + ulInputDesc + '\')">x</button>' +
                 '   </div>' +
                 '</li>' +
                 '</ul>'
@@ -234,6 +235,7 @@
 
         function disableDescription(elementId) {
             $("#" + elementId).hide();
+            $("#" + elementId + "-disable-button").parent().find( "textarea" ).val('');
             $("#" + elementId + "-disable-button").hide();
             $("#" + elementId + "-enable-button").show();
         }
