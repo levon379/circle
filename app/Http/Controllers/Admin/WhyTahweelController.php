@@ -51,7 +51,7 @@ class WhyTahweelController extends Controller
             'title' => 'required|max:191',
             'description' => 'string',
             'link' => 'string|max:191',
-            'path' => 'required|image'
+            'path' => 'required'
         ]);
 
         $path = Storage::disk('public')->putFile('why-tahweel', new File($request->path));
