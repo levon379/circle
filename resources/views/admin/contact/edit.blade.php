@@ -48,12 +48,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="po_box">P.O Box <strong class="text-danger"> &#42; </strong> </label>
+                                <label for="po_box">P.O Box </label>
                                 @error('po_box')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <input type="number" class="form-control" id="po_box"
-                                       placeholder="P.O Box" name="po_box" value="{{$data->po_box}}" required>
+                                       placeholder="P.O Box" name="po_box" value="{{$data->po_box}}" >
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">
