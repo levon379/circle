@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                         @foreach($data as $key=>$val)
-                            <tr>
+                            <tr data-pjax="{{$key + 1}}" data-key="{{$val->id}}">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src='{{asset("/uploads/$val->path")}}' alt="{{$val->title}}" class="img-responsive" width="200">
@@ -69,11 +69,47 @@
 @endpush
 
 @push('footer')
-    <!--Datatable js-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
     <script>
         $('#datatable').DataTable();
+        function updateOrdering() {
+            var ordering = {};
+            $('#datatable .ui-sortable tr').each(function (i, v) {
+                $(this).attr('data-pjax', i);
+                ordering[i] = {
+                    id: $(this).attr('data-key'),
+                    ordering: $(this).attr('data-pjax')
+                }
+            });
+            $.ajax({
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                },
+                data: ordering,
+                url: '/admin/slider/update-ordering',
+                success: function (res) {
+                }
+            });
+
+        }
+        $( function() {
+            $("#datatable > tbody").sortable();
+
+            var tbl_product = $("#datatable> tbody");
+            tbl_product.sortable({
+                items: 'tr:has(td)'
+            });
+            // tbody.disableSelection();
+            tbl_product.sortable({
+                stop: function (event, ui) {
+                    updateOrdering()
+                }
+            });
+
+        } );
     </script>
 @endpush
 

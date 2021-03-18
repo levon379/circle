@@ -24,7 +24,7 @@ class MediaCenterController extends Controller
      */
     public function index()
     {
-        $data = Media::all();
+        $data = Media::orderBy('ordering','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -47,6 +47,23 @@ class MediaCenterController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+    public function updateOrdering(Request $request)
+    {
+        $success = true;
+        $errorMessage = '';
+        try {
+            $data = $request->all();
+            foreach ($data as $media) {
+                $mediaModel = Media::find($media['id']);
+                $mediaModel->update(['ordering'=>(int)$media['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            $success = false;
+            $errorMessage = $e->getMessage();
+        }
+        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+    }
     public function store(Request $request)
     {
         $request->validate([

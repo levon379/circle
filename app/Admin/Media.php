@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    protected $fillable = ['ordering'];
     const TYPE = [
         'newsletter' => 1,
         'pressRelease' => 2

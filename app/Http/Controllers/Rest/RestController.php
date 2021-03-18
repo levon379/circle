@@ -132,7 +132,7 @@ class RestController extends Controller
                 //'category',
                 'image',
                 'specification'
-            ])->get();
+            ])->orderBy('ordering','asc')->get();
 
             foreach ($products as $product) {
                 foreach($product->product_tabs_map as $tabsMap) {
@@ -183,7 +183,7 @@ class RestController extends Controller
         $success = true;
         $slidersResponse = [];
         try {
-            $sliders = Slider::all();
+            $sliders = Slider::orderBy('ordering','asc')->get();
             foreach ($sliders as $key => $slider) {
                 $slidersResponse[$key] = $slider;
                 $slidersResponse[$key]['category'] = $slider->category;
@@ -220,7 +220,7 @@ class RestController extends Controller
         $success = true;
         $mediaResponse = [];
         try {
-            $medias = Media::all();
+            $medias = Media::orderBy('ordering','asc')->get();
             foreach ($medias as $key => $media) {
                 $mediaResponse[$key] = $media;
                 $images = MediaImage::where('media_id',$media->id)->get();
@@ -240,7 +240,7 @@ class RestController extends Controller
         $success = true;
         $whyTahweelResp = [];
         try {
-            $whyTahweel = WhyTahweel::all();
+            $whyTahweel = WhyTahweel::orderBy('ordering','asc')->get();
             foreach ($whyTahweel as $key => $tahweel) {
                 $whyTahweelResp[$key] = $tahweel;
                 $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);

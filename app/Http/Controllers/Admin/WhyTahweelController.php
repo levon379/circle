@@ -22,7 +22,7 @@ class WhyTahweelController extends Controller
      */
     public function index()
     {
-        $data = WhyTahweel::all();
+        $data = WhyTahweel::orderBy('ordering','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -45,6 +45,22 @@ class WhyTahweelController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+    public function updateOrdering(Request $request)
+    {
+        $success = true;
+        $errorMessage = '';
+        try {
+            $data = $request->all();
+            foreach ($data as $whyTahweel) {
+                $whyTahweelModel = WhyTahweel::find($whyTahweel['id']);
+                $whyTahweelModel->update(['ordering'=>(int)$whyTahweel['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            $success = false;
+            $errorMessage = $e->getMessage();
+        }
+        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+    }
     public function store(Request $request)
     {
         $request->validate([

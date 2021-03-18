@@ -79,6 +79,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/mail-settings', 'MailSettingsController');
     Route::resource('/slider', 'SliderController');
     Route::resource('/why-tahweel', 'WhyTahweelController');
+    Route::POST('/why-tahweel/update-ordering', 'WhyTahweelController@updateOrdering');
+    Route::POST('/slider/update-ordering', 'SliderController@updateOrdering');
+    Route::POST('/product-tabs/update-ordering', 'ProductTabsController@updateOrdering');
     Route::get('/subscriber', 'SubscriberController@index');
     Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
 
@@ -92,6 +95,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
 
     Route::resource('/media-center', 'MediaCenterController');
     Route::DELETE('/media-center/{media_id}/destroy-image/{image_id}', 'MediaCenterController@destroyImage');
+    Route::POST('/media-center/update-ordering', 'MediaCenterController@updateOrdering');
 
     //Route::resource('/press-releases', 'PressReleaseController');
     //Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
@@ -111,6 +115,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::POST('/ajax-get', 'ProductController@ajaxGet');
         Route::GET('/{id}/featured', 'ProductController@featured');
         Route::POST('/{id}/featured-store', 'ProductController@featuredStore');
+        Route::POST('/update-ordering', 'ProductController@updateOrdering');
     });
 
 });

@@ -22,7 +22,7 @@ class ProductTabsController extends Controller
      */
     public function index()
     {
-        $data = ProductTabs::all();
+        $data = ProductTabs::orderBy('ordering','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -51,7 +51,7 @@ class ProductTabsController extends Controller
             "name" => "required",
             "description" => "required"
         ]);
-        
+
 
 
         $ProductTabs = new ProductTabs;
@@ -69,6 +69,22 @@ class ProductTabsController extends Controller
      * @param \App\Admin\ProductTabs $ProductTabs
      * @return \Illuminate\Http\Response
      */
+    public function updateOrdering(Request $request)
+    {
+        $success = true;
+        $errorMessage = '';
+        try {
+            $data = $request->all();
+            foreach ($data as $tab) {
+                $tabModel = ProductTabs::find($tab['id']);
+                $tabModel->update(['ordering'=>(int)$tab['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            $success = false;
+            $errorMessage = $e->getMessage();
+        }
+        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+    }
     public function show($id)
     {
         $data = ProductTabs::find($id);

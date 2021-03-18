@@ -89,22 +89,22 @@
                         </span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="/admin/products" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        <li><a href="/admin/products" class="waves-effect">
                                 <span class="hide-menu">Products</span></a>
                         </li>
                         {{--<li><a href="/admin/product/details" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Product Details</span></a>
                         </li>--}}
-                        <li><a href="/admin/product-tabs" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        <li><a href="/admin/product-tabs" class="waves-effect">
                                 <span class="hide-menu">Product Tabs</span></a>
                         </li>
                         {{--<li><a href="/admin/product/configuration" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
                                 <span class="hide-menu">Product Configuration</span></a>
                         </li>--}}
-                        <li><a href="/admin/categories" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        <li><a href="/admin/categories" class="waves-effect">
                                 <span class="hide-menu">Category</span></a>
                         </li>
-                        <li><a href="/admin/catalog" class="waves-effect"><i class="mdi mdi-file fa-fw"></i>
+                        <li><a href="/admin/catalog" class="waves-effect">
                                 <span class="hide-menu">Product Catalogue</span></a>
                         </li>
                     </ul>
@@ -119,7 +119,7 @@
                         <li><a href="/admin/slider" class="waves-effect"><i class="mdi zmdi-slideshare fa-fw"></i>
                                 <span class="hide-menu">Sliders</span></a>
                         </li>
-                        <li><a href="/admin/why-tahweel" class="waves-effect"><i class="mdi mdi-cart fa-fw"></i>
+                        <li><a href="/admin/why-tahweel" class="waves-effect">
                                 <span class="hide-menu">Why Tahweel</span></a>
                         </li>
                     </ul>

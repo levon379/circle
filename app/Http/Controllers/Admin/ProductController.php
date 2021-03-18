@@ -35,7 +35,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::with('image')->get();
+        $data = Product::with('image')->orderBy('ordering','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -53,6 +53,23 @@ class ProductController extends Controller
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.create', compact('title', 'route', 'category', 'product_tabs', 'specification'));
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function updateOrdering(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            foreach ($data as $product) {
+                $productModel = Product::find($product['id']);
+                $productModel->update(['ordering'=>(int)$product['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            print_r($e->getMessage());die;
+        }
     }
 
     /**

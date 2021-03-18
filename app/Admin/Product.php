@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable = ['ordering'];
     public function image()
     {
         return $this->hasMany('App\Admin\ProductImage', "product_id", "id");

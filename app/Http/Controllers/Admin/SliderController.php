@@ -26,7 +26,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $data = Slider::all();
+        $data = Slider::orderBy('ordering','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -50,6 +50,22 @@ class SliderController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+    public function updateOrdering(Request $request)
+    {
+        $success = true;
+        $errorMessage = '';
+        try {
+            $data = $request->all();
+            foreach ($data as $slider) {
+                $sliderModel = Slider::find($slider['id']);
+                $sliderModel->update(['ordering'=>(int)$slider['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            $success = false;
+            $errorMessage = $e->getMessage();
+        }
+        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+    }
     public function store(Request $request)
     { //dd($request->path);
         $request->validate([

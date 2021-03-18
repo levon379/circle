@@ -8,6 +8,7 @@ class Slider extends Model
 {
 
     protected $guarded = [];
+    protected $fillable = ['ordering'];
     protected $table = "slider";
     public function category()
     {
