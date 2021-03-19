@@ -21,7 +21,7 @@ class SocialController extends Controller
      */
     public function index()
     {
-        $data = Social::all();
+        $data = Social::orderBy('id','asc')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));

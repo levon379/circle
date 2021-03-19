@@ -16,7 +16,7 @@
                             <th>#</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Options</th>
+                            <th style="width:110px !important">Options</th>
                         </tr>
                         </thead>
                         <tbody>

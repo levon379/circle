@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-<style>
 
-</style>
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -20,7 +18,7 @@
                             <th>Title</th>
                             <th>Category</th>
                             <th>Show Status</th>
-                            <th>Options</th>
+                            <th style="width:110px !important">Options</th>
                         </tr>
                         </thead>
                         <tbody>
