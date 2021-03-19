@@ -31,7 +31,7 @@ class RestController extends Controller
 {
 
     public function addSubscriber(Request $request)
-    { dd($request);
+    {
         $errorMessage = "";
         $success = true;
         $subscriber = [];
@@ -39,7 +39,7 @@ class RestController extends Controller
             $request->validate([
                 "email" => "email"
             ]);
-            dd($request);
+
             $data = $request->all();
             $subscriber = Subscriber::create($data);
             if ($subscriber) {
