@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'Rest'], function () {
-    Route::POST('/job-applicaion', 'RestController@addJobApplicaion');
+    Route::POST('/job-application', 'RestController@addJobApplicaion');
     Route::POST('/subscriber', 'RestController@addSubscriber');
     Route::GET('/getProductsByCategory/{id}', 'RestController@getAllProductsByCategory');
     Route::GET('/getCategory/{id}', 'RestController@getCategoryById');
