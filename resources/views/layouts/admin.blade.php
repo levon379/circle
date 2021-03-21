@@ -235,6 +235,11 @@
 <script src="{{asset('assets/js/custom.min.js')}}"></script>
 
 {{--custom script--}}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--Datatable js-->
+<script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
 @stack('footer')
 
 </html>

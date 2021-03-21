@@ -79,6 +79,7 @@
                             <div class="">
                                 <div id="product-lists-container" class="form-inline">
                                 </div>
+                                <input type="hidden" id="product-list-order" name="product-list-order" />
                             </div>
                             <div style="margin-bottom:10px">
                                 <button id="add-list" type="button" class="btn btn-primary" onclick="addList()">Add List</button>
@@ -124,6 +125,14 @@
 @push('footer')
     <script>
         $('.dropify').dropify();
+        $("#product-lists-container").sortable({
+            items: "ul",
+            update: function( ) {
+                calculateProductListOrder();
+            }
+        });
+        $('#product-lists-container').disableSelection();
+
         let currentListIndex = 0;
         const ulListBaseName = "product-list";
         const ulListBaseNameDesc = "product-desc";
@@ -144,17 +153,22 @@
             const ulInputName = ulListBaseName + '-' + currentListIndex;
             const ulInputDesc = ulListBaseNameDesc + '-' + currentListIndex;
             const ulInputId = ulListBaseName + '-' + currentListIndex;
+            const ulHiddenInputName = 'ul-order-' + currentListIndex;
             const ulHtml =
-                '<ul id="product-list-ul-' + currentListIndex + '" data-list-index="' + currentListIndex + '" class="list-group ">' +
+                '<ul id="product-list-ul-' + currentListIndex + '" data-list-index="' + currentListIndex + '" class="list-group ui-state-default>' +
                 '<li class="list-group-item">' +
                 '   <div class="input-group" style="width:70%">' +
-                '       <label htmlFor="' + ulInputId + '">List </label>' +
+                '       <label htmlFor="' + ulInputId + '">' +
+                '           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16">' +
+                '               <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>' +
+                '           </svg> &nbsp;List' +
+                '       </label>' +
                 '       <div class="input-group-append">' +
-                '           <input id="' + ulInputId + '" style="width:65%" type="text" name="' + ulInputName + '"  value="' + name + '" class="form-control" placeholder="Name" />' +
+                '           <input id="' + ulInputId + '"  style="width:65%" type="text" name="' + ulInputName + '" value="' + name + '" class="form-control" placeholder="List name" />' +
                 '           <button type="button" class="btn btn-danger waves-effect waves-light form-control" title="Delete list" onclick="removeList(this)">x</button>' +
-                '           <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
+                '       <button type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Add item" onclick="addItem(this)">Add item</button>' +
                 // '       <button id="' + ulInputDesc + '-disable-button" style="' + (showDescription ? "" : "display:none") + '" type="button" class="btn btn-danger waves-effect waves-light form-control" title="Disable description" onclick="disableDescription(\'' + ulInputDesc + '\')">Disable desc</button>' +
-                '           <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
+                '       <button id="' + ulInputDesc + '-enable-button" style="' + (showDescription ? "display:none" : "") + '" type="button" class="btn btn-secondary waves-effect waves-light form-control" title="Enable description" onclick="enableDescription(\'' + ulInputDesc + '\')">Add desc</button>' +
                 '       </div>' +
                 '   </div>' +
                 '   <div class="input-group-append" style="width:70%">' +
@@ -164,6 +178,15 @@
                 '</li>' +
                 '</ul>'
             $("#product-lists-container").append(ulHtml);
+            $("#product-lists-container").sortable("refresh");
+
+            $('#product-list-ul-' + currentListIndex).sortable({
+                items: "li",
+            });
+            $('#product-list-ul-' + currentListIndex).disableSelection();
+
+            calculateProductListOrder();
+
             ++currentListIndex;
         }
 
@@ -187,26 +210,36 @@
             const currentListSavedIndex = $(element).closest('ul').data("list-index");
             const liInputName = liItemBaseName + '-' + currentListSavedIndex + "[]";
             $(element).closest('ul').append(
-                '<li class="list-group-item">' +
+                '<li class="list-group-item ui-state-default">' +
+                '   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">' +
+                '       <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>' +
+                '   </svg>' +
                 '   <div class="input-group" style="width:70%">' +
                 '       <div class="input-group-append">' +
-                '       <input class="form-control" style="width:65%" name="' + liInputName + '" value="' + value + '"  placeholder="Item name"/>' +
+                '           <input class="form-control" style="width:65%"  name="' + liInputName + '" value="' + value + '" placeholder="Item name"/>' +
                 '           <button type="button" class="btn btn-primary waves-effect waves-light" onclick="removeItem(this)">x</button>' +
                 '       </div>' +
                 '   </div>' +
                 '</li>'
             );
+
+            $(element).closest('ul').sortable("refresh");
         }
 
         function removeList(element) {
             $(element).closest('ul').remove();
         }
-        function removeDesc(element) {
-            //disableDescription(elementId);
-            $(element).closest('div').remove();
-        }
         function removeItem(element) {
             $(element).closest('li').remove();
+        }
+
+        function calculateProductListOrder() {
+            let newOrder = [];
+            $("#product-lists-container > ul").each(function () {
+                const currentElementIndex = $(this).data("list-index");
+                newOrder.push(currentElementIndex);
+            });
+            $("#product-list-order").val(newOrder.join(','));
         }
     </script>
 @endpush

@@ -128,6 +128,9 @@ class RestController extends Controller
                 'product_list',
                 //'product_list_items',
                 'product_tabs_map',
+//                'product_tabs_map' => function ($q) {
+//                    $q->orderBy('tab_id', 'asc');
+//                },
                 'featured',
                 //'category',
                 'image',
@@ -138,6 +141,9 @@ class RestController extends Controller
                 foreach($product->product_tabs_map as $tabsMap) {
                     $tabsMap->get_tabs;
                 }
+                $product->load(['product_list' => function ($q) {
+                    $q->orderBy('id', 'asc');
+                }]);
                 foreach($product->product_list as $list_items) {
                     $list_items->product_list_items;
                 }

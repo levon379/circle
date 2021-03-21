@@ -112,29 +112,7 @@ class ProductController extends Controller
                     $product_tabs_map->save();
                 }
             }
-
-            for($i = 0; $i < 30; ++$i) {
-                if (!$request->has("product-list-$i")) {
-                    continue;
-                }
-
-                $product_list = new ProductList();
-                $product_list->product_id = $product->id;
-                $product_list->name = $request->{"product-list-$i"};
-                $product_list->description = $request->{"product-desc-$i"};
-                $product_list->save();
-
-                if (!$request->has("product-list-item-$i")) {
-                    continue;
-                }
-                foreach($request->toArray()["product-list-item-$i"] as $itemName) {
-                    $item = new ProductListItems();
-                    $item->product_list_id = $product_list->id;
-                    $item->name = $itemName;
-                    $item->save();
-                }
-
-            }
+            $this->saveProductList($request, $product);
         }
         if ($request->has('images')) {
             $product->image()->createMany($image);
@@ -166,6 +144,10 @@ class ProductController extends Controller
     {
         //$data = $product;
         $data = Product::find($id);
+        $data->load(['product_list' => function ($q) {
+            $q->orderBy('id', 'asc');
+        }]);
+
         $category = Category::all();
         $tabs = ProductTabs::all();
         $product_tabs_map =  ProductTabsMap::where('product_id',$id)->get();
@@ -231,28 +213,7 @@ class ProductController extends Controller
         //product list
         $product_list = new ProductList();
         $product_list::where('product_id', $product->id)->delete();
-        for($i = 0; $i < 20; ++$i) {
-            if (!$request->has("product-list-$i")) {
-                continue;
-            }
-
-            $product_list = new ProductList();
-            $product_list->product_id = $product->id;
-            $product_list->name = $request->{"product-list-$i"};
-            $product_list->description = $request->{"product-desc-$i"};
-            $product_list->save();
-
-            if (!$request->has("product-list-item-$i")) {
-                continue;
-            }
-            foreach($request->toArray()["product-list-item-$i"] as $itemName) {
-                $item = new ProductListItems();
-                $item->product_list_id = $product_list->id;
-                $item->name = $itemName;
-                $item->save();
-            }
-
-        }
+        $this->saveProductList($request, $product);
         //////////////
         if ($request->has('images')) {
             $image = FileUploadHelper::upload($request->images, ['*'], "/product");
@@ -420,5 +381,39 @@ class ProductController extends Controller
         $featured = new ProductFeatur;
         $featured->insert($arr);
         return redirect(self::ROUTE);
+    }
+
+    protected function saveProductList(Request $request, Product $product) {
+        if (!$request->has("product-list-order")) {
+            return;
+        }
+        $order = $request->{"product-list-order"};
+        $orderArray = explode(',', $order);
+        if (!is_array($orderArray)) {
+            $orderArray = [];
+        }
+        for ($j = 0; $j < count($orderArray); ++$j) {
+            $i = $orderArray[$j];
+            if (!$request->has("product-list-$i")) {
+                continue;
+            }
+
+            $product_list = new ProductList();
+            $product_list->product_id = $product->id;
+            $product_list->name = $request->{"product-list-$i"};
+            $product_list->description = $request->{"product-desc-$i"};
+            $product_list->save();
+
+            if (!$request->has("product-list-item-$i")) {
+                continue;
+            }
+            foreach($request->toArray()["product-list-item-$i"] as $itemName) {
+                $item = new ProductListItems();
+                $item->product_list_id = $product_list->id;
+                $item->name = $itemName;
+                $item->save();
+            }
+
+        }
     }
 }

@@ -71,12 +71,8 @@
 @endpush
 
 @push('footer')
-    <!--Datatable js-->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
     <script>
-        $('#datatable').DataTable();
+        $('#datatable').DataTable({"bSort" : false});
         function updateOrdering() {
             var ordering = {};
             $('#datatable .ui-sortable tr').each(function (i, v) {

@@ -54,9 +54,7 @@
 @endpush
 
 @push('footer')
-    <!--Datatable js-->
-    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
+
     <script src="{{asset('assets/pdfobject/pdfobject.min.js')}}"></script>
     <script>
         $('.dropify').dropify();

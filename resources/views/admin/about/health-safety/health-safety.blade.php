@@ -72,9 +72,6 @@
 @endpush
 
 @push('footer')
-    <!--Datatable js-->
-    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/swal/sweetalert.min.js')}}"></script>
     <script>
         $('#datatable').DataTable();
     </script>

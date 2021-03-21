@@ -35,6 +35,7 @@ class Product extends Model
     public function product_tabs_map()
     {
         //return $this->belongsToMany(ProductTabsMap::class, "",'product_tabs_map');
-        return $this->hasMany('App\Admin\ProductTabsMap', "product_id");
+//        return $this->hasMany('App\Admin\ProductTabsMap', "product_id");
+        return $this->hasMany('App\Admin\ProductTabsMap', "product_id")->leftJoin('product_tabs', 'product_tabs_map.tab_id', '=', 'product_tabs.id')->orderBy('product_tabs.ordering');
     }
 }
