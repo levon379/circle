@@ -29,13 +29,13 @@
                                        placeholder="Link" name="link" value="{{$data->link}}" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="logo">Upload Link Logo <strong class="text-danger"> &#42; </strong></label>
-                                @error('logo')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="file" id="logo" name="logo" required class="dropify" data-default-file='{{asset("uploads/$data->logo")}}' />
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="logo">Upload Link Logo <strong class="text-danger"> &#42; </strong></label>--}}
+{{--                                @error('logo')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="file" id="logo" name="logo" required class="dropify" data-default-file='{{asset("uploads/$data->logo")}}' />--}}
+{{--                            </div>--}}
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">
                                 Save {{$title}}

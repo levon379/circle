@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rest;
 
 use App\Admin\ContactUs;
+use App\Admin\Social;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin\Subscriber;
@@ -413,6 +414,23 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['career' => $whyTahweelResp, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getSocial()
+    {
+        $errorMessage = "";
+        $success = true;
+        $socialResp = [];
+        try {
+            $socTahweel = Social::orderBy('id','asc')->get();
+            foreach ($socTahweel as $key => $social) {
+                $socialResp[$key] = $social;
+                $socialResp[$key]['image'] = asset("/uploads/" . $social->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['social' => $socialResp, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
 }

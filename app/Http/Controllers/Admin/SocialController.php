@@ -49,15 +49,15 @@ class SocialController extends Controller
         $request->validate([
             "name" => "required",
             "link" => "required",
-            "logo" => "required|image|mimes:jpeg,png,jpg|max:2048",
+           // "logo" => "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
 
-        $logo = Storage::disk('public')->putFile('social/', new File($request->logo));
+        //$logo = Storage::disk('public')->putFile('social/', new File($request->logo));
 
         $social = new Social;
         $social->name = $request->name;
         $social->link = $request->link;
-        $social->logo = $logo;
+       // $social->logo = $logo;
         $social->save();
 
         return redirect(self::ROUTE);
@@ -98,15 +98,15 @@ class SocialController extends Controller
         $request->validate([
             "name" => "required",
             "link" => "required",
-            "logo" => "mimes:jpeg,png,jpg|max:2048",
+            //"logo" => "mimes:jpeg,png,jpg|max:2048",
         ]);
 
 
-        if ($request->logo){
-            Storage::disk('public')->delete($social->logo);
-            $logo = Storage::disk('public')->putFile('social/', new File($request->logo));
-            $social->logo = $logo;
-        }
+//        if ($request->logo){
+//            Storage::disk('public')->delete($social->logo);
+//            $logo = Storage::disk('public')->putFile('social/', new File($request->logo));
+//            $social->logo = $logo;
+//        }
 
         $social->name = $request->name;
         $social->link = $request->link;
@@ -122,7 +122,7 @@ class SocialController extends Controller
      */
     public function destroy(Social $social)
     {
-        Storage::disk('public')->delete("$social->logo");
+       // Storage::disk('public')->delete("$social->logo");
         Social::destroy($social->id);
         return redirect(self::ROUTE);
     }

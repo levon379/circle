@@ -14,7 +14,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Logo</th>
+{{--                            <th>Logo</th>--}}
                             <th>Name</th>
                             <th>Link</th>
                             <th>Options</th>
@@ -24,9 +24,9 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>
-                                    <img src='{{asset("/uploads/$val->logo")}}' alt="{{$val->name}}" class="img-responsive" width="50">
-                                </td>
+{{--                                <td>--}}
+{{--                                    <img src='{{asset("/uploads/$val->logo")}}' alt="{{$val->name}}" class="img-responsive" width="50">--}}
+{{--                                </td>--}}
                                 <td>{{$val->name}}</td>
                                 <td>{{$val->link}}</td>
 
