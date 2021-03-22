@@ -46,7 +46,8 @@ class RestController extends Controller
                 $subscribers = Subscriber::where('status', 0)->pluck('email');
                 $mailData = MailContent::where('type', 'subscriber')->first();
                 $mail = array('subject' => $mailData->subject, 'message' => $mailData->message);
-                Subscribe::dispatch($subscribers, $mail);
+                $subscribe = new Subscribe($subscribers, $mail);
+                $subscribe->dispatch($subscribers, $mail);
                 Subscriber::where('status', '=', 0)
                     ->update(['status' => 1]);
             }
