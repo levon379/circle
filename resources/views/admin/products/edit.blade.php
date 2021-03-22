@@ -301,9 +301,9 @@
         }
 
         @foreach ($data->product_list as $list)
-            addList("{{$list->name}}", "{{$list->description}}");
+            addList(`{{$list->name}}`, `{{ strip_tags($list->description) }}`);
             @foreach ($list->product_list_items as $item)
-                addItem($("#product-list-ul-" + (currentListIndex - 1)), "{{$item->name}}");
+                addItem($("#product-list-ul-" + (currentListIndex - 1)), `{{$item->name}}`);
             @endforeach
         @endforeach
 
