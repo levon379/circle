@@ -13,7 +13,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Thumbnail</th>
+{{--                            <th>Thumbnail</th>--}}
                             <th>Title</th>
                             <th>Mission Text</th>
                             <th>Vision Text</th>
