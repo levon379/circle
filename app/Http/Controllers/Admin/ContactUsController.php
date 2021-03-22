@@ -56,7 +56,7 @@ class ContactUsController extends Controller
             "country" => "required",
             "telephone_number" => "required|regex:/^([0-9\s\-\+\(\)]*)$/",
             "fax_number" => "required",
-            "po_box" => "numeric",
+//            "po_box" => "numeric",
         ]);
 
         $contactUs = new ContactUs;
@@ -107,7 +107,7 @@ class ContactUsController extends Controller
             "country" => "required",
             "telephone_number" => "required|regex:/^([0-9\s\-\+\(\)]*)$/",
             "fax_number" => "required",
-            "po_box" => "numeric",
+//            "po_box" => "numeric",
         ]);
 
         $contactUs = ContactUs::find($id);

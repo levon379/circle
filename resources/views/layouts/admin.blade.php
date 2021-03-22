@@ -116,7 +116,7 @@
                         </span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="/admin/slider" class="waves-effect"><i class="mdi zmdi-slideshare fa-fw"></i>
+                        <li><a href="/admin/slider" class="waves-effect">
                                 <span class="hide-menu">Sliders</span></a>
                         </li>
                         <li><a href="/admin/why-tahweel" class="waves-effect">
