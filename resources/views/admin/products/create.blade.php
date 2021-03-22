@@ -216,7 +216,7 @@
                 '   </svg>' +
                 '   <div class="input-group" style="width:70%">' +
                 '       <div class="input-group-append">' +
-                '           <input class="form-control" style="width:65%"  name="' + liInputName + '" value="' + value + '" placeholder="Item name"/>' +
+                '           <textarea class="form-control" style="width:65%"  name="' + liInputName + '"  placeholder="Item name">'+value+'</textarea>' +
                 '           <button type="button" class="btn btn-primary waves-effect waves-light" onclick="removeItem(this)">x</button>' +
                 '       </div>' +
                 '   </div>' +
