@@ -27,11 +27,11 @@
                                 <td>{{$val->message}}</td>
 
                                 <td>
-                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"
-                                       data-placement="top" title="Show"
-                                       class="btn btn-warning btn-circle tooltip-warning">
-                                        <i class="fas fas fa-eye"></i>
-                                    </a>
+{{--                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"--}}
+{{--                                       data-placement="top" title="Show"--}}
+{{--                                       class="btn btn-warning btn-circle tooltip-warning">--}}
+{{--                                        <i class="fas fas fa-eye"></i>--}}
+{{--                                    </a>--}}
 
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
