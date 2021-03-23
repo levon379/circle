@@ -146,10 +146,10 @@ class RestController extends Controller
             $message = str_replace('{{name}}', $request->name, $message);
             $message = str_replace('{{mobile}}', $request->phone, $message);
             $message = str_replace('{{subject}}', $request->subject, $message);
-            $message = str_replace('{{start_date}}', $application->created_at, $message);
+            $message = str_replace('{{start_date}}', $application->created_at->format('d M Y'), $message);
 
             $subject = $mailData->subject;
-            $subject = str_replace('{{start_date}}', $application->created_at, $subject );
+            $subject = str_replace('{{start_date}}', $application->created_at->format('d M Y'), $subject );
             $mail = array('subject' => $subject, 'message' => $message);
             $job_application = new Subscribe($request->email, $mail);
             $job_application->dispatch($request->email, $mail);
