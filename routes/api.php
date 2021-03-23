@@ -38,4 +38,6 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getSocial', 'RestController@getSocial');
     Route::GET('/getContactUs', 'RestController@getContactUs');
     Route::GET('/getCategories', 'RestController@getCategories');
+    Route::GET('/verifySubscribtionEmail', 'RestController@verifySubscribtionEmail');
+    Route::GET('/verifyJobApplicationEmail', 'RestController@verifyJobApplicationEmail');
 });

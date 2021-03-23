@@ -30,34 +30,95 @@ use Illuminate\Support\Facades\Storage;
 
 class RestController extends Controller
 {
-
-    public function addSubscriber(Request $request)
+    public function verifySubscribtionEmail(Request $request)
     {
         $errorMessage = "";
         $success = true;
-        $subscriber = [];
         try {
             $request->validate([
-                "email" => "email"
+                "token" => "string"
             ]);
 
-            $data = $request->all();
-            $subscriber = Subscriber::create($data);
-            if ($subscriber) {
-                $subscribers = Subscriber::where('status', 0)->pluck('email');
-                $mailData = MailContent::where('type', 'subscriber')->first();
-                $mail = array('subject' => $mailData->subject, 'message' => $mailData->message);
-                $subscribe = new Subscribe($subscribers, $mail);
-                $subscribe->dispatch($subscribers, $mail);
-                Subscriber::where('status', '=', 0)
-                    ->update(['status' => 1]);
+            $subscriber = Subscriber::where('email_verify_token', $request->token)->first();
+            if (!$subscriber) {
+                return response()->json(['success' => false, 'errorMessage' => 'Invalid token']);
+            }
+            if (!$subscriber->status) {
+                $subscriber->status = 1;
+                $subscriber->save();
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
 
-        return response()->json(['subscriber' => $subscriber, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function verifyJobApplicationEmail(Request $request)
+    {
+        $errorMessage = "";
+        $success = true;
+        try {
+            $request->validate([
+                "token" => "string"
+            ]);
+
+            $jobApplication = JobApplication::where('email_verify_token', $request->token)->first();
+            if (!$jobApplication) {
+                return response()->json(['success' => false, 'errorMessage' => 'Invalid token']);
+            }
+            if (!$jobApplication->status) {
+                $jobApplication->status = 1;
+                $jobApplication->save();
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+
+        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    public function addSubscriber(Request $request)
+    {
+        $errorMessage = "";
+        $success = true;
+        try {
+            $request->validate([
+                "email" => "email"
+            ]);
+
+            $subscriber = Subscriber::where('email', $request->email)->first();
+            if ($subscriber) {
+                if ($subscriber->status) {
+                    return response()->json(['success' => false, 'errorMessage' => 'Already subscribed']);
+                }
+            }
+
+            if (!$subscriber) {
+                $token = uniqid() . random_int(1000, 9999);
+                $data = [
+                    'email' => $request->email,
+                    'status' => 0,
+                    'email_verify_token' => $token
+                ];
+                $subscriber = Subscriber::create($data);
+            }
+
+            $verificationLink = env('FRONT_URL') . 'subscriptionVerification/'. $subscriber->email_verify_token;
+            $mailData = MailContent::where('type', 'subscriber')->first();
+            $message = $mailData->message;
+            $message = str_replace('{{email}}', $request->email, $message);
+            $message = str_replace('{{verification_link}}', $verificationLink, $message);
+            $mail = array('subject' => $mailData->subject, 'message' => $message);
+            $subscribe = new Subscribe($request->email, $mail);
+            $subscribe->dispatch($request->email, $mail);
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
     }
 
     public function addJobApplicaion(Request $request)
@@ -78,6 +139,21 @@ class RestController extends Controller
 
             $data = $request->all();
             $application = JobApplication::create($data);
+
+            $mailData = MailContent::where('type', 'application')->first();
+            $message = $mailData->message;
+            $message = str_replace('{{message}}', $request->message, $message);
+            $message = str_replace('{{name}}', $request->name, $message);
+            $message = str_replace('{{mobile}}', $request->phone, $message);
+            $message = str_replace('{{subject}}', $request->subject, $message);
+            $message = str_replace('{{start_date}}', $application->created_at, $message);
+
+            $subject = $mailData->subject;
+            $subject = str_replace('{{start_date}}', $application->created_at, $subject );
+            $mail = array('subject' => $subject, 'message' => $message);
+            $job_application = new Subscribe($request->email, $mail);
+            $job_application->dispatch($request->email, $mail);
+
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;

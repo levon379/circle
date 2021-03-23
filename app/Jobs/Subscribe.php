@@ -14,16 +14,16 @@ class Subscribe implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $subscriber;
+    protected $to;
     protected $mail;
 
     /**
      * Create a new job instance.
      * @return void
      */
-    public function __construct($subscriber, $mail)
+    public function __construct($to, $mail)
     {
-        $this->subscriber = $subscriber;
+        $this->to = $to;
         $this->mail = $mail;
     }
 
@@ -33,8 +33,9 @@ class Subscribe implements ShouldQueue
      */
     public function handle()
     {
-        $subscriber = $this->subscriber;
         $details = $this->mail;
-        Mail::to($subscriber)->send(new SubscriberMail($details));
+        $mailable = new SubscriberMail($details);
+        $mailable->html(nl2br($details['message']));
+        Mail::to($this->to)->send($mailable);
     }
 }
