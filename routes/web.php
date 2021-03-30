@@ -29,93 +29,61 @@ Auth::routes([
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');
 
-    Route::resource('/contact-us', 'ContactUsController');
-    Route::resource('/categories', 'CategoryController');
-    Route::resource('/product-tabs', 'ProductTabsController');
-    Route::resource('/about-us', 'AboutUsController');
+    Route::resource('/home-page', 'HomePageController');
+    Route::resource('/our-team', 'OurTeamController');
 
-    Route::GET('/overview', 'AboutUsController@overview');
-    Route::GET('/overview/{id}/edit', 'AboutUsController@overviewEdit');
-    Route::PUT('/overview/{id}', 'AboutUsController@overviewStore');
+    Route::prefix('request-quote')->group(function () {
+        Route::resource('/', 'RequestQuoteController');
+        Route::DELETE('/{request_id}/destroy-image/{image_id}', 'RequestQuoteController@destroyImage');
+        Route::GET('/{id}/edit', 'RequestQuoteController@edit');
+        Route::POST('/{id}/delete', 'RequestQuoteController@destroyQuote');
+        Route::get('/{id}', 'RequestQuoteController@show');
+    });
+    Route::prefix('quote-main')->group(function () {
+        Route::GET('/', 'RequestQuoteMainController@quoteMain');
+        Route::GET('/{id}/edit', 'RequestQuoteMainController@quoteMainEdit');
+        Route::PUT('/{id}', 'RequestQuoteMainController@quoteMainStore');
+    });
+    Route::prefix('contact-main')->group(function () {
+        Route::GET('/', 'ContactMainController@contactMain');
+        Route::GET('/{id}/edit', 'ContactMainController@contactMainEdit');
+        Route::PUT('/{id}', 'ContactMainController@contactMainStore');
+    });
+    Route::prefix('contact-us')->group(function () {
+        Route::resource('/', 'ContactController');
+        Route::DELETE('/{request_id}/destroy-image/{image_id}', 'ContactController@destroyImage');
+        Route::GET('/{id}/edit', 'ContactController@edit');
+        Route::POST('/{id}/delete', 'ContactController@destroyContact');
+        Route::get('/{id}', 'ContactController@show');
+    });
+    Route::prefix('our-team-main')->group(function () {
+        Route::GET('/', 'OurTeamMainController@teamMain');
+        Route::GET('/{id}/edit', 'OurTeamMainController@teamMainEdit');
+        Route::PUT('/{id}', 'OurTeamMainController@teamMainStore');
+    });
+    Route::prefix('work-with-us-main')->group(function () {
 
-    Route::GET('/integrated', 'AboutUsController@integrated');
-    Route::GET('/integrated/{id}/edit', 'AboutUsController@integratedEdit');
-    Route::PUT('/integrated/{id}', 'AboutUsController@integratedStore');
-
-    Route::GET('/mission-vision', 'AboutUsController@integrated');
-    Route::GET('/mission-vision/{id}/edit', 'AboutUsController@missionVisionEdit');
-    Route::PUT('/mission-vision/{id}', 'AboutUsController@missionVisionStore');
-
-    Route::GET('/history', 'AboutUsController@history');
-    Route::GET('/history/{id}/edit', 'AboutUsController@historyEdit');
-    Route::PUT('/history/{id}', 'AboutUsController@historyStore');
-
-    Route::GET('/around-world', 'AboutUsController@aroundWorld');
-    Route::GET('/around-world/{id}/edit', 'AboutUsController@aroundWorldEdit');
-    Route::PUT('/around-world/{id}', 'AboutUsController@aroundWorldStore');
-
-    Route::GET('/health-safety', 'AboutUsController@healthSafety');
-    Route::GET('/health-safety/{id}/edit', 'AboutUsController@healthSafetyEdit');
-    Route::PUT('/health-safety/{id}', 'AboutUsController@healthSafetyStore');
-
-    Route::GET('/people', 'AboutUsController@people');
-    Route::GET('/people/{id}/edit', 'AboutUsController@peopleEdit');
-    Route::PUT('/people/{id}', 'AboutUsController@peopleStore');
-
-    Route::GET('/career', 'ContactUsController@career');
-    Route::GET('/career/{id}/edit', 'ContactUsController@careerEdit');
-    Route::PUT('/career/{id}', 'ContactUsController@careerStore');
-
-    //Route::POST('/about-us/overview', 'AboutUsController@overview');
-    Route::GET('/integrated', 'AboutUsController@integrated');
-    Route::GET('/mission-vision', 'AboutUsController@missionVision');
-    Route::GET('/history', 'AboutUsController@history');
-    Route::GET('/around-world', 'AboutUsController@aroundWorld');
-    Route::GET('/health-safety', 'AboutUsController@healthSafety');
-    Route::GET('/people', 'AboutUsController@people');
-
-    //Route::GET('/career', 'AboutUsController@career');
-
-    Route::resource('/mail-settings', 'MailSettingsController');
-    Route::resource('/slider', 'SliderController');
-    Route::resource('/why-tahweel', 'WhyTahweelController');
-    Route::POST('/why-tahweel/update-ordering', 'WhyTahweelController@updateOrdering');
-    Route::POST('/slider/update-ordering', 'SliderController@updateOrdering');
-    Route::POST('/product-tabs/update-ordering', 'ProductTabsController@updateOrdering');
-    Route::get('/subscriber', 'SubscriberController@index');
-    Route::DELETE('/subscriber/{id}', 'SubscriberController@destroy');
-
-    Route::get('/job-application', 'JobApplicationController@index');
-    Route::get('/job-application/show/{id}', 'JobApplicationController@show');
-    Route::DELETE('/job-application/{id}', 'JobApplicationController@destroy');
-
-    Route::resource('/social', 'SocialController');
-    Route::resource('/vacancies', 'VacancyController');
-    Route::resource('/catalog', 'CatalogController');
-
-    Route::resource('/media-center', 'MediaCenterController');
-    Route::DELETE('/media-center/{media_id}/destroy-image/{image_id}', 'MediaCenterController@destroyImage');
-    Route::POST('/media-center/update-ordering', 'MediaCenterController@updateOrdering');
-
-    //Route::resource('/press-releases', 'PressReleaseController');
-    //Route::DELETE('/press-releases/{media_id}/destroy-image/{image_id}', 'NewsletterController@destroyImage');
-
-    Route::prefix('products')->group(function () {
-        Route::resource('/', 'ProductController');
-        Route::GET('/details', 'ProductController@details');
-        Route::DELETE('/{product_id}/destroy-image/{image_id}', 'ProductController@destroyImage');
-        Route::GET('/{id}/specification', 'ProductController@specification');
-        Route::POST('/{id}/specification', 'ProductController@specificationStore');
-        Route::GET('/{id}/edit', 'ProductController@edit');
-        Route::POST('/{id}/delete', 'ProductController@destroyProduct');
-        Route::PUT('/{id}', 'ProductController@update');
-
-        Route::POST('/ajax-delete', 'ProductController@ajaxDelete');
-        Route::POST('/ajax-edit', 'ProductController@ajaxEdit');
-        Route::POST('/ajax-get', 'ProductController@ajaxGet');
-        Route::GET('/{id}/featured', 'ProductController@featured');
-        Route::POST('/{id}/featured-store', 'ProductController@featuredStore');
-        Route::POST('/update-ordering', 'ProductController@updateOrdering');
+        Route::GET('/', 'WorkWithUsMainController@withUsMain');
+        Route::GET('/{id}/edit', 'WorkWithUsMainController@workWithUsMainEdit');
+        Route::PUT('/{id}', 'WorkWithUsMainController@workWithUsMainStore');
+    });
+    Route::prefix('our-services')->group(function () {
+        Route::resource('/', 'OurServicesController');
+        Route::GET('/{id}/edit', 'OurServicesController@edit');
+        Route::POST('/{id}/delete', 'OurServicesController@destroyProduct');
+        Route::PUT('/{id}', 'OurServicesController@update');
+        Route::POST('/update-ordering', 'OurServicesController@updateOrdering');
+    });
+    Route::prefix('our-works-main')->group(function () {
+        Route::GET('/', 'OurWorksMainController@main');
+        Route::GET('/{id}/edit', 'OurWorksMainController@edit');
+        Route::PUT('/{id}', 'OurWorksMainController@store');
+    });
+    Route::prefix('our-works')->group(function () {
+        Route::resource('/', 'OurWorksController');
+        Route::GET('/{id}/edit', 'OurWorksController@edit');
+        Route::PUT('/{id}', 'OurWorksController@update');
+        Route::POST('/{id}/delete', 'OurWorksController@destroyWork');
     });
 
 });

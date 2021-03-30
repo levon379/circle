@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 use App\Admin\Subscriber;
 use App\Admin\Category;
 use App\Jobs\Subscribe;
-use App\Admin\Product;
+use App\Admin\RequestQuote;
 use App\Admin\Slider;
 use App\Admin\MailContent;
 use App\Admin\JobApplication;
 use App\Admin\AboutUs;
 use App\Admin\Media;
 use App\Admin\MediaImage;
-use App\Admin\WhyTahweel;
+use App\Admin\HomePage;
 use App\Admin\Overview;
 use App\Admin\History;
 use App\Admin\Integrated;
@@ -24,7 +24,7 @@ use App\Admin\MissionVision;
 use App\Admin\HealthSafety;
 use App\Admin\AroundWorld;
 use App\Admin\People;
-use App\Admin\Career;
+use App\Admin\RequestQuoteMain;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -202,7 +202,7 @@ class RestController extends Controller
         $productsResponse = [];
         try {
             $category = Category::find($categoryId);
-            $products = Product::where('category_id',$categoryId)->with([
+            $products = RequestQuote::where('category_id',$categoryId)->with([
                 'product_list',
                 //'product_list_items',
                 'product_tabs_map',
@@ -241,7 +241,7 @@ class RestController extends Controller
         $success = true;
         $productsResponse = [];
         try {
-            $productsResponse = Product::with([
+            $productsResponse = RequestQuote::with([
                 'product_list',
                 'product_tabs',
                 'featured',
@@ -324,7 +324,7 @@ class RestController extends Controller
         $success = true;
         $whyTahweelResp = [];
         try {
-            $whyTahweel = WhyTahweel::orderBy('ordering','asc')->get();
+            $whyTahweel = HomePage::orderBy('ordering','asc')->get();
             foreach ($whyTahweel as $key => $tahweel) {
                 $whyTahweelResp[$key] = $tahweel;
                 $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
@@ -480,7 +480,7 @@ class RestController extends Controller
         $success = true;
         $whyTahweelResp = [];
         try {
-            $whyTahweel = Career::all();
+            $whyTahweel = RequestQuoteMain::all();
             foreach ($whyTahweel as $key => $tahweel) {
                 $whyTahweelResp[$key] = $tahweel;
                 $whyTahweelResp[$key]['image'] = asset("/uploads/" . $tahweel->path);
