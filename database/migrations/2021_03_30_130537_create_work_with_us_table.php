@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOurWorksTable extends Migration
+class CreateWorkWithUsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateOurWorksTable extends Migration
      */
     public function up()
     {
-        Schema::create('our_works', function (Blueprint $table) {
+        Schema::create('work_with_us', function (Blueprint $table) {
             $table->integer('id', true, true);
-            $table->string('title', 191);
-            $table->text('description');
-            $table->string('logo');
-            $table->enum('category',['branding', 'technical', 'interior'])->default('branding');
-            $table->integer('ordering');
+            $table->string("email", 191);
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateOurWorksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('our_works');
+        Schema::dropIfExists('work_with_us');
     }
 }

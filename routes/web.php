@@ -85,5 +85,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::PUT('/{id}', 'OurWorksController@update');
         Route::POST('/{id}/delete', 'OurWorksController@destroyWork');
     });
+    Route::prefix('work-with-us')->group(function () {
+        Route::resource('/', 'WorkWithUsController');
+        Route::DELETE('/{request_id}/destroy-image/{image_id}', 'WorkWithUsController@destroyImage');
+        Route::GET('/{id}/edit', 'WorkWithUsController@edit');
+        Route::POST('/{id}/delete', 'WorkWithUsController@destroyQuote');
+        Route::get('/{id}', 'WorkWithUsController@show');
+    });
 
 });

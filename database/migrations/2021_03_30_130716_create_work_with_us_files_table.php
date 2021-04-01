@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequestQuoteImagesTable extends Migration
+class CreateWorkWithUsFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateRequestQuoteImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('request_quote_images', function (Blueprint $table) {
+        Schema::create('work_with_us_files', function (Blueprint $table) {
             $table->integer('id', true, true);
-            $table->integer('request_quotes_id',false, true)->nullable();
+            $table->integer('work_with_us_id',false, true)->nullable();
             $table->string('image');
             $table->string('origin_name');
             $table->string('ext');
             $table->timestamps();
 
-            $table->foreign('request_quotes_id')->references('id')->on('request_quote')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('work_with_us_id')->references('id')->on('work_with_us')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }
@@ -33,6 +33,6 @@ class CreateRequestQuoteImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_quote_images');
+        Schema::dropIfExists('work_with_us_files');
     }
 }

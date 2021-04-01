@@ -132,6 +132,9 @@
                         <li><a href="/admin/work-with-us-main" class="waves-effect">
                                 <span class="hide-menu">Work With Us Main Image</span></a>
                         </li>
+                        <li><a href="/admin/work-with-us" class="waves-effect">
+                                <span class="hide-menu">Work With Us</span></a>
+                        </li>
 
                     </ul>
                 </li>

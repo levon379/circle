@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\RequestQuote;
-use App\Admin\RequestQuoteImage;
+use App\Admin\WorkWithUs;
+use App\Admin\WorkWithUsFiles;
 use App\helpers\FileUploadHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
@@ -12,12 +12,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class RequestQuoteController extends Controller
+class WorkWithUsController extends Controller
 {
 
-    const FOLDER = "admin.request-quote";
-    const TITLE = "Request Quote";
-    const ROUTE = "/admin/request-quote";
+    const FOLDER = "admin.work-with-us";
+    const TITLE = "Work With Us";
+    const ROUTE = "/admin/work-with-us";
 
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class RequestQuoteController extends Controller
      */
     public function index()
     {
-        $data = RequestQuote::with('image')->get();
+        $data = WorkWithUs::with('image')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -55,34 +55,38 @@ class RequestQuoteController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+//        $extension = $data->image->getClientOriginalExtension();;
+//        dd($extension);
+//
+//        $info = pathinfo(storage_path()."$data->image");
+//        $ext = $info['extension'];
         $request->validate([
             "email" => "required",
-            "quote" => "required",
-            /*"product_desc" => "required",
-            "uses_desc" => "required",*/
+            "message" => "required",
             "images" => "array|max:5",
         ]);
 
         if ($request->has('images')) {
-            $image = FileUploadHelper::upload($request->images, ['*'], "/request-quote");
+            $image = FileUploadHelper::upload($request->images, ['*'], "/work-with-us");
         }
         DB::beginTransaction();
 
-        $quote = new RequestQuote;
+        $quote = new WorkWithUs;
         $quote->email = $request->email;
-        $quote->quote = $request->quote;
+        $quote->message = $request->message;
         $quote->save();
         $arr = array();
         if (!empty($request->images)) {
             foreach ($request->images as $key => $val) {
                 if ($val != null) {
-                    $image = Storage::disk('public')->putFile('request-quote/', new File($val));
+                    $image = Storage::disk('public')->putFile('work-with-us', new File($val));
                     $arr[$key]['image'] = $image;
                     $arr[$key]['ext'] = $val->getClientOriginalExtension();
                     $arr[$key]['origin_name'] = $val->getClientOriginalName();
                 }
             }
         }
+
         $quote->image()->createMany($arr);
         DB::commit();
 
@@ -96,7 +100,7 @@ class RequestQuoteController extends Controller
      */
     public function show($id)
     {
-        $data = RequestQuote::find($id);
+        $data = WorkWithUs::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.show', compact('title', 'route', 'data'));
@@ -107,9 +111,9 @@ class RequestQuoteController extends Controller
      * @param \App\Admin\RequestQuote $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(RequestQuote $product, $id)
+    public function edit(WorkWithUs $product, $id)
     {
-        $data = RequestQuote::find($id);
+        $data = WorkWithUs::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.edit', compact('title', 'route',  'data'));
@@ -121,26 +125,26 @@ class RequestQuoteController extends Controller
      * @param \App\Admin\RequestQuote       $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RequestQuote $quote, $id)
+    public function update(Request $request, WorkWithUs $quote, $id)
     {
         //dd($request);
         $request->validate([
             "email" => "required",
-            "quote" => "required",
+            "message" => "required",
             "images" => "array",
         ]);
 
 
         DB::beginTransaction();
 
-        $quote = RequestQuote::find($id);
+        $quote = WorkWithUs::find($id);
         $quote->email = $request->email;
-        $quote->quote = $request->quote;
+        $quote->message = $request->message;
 
         $quote->save();
 
         if ($request->has('images')) {
-            $image = FileUploadHelper::upload($request->images, ['*'], "/request-quote");
+            $image = FileUploadHelper::upload($request->images, ['*'], "/work-with-us");
             $quote->image()->createMany($image);
         }
 
@@ -154,20 +158,20 @@ class RequestQuoteController extends Controller
      * @param \App\Admin\RequestQuote $product
      * @return \Illuminate\Http\Response
      */
-    public function destroyRequest(RequestQuote $quote)
+    public function destroyRequest(WorkWithUs $quote)
     {
         if (!empty($quote->image)) {
             foreach ($quote->image as $key) {
                 Storage::disk('public')->delete("$key->image");
             }
         }
-        RequestQuote::destroy($quote->id);
+        WorkWithUs::destroy($quote->id);
         return redirect(self::ROUTE);
     }
     public function destroyQuote($id)
     {
-        $quote = RequestQuote::find($id);
-        RequestQuote::destroy($quote->id);
+        $quote = WorkWithUs::find($id);
+        WorkWithUs::destroy($quote->id);
         return  redirect(self::ROUTE);
     }
 
@@ -178,9 +182,9 @@ class RequestQuoteController extends Controller
      */
     public function destroyImage($quote_id, $image_id)
     {
-        $quote_image = RequestQuoteImage::find($image_id);
+        $quote_image = WorkWithUsFiles::find($image_id);
         Storage::disk('public')->delete("$quote_image->image");
-        RequestQuoteImage::destroy($quote_image->id);
+        WorkWithUsFiles::destroy($quote_image->id);
         return redirect(self::ROUTE . '/' . $quote_id . '/edit');
     }
 
