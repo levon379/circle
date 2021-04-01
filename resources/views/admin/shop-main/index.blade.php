@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add New Category</a>
+{{--                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add New {{ $title }}</a>--}}
 
                 {{--table--}}
                 <div class="table-responsive">
@@ -14,7 +14,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
+                            <th>Thumbnail</th>
+{{--                            <th>Type</th>--}}
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -22,32 +23,28 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-
-                                <td>{{$val->name}}</td>
+                                <td>
+                                    <img src='{{asset("/uploads/$val->path")}}' alt="{{$val->title}}" class="img-responsive" width="200">
+                                </td>
+{{--                                <td>{{$val->title}}</td>--}}
 
                                 <td>
-{{--                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"--}}
-{{--                                       data-placement="top" title="Show"--}}
-{{--                                       class="btn btn-warning btn-circle tooltip-warning">--}}
-{{--                                        <i class="fas fas fa-eye"></i>--}}
-{{--                                    </a>--}}
-
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"
-                                          method="post" id="work-for-form">
-                                        @csrf
-                                        @method("DELETE")
-                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Remove"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </a>
-                                    </form>
+{{--                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"--}}
+{{--                                          method="post" id="work-for-form">--}}
+{{--                                        @csrf--}}
+{{--                                        @method("DELETE")--}}
+{{--                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">--}}
+{{--                                            <button data-toggle="tooltip"--}}
+{{--                                                    data-placement="top" title="Remove"--}}
+{{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
+{{--                                                    class="fas fa-trash"></i></button>--}}
+{{--                                        </a>--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach

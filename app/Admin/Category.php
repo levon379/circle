@@ -4,7 +4,7 @@ namespace App\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpecificationType extends Model
+class Category extends Model
 {
     //
 }

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\ProductTabs;
+use App\Admin\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\helpers\FileUploadHelper;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
-class ProductTabsController extends Controller
+class CategoryController extends Controller
 {
 
-    const FOLDER = "admin.producttabs";
-    const TITLE = "Product Tabs";
-    const ROUTE = "/admin/product-tabs";
+    const FOLDER = "admin.categories";
+    const TITLE = "Category";
+    const ROUTE = "/admin/categories";
 
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class ProductTabsController extends Controller
      */
     public function index()
     {
-        $data = ProductTabs::orderBy('ordering','asc')->get();
+        $data = Category::all();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . '.index', compact('title', 'route', 'data'));
@@ -48,17 +48,16 @@ class ProductTabsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required",
-            "description" => "required"
+            "name" => "required"
         ]);
+//dd($request->pdf_path);
+        //$pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
+        //$pdf = FileUploadHelper::upload($request->pdf_path, ['*'], "/categories");
 
-
-
-        $ProductTabs = new ProductTabs;
-        $ProductTabs->name = $request->name;
-        $ProductTabs->description = $request->description;
-        if(!$ProductTabs->save()) {
-            echo "<pre>";print_r($ProductTabs->getErrors());die;
+        $Category = new Category;
+        $Category->name = $request->name;
+        if(!$Category->save()) {
+            echo "<pre>";print_r($Category->getErrors());die;
         }
 
         return redirect(self::ROUTE);
@@ -66,41 +65,22 @@ class ProductTabsController extends Controller
 
     /**
      * Display the specified resource.
-     * @param \App\Admin\ProductTabs $ProductTabs
+     * @param \App\Admin\Category $Category
      * @return \Illuminate\Http\Response
      */
-    public function updateOrdering(Request $request)
+    public function show(Category $Category)
     {
-        $success = true;
-        $errorMessage = '';
-        try {
-            $data = $request->all();
-            foreach ($data as $tab) {
-                $tabModel = ProductTabs::find($tab['id']);
-                $tabModel->update(['ordering'=>(int)$tab['ordering']]);
-            }
-        } catch (\Throwable $e) {
-            $success = false;
-            $errorMessage = $e->getMessage();
-        }
-        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
-    }
-    public function show($id)
-    {
-        $data = ProductTabs::find($id);
-        $title = self::TITLE;
-        $route = self::ROUTE;
-        return view(self::FOLDER . '.show', compact('title', 'route', 'data'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param \App\Admin\ProductTabs $ProductTabs
+     * @param \App\Admin\Category $Category
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data = ProductTabs::find($id);
+        $data = Category::find($id);
         $title = self::TITLE;
         $route = self::ROUTE;
         $action = "Edit";
@@ -110,7 +90,7 @@ class ProductTabsController extends Controller
     /**
      * Update the specified resource in storage.
      * @param \Illuminate\Http\Request $request
-     * @param \App\Admin\ProductTabs     $ProductTabs
+     * @param \App\Admin\Category     $Category
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -119,25 +99,32 @@ class ProductTabsController extends Controller
             "name" => "required"
         ]);
 
-        $ProductTabs = ProductTabs::find($id);
+        $Category = Category::find($id);
 
-        $ProductTabs->name = $request->name;
-        $ProductTabs->description = $request->description;
+//        if ($request->pdf_path) {
+//            Storage::disk('public')->delete("$Category->pdf_path");
+//            $pdf = Storage::disk('public')->putFile('categories', new File($request->pdf_path));
+//            $Category->pdf_path = $pdf;
+//        }
 
-        $ProductTabs->save();
+
+        $Category->name = $request->name;
+//        $Category->link = $request->link;
+        $Category->save();
 
         return redirect(self::ROUTE);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param \App\Admin\ProductTabs $ProductTabs
+     * @param \App\Admin\Category $Category
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $ProductTabs = ProductTabs::find($id);
-         ProductTabs::destroy($ProductTabs->id);
+        $Category = Category::find($id);
+//         Storage::disk('public')->delete("$Category->pdf_path");
+         Category::destroy($Category->id);
         return  redirect(self::ROUTE);
     }
 }

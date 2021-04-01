@@ -11,25 +11,23 @@
                             @csrf
                             @method("PUT")
 
-                            <div class="form-group">
-                                <label for="title">Name <strong class="text-danger"> &#42; </strong> </label>
-                                @error('name')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="text" class="form-control" id="name"
-                                       placeholder="Name" name="name" value="{{$data->name}}" required>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="title">Title <strong class="text-danger"> &#42; </strong> </label>--}}
+{{--                                @error('title')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="text" class="form-control" id="title"--}}
+{{--                                       placeholder="Title" name="title" value="{{$data->title}}" required>--}}
+{{--                            </div>--}}
+
 
                             <div class="form-group">
-                                <label for="description">Description <strong class="text-danger">
-                                        &#42; </strong></label>
-                                @error('description')
+                                <label for="logo">Upload Image </label>
+                                @error('path')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <textarea name="description" id="description" cols="30" rows="10" class="form-control"
-                                          style="resize: none;" required>{{$data->description}}</textarea>
+                                <input type="file" id="path" name="path" class="dropify" data-default-file='{{asset("uploads/$data->path")}}'/>
                             </div>
-
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">
                                 Save {{$title}}
@@ -55,17 +53,10 @@
 
 @push('footer')
 
-    <script src="{{asset('assets/pdfobject/pdfobject.min.js')}}"></script>
     <script>
         $('.dropify').dropify();
 
         $('#datatable').DataTable();
-         $(document).ready(function () {
-            let p = $('.file').attr('href');
-            if(p){
-                PDFObject.embed(p, ".pdf");
-            }
-        })
     </script>
 @endpush
 

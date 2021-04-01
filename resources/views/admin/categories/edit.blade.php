@@ -20,16 +20,6 @@
                                        placeholder="Name" name="name" value="{{$data->name}}" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Description <strong class="text-danger">
-                                        &#42; </strong></label>
-                                @error('description')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <textarea name="description" id="description" cols="30" rows="10" class="form-control"
-                                          style="resize: none;" required>{{$data->description}}</textarea>
-                            </div>
-
 {{--                            <div class="form-group">--}}
 {{--                                <label for="link">Link</label>--}}
 {{--                                @error('link')--}}

@@ -28,7 +28,7 @@ Auth::routes([
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');
-
+    Route::resource('/categories', 'CategoryController');
     Route::resource('/home-page', 'HomePageController');
     Route::resource('/our-team', 'OurTeamController');
 
@@ -91,6 +91,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::GET('/{id}/edit', 'WorkWithUsController@edit');
         Route::POST('/{id}/delete', 'WorkWithUsController@destroyQuote');
         Route::get('/{id}', 'WorkWithUsController@show');
+    });
+    Route::prefix('shop-main')->group(function () {
+        Route::GET('/', 'ShopMainController@main');
+        Route::GET('/{id}/edit', 'ShopMainController@edit');
+        Route::PUT('/{id}', 'ShopMainController@store');
+    });
+    Route::prefix('shop')->group(function () {
+        Route::resource('/', 'ShopController');
+        Route::GET('/{id}/edit', 'ShopController@edit');
+        Route::PUT('/{id}', 'ShopController@update');
+        Route::POST('/{id}/delete', 'ShopController@destroyShop');
     });
 
 });

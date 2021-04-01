@@ -152,18 +152,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
-                        <span class="hide-menu">Single Work<span class="fa arrow"></span>
-                        </span>
-                    </a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="/admin/" class="waves-effect">
-                                <span class="hide-menu">Single Work test</span></a>
-                        </li>
 
-                    </ul>
-                </li>
                 <li>
                     <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
                         <span class="hide-menu">Blog<span class="fa arrow"></span>
@@ -176,26 +165,21 @@
 
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
-                        <span class="hide-menu">Single Blog<span class="fa arrow"></span>
-                        </span>
-                    </a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="/admin/" class="waves-effect">
-                                <span class="hide-menu">Single Blog test</span></a>
-                        </li>
 
-                    </ul>
-                </li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/subscriber.svg') }}">
                         <span class="hide-menu">Shop<span class="fa arrow"></span>
                         </span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="/admin/" class="waves-effect">
-                                <span class="hide-menu">test</span></a>
+                        <li><a href="/admin/shop-main" class="waves-effect">
+                                <span class="hide-menu">Shop Main Image</span></a>
+                        </li>
+                        <li><a href="/admin/categories" class="waves-effect">
+                                <span class="hide-menu">Shop Category</span></a>
+                        </li>
+                        <li><a href="/admin/shop" class="waves-effect">
+                                <span class="hide-menu">Shop</span></a>
                         </li>
 
                     </ul>
