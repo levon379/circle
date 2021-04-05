@@ -9,7 +9,7 @@ class WorkWithUs extends Model
     protected $table = "work_with_us";
     public function image()
     {
-        return $this->hasMany('App\Admin\WorkWIthUsFiles', "work_with_us_id", "id");
+        return $this->hasMany('App\Admin\WorkWithUsFiles', "work_with_us_id", "id");
     }
 
 }
