@@ -35,17 +35,17 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"
-                                          method="post" id="work-for-form">
-                                        @csrf
-                                        @method("DELETE")
-                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Remove"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </a>
-                                    </form>
+{{--                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}"--}}
+{{--                                          method="post" id="work-for-form">--}}
+{{--                                        @csrf--}}
+{{--                                        @method("DELETE")--}}
+{{--                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">--}}
+{{--                                            <button data-toggle="tooltip"--}}
+{{--                                                    data-placement="top" title="Remove"--}}
+{{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
+{{--                                                    class="fas fa-trash"></i></button>--}}
+{{--                                        </a>--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach
