@@ -184,14 +184,11 @@
 
                     </ul>
                 </li>
-
-
-                <li>
-                        <li><a href="/admin/" class="waves-effect">
-                                <span class="hide-menu">Contact Us</span></a>
-                        </li>
-
+                <li><a href="/admin/social" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/vacancies.svg') }}">
+                        <span class="hide-menu">Social Links</span></a>
                 </li>
+
+
 
             </ul>
         </div>

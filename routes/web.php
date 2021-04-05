@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('/categories', 'CategoryController');
     Route::resource('/home-page', 'HomePageController');
     Route::resource('/our-team', 'OurTeamController');
+    Route::resource('/social', 'SocialController');
 
     Route::prefix('request-quote')->group(function () {
         Route::resource('/', 'RequestQuoteController');
