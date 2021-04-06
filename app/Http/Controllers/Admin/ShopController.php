@@ -46,7 +46,9 @@ class ShopController extends Controller
             "title" => "required",
             "description" => "required",
             "link" => "required",
+            "show" => "required|numeric",
             "price" => "required",
+            "currency" => "required",
             "category_id" => "required|numeric",
             "thumbnail" => "image|max:5000",
         ]);
@@ -58,7 +60,9 @@ class ShopController extends Controller
         $shop->description = $request->description;
         $shop->category_id = $request->category_id;
         $shop->link = $request->link;
+        $shop->show = $request->show;
         $shop->price = $request->price;
+        $shop->currency = $request->currency;
         $shop->logo = $logo;
         $shop->save();
 
@@ -83,7 +87,9 @@ class ShopController extends Controller
             "description" => "required",
             "category_id" => "required",
             "link" => "required",
+            "show" => "required|numeric",
             "price" => "required",
+            "currency" => "required",
             "thumbnail" => "image|max:5000",
         ]);
 
@@ -94,7 +100,9 @@ class ShopController extends Controller
         $shop->title = $request->title;
         $shop->description = $request->description;
         $shop->link = $request->link;
+        $shop->show = $request->show;
         $shop->price = $request->price;
+        $shop->currency = $request->currency;
         $shop->category_id = $request->category_id;
 
         if ($request->thumbnail) {

@@ -42,11 +42,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="text1">Description</label>
+                                <label for="text1">Sub-title <strong class="text-danger"> &#42; </strong></label>
                                 @error('text1')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <textarea name="description" id="text1" cols="30" rows="10" class="form-control"
+                                <textarea required name="description" id="text1" cols="30" rows="10" class="form-control"
                                           style="resize: none">{{$data->description}}</textarea>
                             </div>
 
@@ -80,6 +80,7 @@
     <script>
         $('.dropify').dropify();
         $('#datatable').DataTable();
+
 
     </script>
 @endpush

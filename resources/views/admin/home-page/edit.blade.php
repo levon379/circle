@@ -10,15 +10,15 @@
                         <form method="post" action="{{ $route."/".$data->id }}" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
-                            @if($data->type != 'Main' and $data->type != 'Branding')
-                            <div class="form-group">
-                                <label for="title">Title <strong class="text-danger"> &#42; </strong> </label>
-                                @error('title')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="text" class="form-control" id="title"
-                                       placeholder="Title" name="title" value="{{$data->title}}" required>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="title">Title <strong class="text-danger"> &#42; </strong> </label>--}}
+{{--                                @error('title')--}}
+{{--                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>--}}
+{{--                                @enderror--}}
+{{--                                <input type="text" class="form-control" id="title"--}}
+{{--                                       placeholder="Title" name="title" value="{{$data->title}}" required>--}}
+{{--                            </div>--}}
+                            @if($data->type != 'Hero Video Banner' and $data->type != 'Branding')
 
                             <div class="form-group">
                                 <label for="description">Description <strong class="text-danger">
@@ -30,7 +30,7 @@
                                           style="resize: none;" required>{{$data->description}}</textarea>
                             </div>
                             @endif
-                            @if($data->type != 'Main')
+                            @if($data->type != 'Hero Video Banner')
                             <div class="form-group">
                                 <label for="description">Link <strong class="text-danger"> &#42; </strong></label>
                                 @error('link')

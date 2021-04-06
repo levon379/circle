@@ -44,11 +44,11 @@
 
 
                             <div class="form-group">
-                                <label for="product_desc">Description</label>
+                                <label for="product_desc">Sub-title <strong class="text-danger"> &#42; </strong></label>
                                 @error('description')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <textarea name="description" id="product_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
+                                <textarea required name="description" id="product_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light col-md-12">Save {{$title}}

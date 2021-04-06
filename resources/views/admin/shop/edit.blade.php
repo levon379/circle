@@ -31,14 +31,16 @@
                                        placeholder="thumbnail"  data-default-file='{{asset("uploads/$data->logo")}}'>
                             </div>
                             <div class="form-group">
-                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
+                                <label for="category">Category</label>
                                 @error('category')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <select name="category_id" id="category_id" class="form-control">
+                                    <option value="0" @if($data->category_id == 0) selected @endif>Choose</option>
                                     @foreach($category as $key)
                                         <option value="{{$key->id}}"
-                                                @if($data->category_id == $key->id) selected @endif>{{$key->name}}</option>
+                                                @if($data->category_id == $key->id) selected @endif>{{$key->name}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -51,12 +53,37 @@
                                           style="resize: none">{{$data->description}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="title">Price<strong class="text-danger"> &#42; </strong> </label>
-                                @error('price')
+                                <label for="show">Status<strong class="text-danger"> &#42; </strong> </label>
+                                @error('show')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="price"
-                                       placeholder="Price" name="price" value="{{$data->price}}" required>
+                                <select name="show" id="show" class="form-control">
+                                    <option value="0" @if($data->show == 0) selected @endif>Enable</option>
+                                    <option value="1" @if($data->show == 1) selected @endif>Disable</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                <div class="col-xs-6">
+                                    <label for="title">Price<strong class="text-danger"> &#42; </strong> </label>
+                                    @error('price')
+                                    <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                    @enderror
+                                    <input type="text" class="form-control" id="price"
+                                           placeholder="Price" name="price" value="{{$data->price}}" required>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="title">Currency<strong class="text-danger"> &#42; </strong> </label>
+                                    @error('currency')
+                                    <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                    @enderror
+                                    <select name="currency" id="currency" class="form-control">
+                                        @foreach(\App\Admin\Shop::$currency as $key=>$category)
+                                            <option value="{{$key}}" @if($data->currency == $key) selected @endif>{{$category}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title">Link<strong class="text-danger"> &#42; </strong> </label>
@@ -96,6 +123,12 @@
     <script>
         $('.dropify').dropify();
         $('#datatable').DataTable();
-
+        $("#price").on("keypress keyup blur",function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
     </script>
 @endpush

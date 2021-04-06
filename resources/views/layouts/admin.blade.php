@@ -94,15 +94,15 @@
                         <li><a href="/admin/quote-main" class="waves-effect">
                                 <span class="hide-menu">Request A Quote Main Image</span></a>
                         </li>
-                        <li><a href="/admin/request-quote" class="waves-effect">
-                                <span class="hide-menu">Request A Quote</span></a>
-                        </li>
+{{--                        <li><a href="/admin/request-quote" class="waves-effect">--}}
+{{--                                <span class="hide-menu">Request A Quote</span></a>--}}
+{{--                        </li>--}}
                         <li><a href="/admin/contact-main" class="waves-effect">
                                 <span class="hide-menu">Contact Us Main Image</span></a>
                         </li>
-                        <li><a href="/admin/contact-us" class="waves-effect">
-                                <span class="hide-menu">Contact Us</span></a>
-                        </li>
+{{--                        <li><a href="/admin/contact-us" class="waves-effect">--}}
+{{--                                <span class="hide-menu">Contact Us</span></a>--}}
+{{--                        </li>--}}
 
                     </ul>
                 </li>
@@ -132,9 +132,9 @@
                         <li><a href="/admin/work-with-us-main" class="waves-effect">
                                 <span class="hide-menu">Work With Us Main Image</span></a>
                         </li>
-                        <li><a href="/admin/work-with-us" class="waves-effect">
-                                <span class="hide-menu">Work With Us</span></a>
-                        </li>
+{{--                        <li><a href="/admin/work-with-us" class="waves-effect">--}}
+{{--                                <span class="hide-menu">Work With Us</span></a>--}}
+{{--                        </li>--}}
 
                     </ul>
                 </li>
@@ -149,6 +149,9 @@
                         </li>
                         <li><a href="/admin/our-works" class="waves-effect">
                                 <span class="hide-menu">Our Works</span></a>
+                        </li>
+                        <li><a href="/admin/our-works/order" class="waves-effect">
+                                <span class="hide-menu">Our Works Order</span></a>
                         </li>
                     </ul>
                 </li>

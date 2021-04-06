@@ -82,6 +82,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     });
     Route::prefix('our-works')->group(function () {
         Route::resource('/', 'OurWorksController');
+        Route::GET('/order', 'OurWorksController@order');
+        Route::POST('/update-ordering', 'OurWorksController@updateOrdering');
         Route::GET('/{id}/edit', 'OurWorksController@edit');
         Route::PUT('/{id}', 'OurWorksController@update');
         Route::POST('/{id}/delete', 'OurWorksController@destroyWork');

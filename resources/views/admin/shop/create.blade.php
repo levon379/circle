@@ -29,11 +29,12 @@
                                        placeholder="thumbnail" name="thumbnail" required>
                             </div>
                             <div class="form-group">
-                                <label for="category">Category<strong class="text-danger"> &#42; </strong> </label>
+                                <label for="category">Category</label>
                                 @error('category')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <select name="category_id" id="category_id" class="form-control">
+                                    <option value="0">Choose</option>
                                     @foreach($category as $key)
                                         <option value="{{$key->id}}" @if(old('category_id') == $key->id) selected @endif>{{$key->name}}</option>
                                     @endforeach
@@ -47,12 +48,37 @@
                                 <textarea name="description" required id="product_desc" cols="30" rows="10" class="form-control" style="resize: none">{{old('product_desc')}}</textarea>
                             </div>
                             <div class="form-group">
+                                <label for="show">Status<strong class="text-danger"> &#42; </strong> </label>
+                                @error('show')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select name="show" id="show" class="form-control">
+                                    <option value="0" @if(old('show') == 0) selected @endif>Enable</option>
+                                    <option value="1" @if(old('show') == 1) selected @endif>Disable</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-6">
                                 <label for="title">Price<strong class="text-danger"> &#42; </strong> </label>
                                 @error('price')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <input type="text" class="form-control" id="price"
                                        placeholder="Price" name="price" value="{{old('price')}}" required>
+                                    </div>
+                                    <div class="col-xs-6">
+                                <label for="category">Currency<strong class="text-danger"> &#42; </strong> </label>
+                                @error('currency')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select name="currency" id="currency" class="form-control">
+                                    @foreach(\App\Admin\Shop::$currency as $key=>$category)
+                                        <option value="{{$key}}">{{$category}}</option>
+                                    @endforeach
+                                </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="title">Link<strong class="text-danger"> &#42; </strong> </label>
@@ -86,6 +112,13 @@
 @push('footer')
     <script>
         $('.dropify').dropify();
+        $("#price").on("keypress keyup blur",function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
         $("#product-lists-container").sortable({
             items: "ul",
             update: function( ) {
