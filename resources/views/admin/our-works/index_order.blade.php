@@ -5,7 +5,11 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add New {{ $title }}</a>
+                <form style="display: inline-block" action="{{ $route."/update-ordering" }}"
+                      method="post" id="work-for-form">
+                    @csrf
+                    @method("POST")
+                    <input type="submit" class="btn btn-success m-b-30" value="Save"/>
 
                 {{--table--}}
                 <div class="table-responsive">
@@ -16,14 +20,14 @@
                             <th>#</th>
                             <th>Image</th>
                             <th>Title</th>
-                            <th style="width:110px !important">Options</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $key=>$val)
                             <tr data-pjax="{{$key + 1}}" data-key="{{$val->id}}">
                                 <td><div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{$key + 1}}" id="check_ordering" name="ordering">
+                                        <input class="form-check-input check_ordering" type="checkbox" value="{{$val->id}}" id="check_ordering" name="order[]">
                                         <label class="form-check-label" for="defaultCheck1">
                                         </label>
                                     </div></td>
@@ -31,29 +35,14 @@
                                     <img src='{{ asset("uploads/".$val->logo)}}' alt="{{$val->title}}" class="img-responsive" width="200">
                                 </td>
                                 <td>{{$val->title}}</td>
-                                <td>
 
-                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
-                                       data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form style="display: inline-block" action="{{ $route."/".$val->id."/delete" }}"
-                                          method="post" id="work-for-form">
-                                        @csrf
-                                        @method("POST")
-                                        <a href="javascript:void(0);" data-text="{{ $title }}" class="delForm" data-id ="{{$val->id}}">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Remove"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </a>
-                                    </form>
-                                </td>
+
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -67,6 +56,17 @@
 
 @push('footer')
     <script>
+        $( document ).ready(function() {
+            $("tbody input[type=checkbox]").click(function() {
+                var countchecked = $("tbody input[type=checkbox]:checked").length;
+
+                if (countchecked >= 2) {
+                    $('tbody input[type=checkbox]').not(':checked').attr("disabled", true);
+                } else {
+                    $('tbody input[type=checkbox]').not(':checked').attr("disabled", false);
+                }
+            });
+        });
         $('#datatable').DataTable();
         function updateOrdering() {
             var ordering = {};
@@ -96,15 +96,9 @@
             tbl_product.sortable({
                 items: 'tr:has(td)'
             });
-            // tbody.disableSelection();
-            $('#check_ordering').change(function() {
-                if(this.checked) {
-                    updateOrdering();
-                }
-            });
-
-
         } );
+
+
     </script>
 @endpush
 

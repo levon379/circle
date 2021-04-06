@@ -42,16 +42,20 @@ class OurWorksController extends Controller
         $errorMessage = '';
         try {
             $data = $request->all();
-            dd($data);
-            foreach ($data as $work) {
-                $workModel = OurWorks::find($work['id']);
-                $workModel->update(['ordering'=>(int)$work['ordering']]);
+            $sum = 0;
+            DB::table('our_works')->update(array('ordering' => null));
+            foreach ($data['order'] as $work) {
+                $sum++;
+                $workModel = OurWorks::find($work);
+                $workModel->update(['ordering'=>(int)$sum]);
             }
+
         } catch (\Throwable $e) {
             $success = false;
             $errorMessage = $e->getMessage();
         }
-        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+//        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+        return redirect('admin/our-works/order');
     }
     public function create()
     {
