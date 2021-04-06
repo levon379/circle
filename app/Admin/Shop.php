@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
+    protected $fillable = ['ordering'];
     protected $table = "shop";
     public static $currency = [
         'amd'=>'AMD', 'usd'=>'USD'

@@ -25,7 +25,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $data = Shop::all();
+        $data = Shop::orderBy('ordering','asc')->get();;
         $category = Category::all();
         $title = self::TITLE;
         $route = self::ROUTE;
@@ -39,7 +39,22 @@ class ShopController extends Controller
         return view(self::FOLDER . '.create', compact('title', 'route','category'));
     }
 
-
+    public function updateOrdering(Request $request)
+    {
+        $success = true;
+        $errorMessage = '';
+        try {
+            $data = $request->all();
+            foreach ($data as $slider) {
+                $sliderModel = Shop::find($slider['id']);
+                $sliderModel->update(['ordering'=>(int)$slider['ordering']]);
+            }
+        } catch (\Throwable $e) {
+            $success = false;
+            $errorMessage = $e->getMessage();
+        }
+        return response()->json(['success'=>$success, 'errorMessage'=>$errorMessage]);
+    }
     public function store(Request $request)
     {
         $request->validate([

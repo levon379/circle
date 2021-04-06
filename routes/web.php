@@ -104,6 +104,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::resource('/', 'ShopController');
         Route::GET('/{id}/edit', 'ShopController@edit');
         Route::PUT('/{id}', 'ShopController@update');
+        Route::POST('/update-ordering', 'ShopController@updateOrdering');
         Route::POST('/{id}/delete', 'ShopController@destroyShop');
     });
 

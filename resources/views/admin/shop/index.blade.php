@@ -79,7 +79,7 @@
                     'X-CSRF-TOKEN': '{{csrf_token()}}'
                 },
                 data: ordering,
-                url: '/admin/products/update-ordering',
+                url: '/admin/shop/update-ordering',
                 success: function (res) {
                 }
             });

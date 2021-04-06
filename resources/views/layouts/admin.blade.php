@@ -187,9 +187,9 @@
 
                     </ul>
                 </li>
-                <li><a href="/admin/social" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/vacancies.svg') }}">
-                        <span class="hide-menu">Social Links</span></a>
-                </li>
+{{--                <li><a href="/admin/social" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/vacancies.svg') }}">--}}
+{{--                        <span class="hide-menu">Social Links</span></a>--}}
+{{--                </li>--}}
 
 
 
