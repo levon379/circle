@@ -83,7 +83,7 @@
 
                 <li class="devider"></li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/home.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/homepage.svg') }}">
                         <span class="hide-menu">Home Page<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -107,7 +107,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/mediacenter.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/services.svg') }}">
                         <span class="hide-menu">Services<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -118,7 +118,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/sociallinks.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/teamworks.svg') }}">
                         <span class="hide-menu">Our Team<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -139,7 +139,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/jobapplication.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/works.svg') }}">
                         <span class="hide-menu">Our Works<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -157,7 +157,7 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/about.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/blog.svg') }}">
                         <span class="hide-menu">Blog<span class="fa arrow"></span>
                         </span>
                     </a>
@@ -170,7 +170,7 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/subscriber.svg') }}">
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/shop.svg') }}">
                         <span class="hide-menu">Shop<span class="fa arrow"></span>
                         </span>
                     </a>

@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-                <form style="display: inline-block" action="{{ $route."/update-ordering" }}"
+                <form action="{{ $route."/update-ordering" }}"
                       method="post" id="work-for-form">
                     @csrf
                     @method("POST")
@@ -20,23 +20,25 @@
                             <th>#</th>
                             <th>Image</th>
                             <th>Title</th>
-                            <th></th>
+                            <th style="width:110px !important">Choose Work</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $key=>$val)
                             <tr data-pjax="{{$key + 1}}" data-key="{{$val->id}}">
-                                <td><div class="form-check">
+                                <td>{{$key + 1}}</td>
+                                <td>
+                                    <img src='{{ asset("uploads/".$val->logo)}}' alt="{{$val->title}}" class="img-responsive" width="115">
+                                </td>
+                                <td>{{$val->title}}</td>
+                                <td>
+                                    <div class="form-check">
                                         <input class="form-check-input check_ordering" type="checkbox" value="{{$val->id}}" id="check_ordering" name="order[]">
                                         <label class="form-check-label" for="defaultCheck1">
                                         </label>
-                                    </div></td>
-                                <td>
-                                    <img src='{{ asset("uploads/".$val->logo)}}' alt="{{$val->title}}" class="img-responsive" width="200">
+                                    </div>
                                 </td>
-                                <td>{{$val->title}}</td>
-
-
                             </tr>
                         @endforeach
                         </tbody>
@@ -60,7 +62,7 @@
             $("tbody input[type=checkbox]").click(function() {
                 var countchecked = $("tbody input[type=checkbox]:checked").length;
 
-                if (countchecked >= 2) {
+                if (countchecked >= 3) {
                     $('tbody input[type=checkbox]').not(':checked').attr("disabled", true);
                 } else {
                     $('tbody input[type=checkbox]').not(':checked').attr("disabled", false);
