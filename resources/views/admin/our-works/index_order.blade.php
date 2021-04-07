@@ -34,7 +34,9 @@
                                 <td>{{$val->title}}</td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input check_ordering" type="checkbox" value="{{$val->id}}" id="check_ordering" name="order[]">
+                                        <input class="form-check-input check_ordering"
+                                               @if($val->ordering != null) checked @endif
+                                               type="checkbox" value="{{$val->id}}" id="check_ordering" name="order[]">
                                         <label class="form-check-label" for="defaultCheck1">
                                         </label>
                                     </div>
@@ -67,11 +69,15 @@
                 } else {
                     $('tbody input[type=checkbox]').not(':checked').attr("disabled", false);
                 }
-                 $.cookie("test", countchecked);
-                 var cookieValue = $.cookie("test");
+                 // $.cookie("test", countchecked);
+                 // var cookieValue = $.cookie("test");
             });
         });
-        $('#datatable').DataTable({"lengthMenu": [[4, 25, 50, -1], [4, 25, 50, "All"]]});
+        var countchecked = $("tbody input[type=checkbox]:checked").length;
+        if (countchecked >= 3) {
+            $('tbody input[type=checkbox]').not(':checked').attr("disabled", true);
+        }
+        $('#datatable').DataTable({"bPaginate": false,});
 
 
     </script>
