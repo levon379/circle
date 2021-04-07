@@ -19,11 +19,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'Rest'], function () {
+    Route::GET('/getHomePageIcons', 'RestController@getHomePageIcons');
+    Route::GET('/getRequestAQuoteImage', 'RestController@getRequestAQuoteImage');
+    Route::GET('/getContactImage', 'RestController@getContactImage');
+    Route::GET('/getServices', 'RestController@getServices');
+    Route::GET('/getOurTeamImage', 'RestController@getOurTeamImage');
+    Route::GET('/getOurTeam', 'RestController@getOurTeam');
+    Route::GET('/getWorksWithUsImage', 'RestController@getWorksWithUsImage');
+    Route::GET('/getOurWorksImage', 'RestController@getOurWorksImage');
+    Route::GET('/getOurWorks', 'RestController@getOurWorks');
+    Route::GET('/getOurWorksOrder', 'RestController@getOurWorksOrder');
+    Route::GET('/getShopImage', 'RestController@getShopImage');
+    Route::GET('/getShop', 'RestController@getShop');
+
+
+
     Route::POST('/job-application', 'RestController@addJobApplicaion');
     Route::POST('/subscriber', 'RestController@addSubscriber');
     Route::GET('/getProductsByCategory/{id}', 'RestController@getAllProductsByCategory');
     Route::GET('/getCategory/{id}', 'RestController@getCategoryById');
-    Route::GET('/getSliderData', 'RestController@getSliders');
     Route::GET('/getAboutUsData', 'RestController@getAboutUsData');
     Route::GET('/getMedia', 'RestController@getMedia');
     Route::GET('/getWhyTahweel', 'RestController@getWhyTahweel');

@@ -67,38 +67,11 @@
                 } else {
                     $('tbody input[type=checkbox]').not(':checked').attr("disabled", false);
                 }
+                 $.cookie("test", countchecked);
+                 var cookieValue = $.cookie("test");
             });
         });
-        $('#datatable').DataTable();
-        function updateOrdering() {
-            var ordering = {};
-            $('#datatable .ui-sortable tr').each(function (i, v) {
-                $(this).attr('data-pjax', i);
-                ordering[i] = {
-                    id: $(this).attr('data-key'),
-                    ordering: $(this).attr('data-pjax')
-                }
-            });
-            $.ajax({
-                method: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                },
-                data: ordering,
-                url: '/admin/our-works/update-ordering',
-                success: function (res) {
-                }
-            });
-
-        }
-        $( function() {
-            $("#datatable > tbody").sortable();
-
-            var tbl_product = $("#datatable> tbody");
-            tbl_product.sortable({
-                items: 'tr:has(td)'
-            });
-        } );
+        $('#datatable').DataTable({"lengthMenu": [[4, 25, 50, -1], [4, 25, 50, "All"]]});
 
 
     </script>

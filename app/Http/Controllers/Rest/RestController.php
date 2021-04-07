@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers\Rest;
 
-use App\Admin\ContactUs;
-use App\Admin\Social;
+
+use App\Admin\OurTeam;
+use App\Admin\OurTeamMain;
+use App\Admin\OurWorks;
+use App\Admin\OurWorksMain;
+use App\Admin\Shop;
+use App\Admin\ShopMain;
+use App\Admin\WorkWithUsMain;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Admin\Subscriber;
-use App\Admin\Category;
-use App\Jobs\Subscribe;
-use App\Admin\RequestQuote;
+
+use App\Admin\HomePage;
+use App\Admin\RequestQuoteMain;
+use App\Admin\ContactMain;
+use App\Admin\OurServices;
+use App\Admin\OurServicesList;
+use App\Admin\OurServicesListItem;
+
+
 use App\Admin\Slider;
-use App\Admin\MailContent;
-use App\Admin\JobApplication;
+use App\Admin\Category;
+
 use App\Admin\AboutUs;
 use App\Admin\Media;
 use App\Admin\MediaImage;
-use App\Admin\HomePage;
 use App\Admin\Overview;
 use App\Admin\History;
 use App\Admin\Integrated;
@@ -24,160 +34,234 @@ use App\Admin\MissionVision;
 use App\Admin\HealthSafety;
 use App\Admin\AroundWorld;
 use App\Admin\People;
-use App\Admin\RequestQuoteMain;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class RestController extends Controller
 {
-    public function verifySubscribtionEmail(Request $request)
+
+    public function getHomePageIcons()
     {
         $errorMessage = "";
         $success = true;
+        $Response = [];
         try {
-            $request->validate([
-                "token" => "string"
-            ]);
-
-            $subscriber = Subscriber::where('email_verify_token', $request->token)->first();
-            if (!$subscriber) {
-                return response()->json(['success' => false, 'errorMessage' => 'Invalid token']);
-            }
-            if (!$subscriber->status) {
-                $subscriber->status = 1;
-                $subscriber->save();
+            $data = HomePage::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-
-        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['home_page' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-
-    public function verifyJobApplicationEmail(Request $request)
+    public function getRequestAQuoteImage()
     {
         $errorMessage = "";
         $success = true;
+        $Response = [];
         try {
-            $request->validate([
-                "token" => "string"
-            ]);
-
-            $jobApplication = JobApplication::where('email_verify_token', $request->token)->first();
-            if (!$jobApplication) {
-                return response()->json(['success' => false, 'errorMessage' => 'Invalid token']);
-            }
-            if (!$jobApplication->status) {
-                $jobApplication->status = 1;
-                $jobApplication->save();
+            $data = RequestQuoteMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-
-        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['request_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-
-    public function addSubscriber(Request $request)
+    public function getContactImage()
     {
         $errorMessage = "";
         $success = true;
+        $Response = [];
         try {
-            $request->validate([
-                "email" => "email"
-            ]);
+            $data = ContactMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['contact_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getServices()
+    {
+        $errorMessage = "";
+        $success = true;
+        $response = [];
+        try {
+            $data = OurServices::with([
+                'our_services_list',
+            ])->get();
+            //dd($data);
 
-            $subscriber = Subscriber::where('email', $request->email)->first();
-            if ($subscriber) {
-                if ($subscriber->status) {
-                    return response()->json(['success' => false, 'errorMessage' => 'Already subscribed']);
+            foreach ($data as $item) {
+                $item->load(['our_services_list' => function ($q) {
+                    $q->orderBy('id', 'asc');
+                }]);
+                foreach($item->our_services_list as $list_items) {
+                    $list_items->our_services_list_item;
                 }
             }
+            $response = $data;
 
-            if (!$subscriber) {
-                $token = uniqid() . random_int(1000, 9999);
-                $data = [
-                    'email' => $request->email,
-                    'status' => 0,
-                    'email_verify_token' => $token
-                ];
-                $subscriber = Subscriber::create($data);
-            }
-
-            $verificationLink = env('FRONT_URL') . 'subscriptionVerification/'. $subscriber->email_verify_token;
-            $mailData = MailContent::where('type', 'subscriber')->first();
-            $message = $mailData->message;
-            $message = str_replace('{{email}}', $request->email, $message);
-            $message = str_replace('{{verification_link}}', $verificationLink, $message);
-            $mail = array('subject' => $mailData->subject, 'message' => $message);
-            $subscribe = new Subscribe($request->email, $mail);
-            $subscribe->dispatch($request->email, $mail);
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['services' => $response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-
-    public function addJobApplicaion(Request $request)
+    public function getOurTeamImage()
     {
         $errorMessage = "";
         $success = true;
-        $application = [];
+        $Response = [];
         try {
-            $request->validate([
-                "name" => "required|max:191",
-                "email" => "email",
-                "job_title" => "max:191",
-                "company" => "max:191",
-                "phone" => "required|max:191",
-                "subject" => "required|max:191",
-                "message" => "required",
-            ]);
-
-            $data = $request->all();
-            $application = JobApplication::create($data);
-
-            $mailData = MailContent::where('type', 'application')->first();
-            $message = $mailData->message;
-            $message = str_replace('{{message}}', $request->message, $message);
-            $message = str_replace('{{name}}', $request->name, $message);
-            $message = str_replace('{{mobile}}', $request->phone, $message);
-            $message = str_replace('{{subject}}', $request->subject, $message);
-            $message = str_replace('{{start_date}}', $application->created_at->format('d M Y'), $message);
-
-            $subject = $mailData->subject;
-            $subject = str_replace('{{start_date}}', $application->created_at->format('d M Y'), $subject );
-            $mail = array('subject' => $subject, 'message' => $message);
-            $job_application = new Subscribe($request->email, $mail);
-            $job_application->dispatch($request->email, $mail);
-
-        } catch (\Throwable $e) {
-            $errorMessage = $e->getMessage();
-            $success = false;
-        }
-
-        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
-    }
-
-    public function getCategories() {
-        $errorMessage = "";
-        $success = true;
-        $categoryResponse = [];
-        try {
-            $categories = Category::all();
-            foreach ($categories as $key=>$category) {
-                $categoryResponse[$key] = $category;
-                $categoryResponse[$key]['pdf'] = asset("/uploads/" . $category->pdf_path);
+            $data = OurTeamMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['category' => $categoryResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['our_team_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
+    public function getWorksWithUsImage()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = WorkWithUsMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['work_with_us_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getOurTeam()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = OurTeam::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['our_team' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getOurWorksImage()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = OurWorksMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['our_works_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getOurWorks()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = OurWorks::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['our_works' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getOurWorksOrder()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = OurWorks::whereNotNull('ordering')->limit(3)->get();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['our_works_order' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getShopImage()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = ShopMain::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['shop_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getShop()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = Shop::orderBy('ordering','asc')->get();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['shop' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+
+
+
+
+
+
     public function getCategoryById($id) {
         $errorMessage = "";
         $success = true;
