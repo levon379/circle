@@ -19,7 +19,7 @@ use App\Admin\ContactMain;
 use App\Admin\OurServices;
 use App\Admin\OurServicesList;
 use App\Admin\OurServicesListItem;
-
+use Mail;
 
 use App\Admin\Category;
 
@@ -297,6 +297,96 @@ class RestController extends Controller
             $success = false;
         }
         return response()->json(['category' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function AddContact(Request $request)
+    {
+        //dd($request->all());
+        $errorMessage = "";
+        $success = true;
+        $application = [];
+        try {
+            $request->validate([
+                "email" => "email",
+                "message" => "required",
+            ]);
+
+            \Mail::send('',
+                array(
+                    'email' => $request->get('email'),
+                    'message' => $request->get('message'),
+                ), function($message) use ($request)
+                {
+                    $message->from($request->email);
+                    $message->to('lev.hambardzumyan@gmail.com');
+                });
+
+
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+
+        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function AddWorkWithUs(Request $request)
+    {
+        dd($request->all());
+        $errorMessage = "";
+        $success = true;
+        $application = [];
+        try {
+            $request->validate([
+                "email" => "email",
+                "message" => "required",
+            ]);
+
+            \Mail::send('',
+                array(
+                    'email' => $request->get('email'),
+                    'message' => $request->get('message'),
+                ), function($message) use ($request)
+                {
+                    $message->from($request->email);
+                    $message->to('lev.hambardzumyan@gmail.com');
+                });
+
+
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+
+        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function AddRequestAQuote(Request $request)
+    {
+        dd($request->all());
+        $errorMessage = "";
+        $success = true;
+        $application = [];
+        try {
+            $request->validate([
+                "email" => "email",
+                "message" => "required",
+            ]);
+
+            \Mail::send('',
+                array(
+                    'email' => $request->get('email'),
+                    'message' => $request->get('message'),
+                ), function($message) use ($request)
+                {
+                    $message->from($request->email);
+                    $message->to('lev.hambardzumyan@gmail.com');
+                });
+
+
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+
+        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
 }

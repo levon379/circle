@@ -115,6 +115,9 @@
                         <li><a href="/admin/our-services" class="waves-effect">
                                 <span class="hide-menu">Our Services</span></a>
                         </li>
+                        <li><a href="/admin/our-works/order" class="waves-effect">
+                                <span class="hide-menu">Our Works Order</span></a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -150,9 +153,7 @@
                         <li><a href="/admin/our-works" class="waves-effect">
                                 <span class="hide-menu">Our Works</span></a>
                         </li>
-                        <li><a href="/admin/our-works/order" class="waves-effect">
-                                <span class="hide-menu">Our Works Order</span></a>
-                        </li>
+
                     </ul>
                 </li>
 
