@@ -310,16 +310,13 @@ class RestController extends Controller
                 "message" => "required",
             ]);
 
-            \Mail::send('',
-                array(
-                    'email' => $request->get('email'),
-                    'message' => $request->get('message'),
-                ), function($message) use ($request)
-                {
-                    $message->from($request->email);
-                    $message->to('lev.hambardzumyan@gmail.com');
-                });
-
+            $from = "levon37987@mail.ru";
+            $to = "levon37987@mail.ru";
+            $subject = "Checking PHP mail";
+            $message = "PHP mail works just fine";
+            $headers = "From:" . $from;
+            mail($to,$subject,$message, $headers);
+            echo "The email message was sent.";
 
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
