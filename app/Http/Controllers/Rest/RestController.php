@@ -37,9 +37,11 @@ class RestController extends Controller
         $Response = [];
         try {
             $data = HomePage::all();
+            $i = 0;
             foreach ($data as $key => $item) {
-                $Response[$key] = $item;
-                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+                $i++;
+                $Response['type'.$i] = $item;
+                $Response[$item->type]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
@@ -194,6 +196,23 @@ class RestController extends Controller
         }
         return response()->json(['our_works' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+    public function getOurWorksByCategory()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = OurWorks::all();
+            foreach ($data as $key => $item) {
+                $Response[$item->category][] = $item;
+                //$Response['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['our_works' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
     public function getOurWorksOrder()
     {
         $errorMessage = "";
@@ -228,17 +247,17 @@ class RestController extends Controller
         }
         return response()->json(['shop_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-    public function getShopByCategory($id)
+    public function getShopByCategory()
     {
         $errorMessage = "";
         $success = true;
         $Response = [];
         try {
 
-            $data = Shop::where('category_id',$id)->orderBy('ordering','asc')->get();
+            $data = Shop::all();
             foreach ($data as $key => $item) {
-                $Response[$key] = $item;
-                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+                $Response[$item->category_id][] = $item;
+                //$Response[$key]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();

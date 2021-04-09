@@ -28,9 +28,10 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getWorksWithUsImage', 'RestController@getWorksWithUsImage');
     Route::GET('/getOurWorksImage', 'RestController@getOurWorksImage');
     Route::GET('/getOurWorks', 'RestController@getOurWorks');
+    Route::GET('/getOurWorksByCategory', 'RestController@getOurWorksByCategory');
     Route::GET('/getOurWorksOrder', 'RestController@getOurWorksOrder');
     Route::GET('/getShopImage', 'RestController@getShopImage');
-    Route::GET('/getShopByCategory/{id}', 'RestController@getShopByCategory');
+    Route::GET('/getShopByCategory', 'RestController@getShopByCategory');
     Route::GET('/getAllShop', 'RestController@getAllShop');
     Route::GET('/getCategory', 'RestController@getCategory');
 

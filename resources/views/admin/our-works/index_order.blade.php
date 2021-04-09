@@ -77,6 +77,9 @@
         if (countchecked >= 3) {
             $('tbody input[type=checkbox]').not(':checked').attr("disabled", true);
         }
+        else {
+            $('tbody input[type=checkbox]').not(':checked').attr("disabled", false);
+        }
         $('#datatable').DataTable({"bPaginate": false,});
 
 
