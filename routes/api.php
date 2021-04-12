@@ -2,7 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Mail\OrderShipped;
+use App\Mail\WorkWithUs;
+use App\Mail\RequestQuote;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,8 +37,16 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getShopByCategory', 'RestController@getShopByCategory');
     Route::GET('/getAllShop', 'RestController@getAllShop');
     Route::GET('/getCategory', 'RestController@getCategory');
-    Route::POST('/AddContact', 'RestController@AddContact');
-    Route::POST('/AddWorkWithUs', 'RestController@AddWorkWithUs');
-    Route::POST('/AddRequestAQuote', 'RestController@AddRequestAQuote');
+//    Route::POST('/AddWorkWithUs', 'RestController@AddWorkWithUs');
+//    Route::POST('/AddRequestAQuote', 'RestController@AddRequestAQuote');
+    Route::POST('/AddContact', function () {
+        Mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
+    });
+    Route::POST('/AddWorkWithUs', function () {
+        Mail::to('info@circletechnicaldesign.com')->send(new WorkWithUs());
+    })->back();
+    Route::POST('/AddRequestAQuote', function () {
+        Mail::to('info@circletechnicaldesign.com')->send(new RequestQuote());
+    });
 
 });

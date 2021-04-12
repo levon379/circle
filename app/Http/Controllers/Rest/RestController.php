@@ -305,18 +305,24 @@ class RestController extends Controller
         $success = true;
         $application = [];
         try {
-            $request->validate([
-                "email" => "email",
-                "message" => "required",
-            ]);
+                $request->validate([
+                    'email' => 'required|email',
+                    'subject' => 'required',
+                    'content' => 'required',
+                ]);
 
-            $from = "levon37987@mail.ru";
-            $to = "levon37987@mail.ru";
-            $subject = "Checking PHP mail";
-            $message = "PHP mail works just fine";
-            $headers = "From:" . $from;
-            mail($to,$subject,$message, $headers);
-            echo "The email message was sent.";
+                $data = [
+                    'subject' => 'contact us',
+                    'email' => $request->email,
+                    'content' => $request->message
+                ];
+
+                Mail::send('email-template', $data, function($message) use ($data) {
+                    $message->to($data['email'])
+                        ->subject($data['subject']);
+                });
+
+                return back()->with(['message' => 'Email successfully sent!']);
 
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();

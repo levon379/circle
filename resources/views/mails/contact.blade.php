@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $details['subject'] }}</title>
+    <title>{{$sent}}</title>
 </head>
 <body>
 
-<p>{{ $details['message'] }}</p>
+<p>Description: {{ $message }}</p>
 
 <p>Thank you!</p>
 </body>
