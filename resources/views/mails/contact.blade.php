@@ -7,6 +7,7 @@
 
 <p>Description: {{ $message }}</p>
 
+
 <p>Thank you!</p>
 </body>
 </html>
