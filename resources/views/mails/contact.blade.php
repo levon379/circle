@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{$sent}}</title>
+    <title>Contact Us</title>
 </head>
 <body>
 
-<p>Description: {{ $message }}</p>
+<p>Description: {{ $mm }}</p>
 
 
-<p>Thank you!</p>
 </body>
 </html>

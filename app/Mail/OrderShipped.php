@@ -29,13 +29,18 @@ class OrderShipped extends Mailable
      */
     public function build(Request $request)
     {
-        return $this->from($request->email, $request->contact)
-            ->subject('From Web: '.$request->contact )
+        if($request->message != null){
+        $mm = $request->message;
+        }else{
+            $mm = '';
+        }
+        return $this->from($request->email, 'Contact Us')
+            ->subject('From Web: Contact Us' )
             ->markdown('mails.contact')
             ->with([
                 'email' => $request->email,
-                'message' => $request->message,
-                'sent' => $request->contact
+                'mm' => $mm,
+
             ]);
     }
 }
