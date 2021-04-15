@@ -107,5 +107,19 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
         Route::POST('/update-ordering', 'ShopController@updateOrdering');
         Route::POST('/{id}/delete', 'ShopController@destroyShop');
     });
+    Route::prefix('vacancy')->group(function () {
+        Route::resource('/', 'VacancyController');
+        Route::GET('/{id}/edit', 'VacancyController@edit');
+        Route::PUT('/{id}', 'VacancyController@update');
+        Route::POST('/update-ordering', 'VacancyController@updateOrdering');
+        Route::POST('/{id}/delete', 'VacancyController@destroyShop');
+    });
+    Route::prefix('career')->group(function () {
+        Route::resource('/', 'CareerController');
+        Route::GET('/{id}/edit', 'CareerController@edit');
+        Route::PUT('/{id}', 'CareerController@update');
+        Route::POST('/update-ordering', 'CareerController@updateOrdering');
+        Route::POST('/{id}/delete', 'CareerController@destroyShop');
+    });
 
 });

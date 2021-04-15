@@ -188,6 +188,20 @@
 
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/career.svg') }}">
+                        <span class="hide-menu">Career<span class="fa arrow"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/admin/vacancy" class="waves-effect">
+                                <span class="hide-menu">Vacancy</span></a>
+                        </li>
+                        <li><a href="/admin/career" class="waves-effect">
+                                <span class="hide-menu">Career</span></a>
+                        </li>
+                    </ul>
+                </li>
 {{--                <li><a href="/admin/social" class="waves-effect"><img class="menu-icon" src="{{ URL::asset('assets/icons/vacancies.svg') }}">--}}
 {{--                        <span class="hide-menu">Social Links</span></a>--}}
 {{--                </li>--}}
