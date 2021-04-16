@@ -282,6 +282,40 @@ class RestController extends Controller
         }
         return response()->json(['shop' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+    public function getVacancy()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = Vacancy::orderBy('ordering','asc')->get();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['vacancy' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+    public function getCareer()
+    {
+        $errorMessage = "";
+        $success = true;
+        $Response = [];
+        try {
+            $data = Career::all();
+            foreach ($data as $key => $item) {
+                $Response[$key] = $item;
+                $Response[$key]['image'] = asset("/uploads/" . $item->path);
+            }
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
+        }
+        return response()->json(['career' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
     public function getCategory()
     {
         $errorMessage = "";

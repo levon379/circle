@@ -36,6 +36,8 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getShopImage', 'RestController@getShopImage');
     Route::GET('/getShopByCategory', 'RestController@getShopByCategory');
     Route::GET('/getAllShop', 'RestController@getAllShop');
+    Route::GET('/getVacancy', 'RestController@getVacancy');
+    Route::GET('/getCareer', 'RestController@getCareer');
     Route::GET('/getCategory', 'RestController@getCategory');
 
     Route::POST('/AddContact', function () {

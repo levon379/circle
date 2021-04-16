@@ -20,8 +20,6 @@
                                        placeholder="Title" name="title" value="{{$data->title}}" required>
                             </div>
 
-
-
                             <div class="form-group">
                                 <label for="thumbnail">Main Image<strong class="text-danger"> &#42; </strong> </label>
                                 @error('thumbnail')
