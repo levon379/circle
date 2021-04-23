@@ -31,18 +31,25 @@ class WorkWithUs extends Mailable
      */
     public function build(Request $request)
     {
-        $mail = $this->from($request->email, 'Work With Us')
-            ->subject('From Web: Work With Us' )
-            ->view('mails.work')
-            ->with('mm', $request->message);
+        $errorMessage = "";
+        $success = true;
+        try {
+            $mail = $this->from($request->email, 'Work With Us')
+                ->subject('From Web: Work With Us')
+                ->view('mails.work')
+                ->with('mm', $request->message);
 
-        /** @var UploadedFile $image */
-        foreach ($request->photos as $image) {
-            $mail->attach($image->getRealPath(), array(
-                    'as' => $image->getClientOriginalName(),
-                    'mime' => $image->getMimeType())
-            );
+            /** @var UploadedFile $image */
+            foreach ($request->photos as $image) {
+                $mail->attach($image->getRealPath(), array(
+                        'as' => $image->getClientOriginalName(),
+                        'mime' => $image->getMimeType())
+                );
+            }
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $success = false;
         }
-        return $mail;
+        return response()->json(['success' => $success, 'errorMessage' => $errorMessage]);
     }
 }
