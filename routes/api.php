@@ -6,6 +6,8 @@ use App\Mail\OrderShipped;
 use App\Mail\WorkWithUs;
 use App\Mail\RequestQuote;
 use Illuminate\Support\Facades\Mail;
+use Response;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,13 +43,14 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getCategory', 'RestController@getCategory');
 
     Route::POST('/AddContact', function () {
-        Mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
+        mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
     });
     Route::POST('/AddWorkWithUs', function () {
-        Mail::to('info@circletechnicaldesign.com')->send(new WorkWithUs());
+        $response = mail::to('info@circletechnicaldesign.com')->send(new WorkWithUs());
+        return Response::json(['response'=>$response]);
     });
     Route::POST('/AddRequestAQuote', function () {
-        Mail::to('info@circletechnicaldesign.com')->send(new RequestQuote());
+        mail::to('info@circletechnicaldesign.com')->send(new RequestQuote());
     });
 
 });
