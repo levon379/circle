@@ -43,14 +43,16 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getCategory', 'RestController@getCategory');
 
     Route::POST('/AddContact', function () {
-        mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
+        $response = mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
+        return Response::json(['response'=>$response]);
     });
     Route::POST('/AddWorkWithUs', function () {
         $response = mail::to('info@circletechnicaldesign.com')->send(new WorkWithUs());
         return Response::json(['response'=>$response]);
     });
     Route::POST('/AddRequestAQuote', function () {
-        mail::to('info@circletechnicaldesign.com')->send(new RequestQuote());
+        $response = mail::to('info@circletechnicaldesign.com')->send(new RequestQuote());
+        return Response::json(['response'=>$response]);
     });
 
 });
