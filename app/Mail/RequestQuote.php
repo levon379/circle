@@ -36,13 +36,15 @@ class RequestQuote extends Mailable
             ->view('mails.files')
             ->with('mm', $request->message);
         /** @var UploadedFile $image */
-        foreach ($request->photos as $image) {
-            //dd($image->getRealPath());
-            $mail->attach($image->getRealPath(), array(
-                'as' => $image->getClientOriginalName(),
-                'mime' => $image->getMimeType())
-            );
+        if($request->photos != ''){
+            foreach ($request->photos as $image) {
+                $mail->attach($image->getRealPath(), array(
+                        'as' => $image->getClientOriginalName(),
+                        'mime' => $image->getMimeType())
+                );
+            }
         }
+
         return $mail;
     }
 
