@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rest;
 
 
+use App\Admin\Blog;
 use App\Admin\OurTeam;
 use App\Admin\OurTeamMain;
 use App\Admin\OurWorks;
@@ -40,7 +41,7 @@ class RestController extends Controller
             $i = 0;
             foreach ($data as $key => $item) {
                 $i++;
-                $Response['type'.$i] = $item;
+                $Response['type' . $i] = $item;
                 $Response[$item->type]['image'] = asset("/uploads/" . $item->path);
             }
         } catch (\Throwable $e) {
@@ -49,6 +50,7 @@ class RestController extends Controller
         }
         return response()->json(['home_page' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getRequestAQuoteImage()
     {
         $errorMessage = "";
@@ -66,6 +68,7 @@ class RestController extends Controller
         }
         return response()->json(['request_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getContactImage()
     {
         $errorMessage = "";
@@ -83,6 +86,7 @@ class RestController extends Controller
         }
         return response()->json(['contact_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getServices()
     {
         $errorMessage = "";
@@ -98,7 +102,7 @@ class RestController extends Controller
                 $item->load(['our_services_list' => function ($q) {
                     $q->orderBy('id', 'asc');
                 }]);
-                foreach($item->our_services_list as $list_items) {
+                foreach ($item->our_services_list as $list_items) {
                     $list_items->our_services_list_item;
                 }
             }
@@ -110,6 +114,7 @@ class RestController extends Controller
         }
         return response()->json(['services' => $response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurTeamImage()
     {
         $errorMessage = "";
@@ -145,6 +150,7 @@ class RestController extends Controller
         }
         return response()->json(['work_with_us_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurTeam()
     {
         $errorMessage = "";
@@ -162,6 +168,7 @@ class RestController extends Controller
         }
         return response()->json(['our_team' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurWorksImage()
     {
         $errorMessage = "";
@@ -179,6 +186,7 @@ class RestController extends Controller
         }
         return response()->json(['our_works_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurWorks()
     {
         $errorMessage = "";
@@ -196,6 +204,7 @@ class RestController extends Controller
         }
         return response()->json(['our_works' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurWorksByCategory()
     {
         $errorMessage = "";
@@ -213,6 +222,7 @@ class RestController extends Controller
         }
         return response()->json(['our_works' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getOurWorksOrder()
     {
         $errorMessage = "";
@@ -230,6 +240,7 @@ class RestController extends Controller
         }
         return response()->json(['our_works_order' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getShopImage()
     {
         $errorMessage = "";
@@ -247,6 +258,7 @@ class RestController extends Controller
         }
         return response()->json(['shop_image' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getShopByCategory()
     {
         $errorMessage = "";
@@ -263,15 +275,16 @@ class RestController extends Controller
             $errorMessage = $e->getMessage();
             $success = false;
         }
-        return response()->json(['shop_by_category' => $Response,  'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['shop_by_category' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getAllShop()
     {
         $errorMessage = "";
         $success = true;
         $Response = [];
         try {
-            $data = Shop::orderBy('ordering','asc')->get();
+            $data = Shop::orderBy('ordering', 'asc')->get();
             foreach ($data as $key => $item) {
                 $Response[$key] = $item;
                 $Response[$key]['image'] = asset("/uploads/" . $item->path);
@@ -282,13 +295,14 @@ class RestController extends Controller
         }
         return response()->json(['shop' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getVacancy()
     {
         $errorMessage = "";
         $success = true;
         $Response = [];
         try {
-            $data = Vacancy::orderBy('ordering','asc')->get();
+            $data = Vacancy::orderBy('ordering', 'asc')->get();
             foreach ($data as $key => $item) {
                 $Response[$key] = $item;
                 $Response[$key]['image'] = asset("/uploads/" . $item->path);
@@ -299,6 +313,7 @@ class RestController extends Controller
         }
         return response()->json(['vacancy' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getCareer()
     {
         $errorMessage = "";
@@ -316,6 +331,7 @@ class RestController extends Controller
         }
         return response()->json(['career' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
+
     public function getCategory()
     {
         $errorMessage = "";
@@ -332,98 +348,78 @@ class RestController extends Controller
         }
         return response()->json(['category' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-    public function AddContact(Request $request)
+
+    public function addBlog()
     {
-        //dd($request->all());
         $errorMessage = "";
         $success = true;
-        $application = [];
+        $blogResponse = [];
         try {
-                $request->validate([
-                    'email' => 'required|email',
-                    'subject' => 'required',
-                    'content' => 'required',
-                ]);
-
-                $data = [
-                    'subject' => 'contact us',
-                    'email' => $request->email,
-                    'content' => $request->message
-                ];
-
-                Mail::send('email-template', $data, function($message) use ($data) {
-                    $message->to($data['email'])
-                        ->subject($data['subject']);
-                });
-
-                return back()->with(['message' => 'Email successfully sent!']);
 
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-
-        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['blog' => $blogResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-    public function AddWorkWithUs(Request $request)
+
+    public function getBlog($id)
     {
-        dd($request->all());
         $errorMessage = "";
         $success = true;
-        $application = [];
+        $blogResponse = [];
+        $subResp = [];
         try {
-            $request->validate([
-                "email" => "email",
-                "message" => "required",
-            ]);
+            $blog = Blog::with('blogScheme')->where('id', $id)->first();
+            $blogResponse = ['id' => $blog->id, 'name' => $blog->title];
+            if ($blog->blogScheme->count()) {
+                $blogSchemes = $blog->blogScheme;
+                foreach ($blogSchemes as $key => $blogScheme) {
+                    $blogResponse['blogScheme'][$key] = [
+                        'col' => $blogScheme->cols,
+                        'header' => $blogScheme->title,
+                        'description' => $blogScheme->description
+                    ];
+                    //echo "<pre>";var_dump($blogScheme->blogImage);die;
+                    if ($blogScheme->blogImage && $blogScheme->blogImage->count()) {
+                        $blogResponse['blogScheme'][$key]['image'] = $blogScheme->blogImage->image_path;
+                    }
+                    if ($blogScheme->blogBackground && $blogScheme->blogBackground->count()) {
+                        $blogResponse['blogScheme'][$key]['background'] = $blogScheme->blogBackground->image_path;
+                    }
 
-            \Mail::send('',
-                array(
-                    'email' => $request->get('email'),
-                    'message' => $request->get('message'),
-                ), function($message) use ($request)
-                {
-                    $message->from($request->email);
-                    $message->to('lev.hambardzumyan@gmail.com');
-                });
-
-
+                    if ($blogScheme->subs && $blogScheme->subs->count()) {
+                        $blogResponse['blogScheme'][$key]['subs'] = $this->getSubs($blogScheme->subs);
+                    }
+                }
+            }
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $success = false;
         }
-
-        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return response()->json(['blog' => $blogResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
-    public function AddRequestAQuote(Request $request)
+
+    private function getSubs($subs , $arr = array())
     {
-        dd($request->all());
-        $errorMessage = "";
-        $success = true;
-        $application = [];
-        try {
-            $request->validate([
-                "email" => "email",
-                "message" => "required",
-            ]);
-
-            \Mail::send('',
-                array(
-                    'email' => $request->get('email'),
-                    'message' => $request->get('message'),
-                ), function($message) use ($request)
-                {
-                    $message->from($request->email);
-                    $message->to('lev.hambardzumyan@gmail.com');
-                });
-
-
-        } catch (\Throwable $e) {
-            $errorMessage = $e->getMessage();
-            $success = false;
+        if (!empty($subs)) {
+            foreach ($subs as $key=>$ch) {
+                $arr[$key]['col'] = $ch->cols;
+                $arr[$key]['header'] = $ch->header;
+                $arr[$key]['description'] = $ch->description;
+                if($ch->blogImage &&  $ch->blogImage->count()) {
+                    $arr[$key]['image'] = $ch->blogImage->image_path;
+                }
+                if($ch->blogBackground && $ch->blogBackground->count()) {
+                    $arr[$key]['background'] = $ch->blogBackground->image_path;
+                }
+                if($ch->subs) {
+                    $arr[$key]['subs'] = $this->getSubs($ch->subs, $arr);
+                }
+            }
         }
 
-        return response()->json(['application' => $application, 'success' => $success, 'errorMessage' => $errorMessage]);
+        return $arr;
     }
 
 }

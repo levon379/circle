@@ -41,6 +41,8 @@ Route::group(['namespace' => 'Rest'], function () {
     Route::GET('/getVacancy', 'RestController@getVacancy');
     Route::GET('/getCareer', 'RestController@getCareer');
     Route::GET('/getCategory', 'RestController@getCategory');
+    Route::POST('/addBlog', 'RestController@addBlog');
+    Route::GET('/getBlog/{id}', 'RestController@getBlog');
 
     Route::POST('/AddContact', function () {
         $response = mail::to('info@circletechnicaldesign.com')->send(new OrderShipped());
