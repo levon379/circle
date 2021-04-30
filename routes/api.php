@@ -6,7 +6,7 @@ use App\Mail\OrderShipped;
 use App\Mail\WorkWithUs;
 use App\Mail\RequestQuote;
 use Illuminate\Support\Facades\Mail;
-use Response;
+//use Response;
 
 /*
 |--------------------------------------------------------------------------
