@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class BlogScheme extends Model
 {
     protected $table = "blog_scheme";
-    public $fillable = ['cols', 'description', 'title', 'parent_id', 'image_id'];
+    public $fillable = ['cols', 'description', 'title', 'parent_id', 'image_id','blog_id'];
+    public $timestamps = false;
 
     public function blogImage()
     {

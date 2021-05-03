@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Rest;
 
 
 use App\Admin\Blog;
+use App\Admin\BlogImage;
+use App\Admin\BlogScheme;
 use App\Admin\OurTeam;
 use App\Admin\OurTeamMain;
 use App\Admin\OurWorks;
@@ -12,6 +14,7 @@ use App\Admin\Shop;
 use App\Admin\ShopMain;
 use App\Admin\WorkWithUsMain;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 
 use App\Admin\HomePage;
@@ -349,18 +352,85 @@ class RestController extends Controller
         return response()->json(['category' => $Response, 'success' => $success, 'errorMessage' => $errorMessage]);
     }
 
-    public function addBlog()
+    public function addBlog(Request $request)
     {
         $errorMessage = "";
         $success = true;
         $blogResponse = [];
         try {
+            DB::beginTransaction();
+            $data = [];
+            $storeData = $request->all();
+            if (count($storeData)) {
+                array_push($data, $storeData);
+            }
+            $blog = Blog::create(['title' => 'asdas', 'description' => 'asdasd']);
+            foreach ($data as $blogScheme) {
+                $blogData = ['cols' => $blogScheme['col'], 'title' => $blogScheme['header'],
+                    'description' => $blogScheme['description'], 'blog_id' => $blog->id];
+                $scheme = BlogScheme::create($blogData);
+                $imageId = null;
+                if (isset($blogScheme['image'])) {
+                    //$request->validate(["image" => "image|max:5000"]);
+                    //if($request->file('image')->isValid()) {
+                    $blogSchemeImage = Storage::disk('public')->putFile('blog-scheme', new File($blogScheme['image']));
+                    $blogSchemeImageData = ['image_path' => $blogSchemeImage, 'is_background' => 0];
+                    $imageId = BlogImage::create($blogSchemeImageData);
+                    //}
+                } elseif (isset($blogScheme['background'])) {
+                    //$request->validate(["background" => "image|max:5000"]);
+                    //if($request->file('background')->isValid()) {
+                    $blogSchemeBackground = Storage::disk('public')->putFile('blog-scheme', new File($blogScheme['background']));
+                    $blogSchemeImageData = ['image_path' => $blogSchemeBackground, 'is_background' => 1];
+                    $imageId = BlogImage::create($blogSchemeImageData);
+                    //}
+                }
+                $scheme->image_id = $imageId->id;
+                $scheme->save();
 
+
+                if (!empty($blogScheme['sub'])) {
+                    $this->saveBlogSub($blogScheme['sub'], $scheme->id);
+                }
+            }
         } catch (\Throwable $e) {
+            DB::rollBack();
             $errorMessage = $e->getMessage();
             $success = false;
         }
+        DB::commit();
         return response()->json(['blog' => $blogResponse, 'success' => $success, 'errorMessage' => $errorMessage]);
+    }
+
+    private function saveBlogSub($subBlogData, $parentId)
+    {
+        foreach($subBlogData as $sub) {
+            $subBlogStoreData = ['cols'=>$sub['col'],'title'=>$sub['header'],
+                'description'=>$sub['description'],'parent_id'=>$parentId];
+            $subBlogScheme = BlogScheme::create($subBlogStoreData);
+            $imageId = null;
+            if (isset($sub['image'])) {
+                //$request->validate(["image" => "image|max:5000"]);
+                //if($request->file('image')->isValid()) {
+                $blogSchemeImage = Storage::disk('public')->putFile('blog-scheme', new File($sub['image']));
+                $blogSchemeImageData = ['image_path'=>$blogSchemeImage,'is_background'=>0];
+                $imageId = BlogImage::create($blogSchemeImageData);
+                //}
+            } elseif(isset($sub['background'])) {
+                //$request->validate(["background" => "image|max:5000"]);
+                //if($request->file('background')->isValid()) {
+                $blogSchemeBackground = Storage::disk('public')->putFile('blog-scheme', new File($sub['background']));
+                $blogSchemeImageData = ['image_path'=>$blogSchemeBackground,'is_background'=>1];
+                $imageId = BlogImage::create($blogSchemeImageData);
+                //}
+            }
+            $subBlogScheme->image_id = $imageId;
+            $subBlogScheme->save();
+
+            if(!empty($sub['sub'])) {
+                $this->saveBlogSub($sub['sub'],$subBlogScheme->id);
+            }
+        }
     }
 
     public function getBlog($id)
